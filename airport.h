@@ -8,6 +8,7 @@ Airport object header file
 #ifndef AIRPORT_H
 #define AIRPORT_H
 #include "TimeObserver.h"
+#include <string>
 
 class Airport : public TimeObserver {
 public:

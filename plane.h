@@ -7,6 +7,7 @@ Plane object header file
 #ifndef PLANE_H
 #define PLANE_H
 #include "TimeObserver.h"
+#include <string>
 
 class Plane : public TimeObserver {
 public:

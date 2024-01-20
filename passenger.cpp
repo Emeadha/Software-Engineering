@@ -7,7 +7,7 @@ Passenger object implementation file
 #include "Passenger.h"
 #include <iostream>
 
-Passenger::Passenger(const std::string& passenger_name) : name(passenger_name) {}
+Passenger::Passenger(const std::string& passenger_name) : name(passenger_name), current_time(0, 0, 0) {}
 
 void Passenger::onTimeUpdate(const Clock& new_time) {
     current_time = new_time;

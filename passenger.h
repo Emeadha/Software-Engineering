@@ -7,6 +7,7 @@
 #ifndef PASSENGER_H
 #define PASSENGER_H
 #include "TimeObserver.h"
+#include <string>
 
 class Passenger : public TimeObserver {
 public:

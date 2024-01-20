@@ -7,7 +7,7 @@ Plane object implementation file
 #include "Plane.h"
 #include <iostream>
 
-Plane::Plane(const std::string& plane_name) : name(plane_name) {}
+Plane::Plane(const std::string& plane_name) : name(plane_name), current_time(0, 0, 0) {}
 
 void Plane::onTimeUpdate(const Clock& new_time) {
     current_time = new_time;
