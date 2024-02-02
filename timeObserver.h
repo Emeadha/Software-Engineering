@@ -8,9 +8,11 @@ Plane object header file
 #define TIME_OBSERVER_H
 #include "Clock.h"
 
+using namespace std;
+
 class TimeObserver {
 public:
-    virtual void onTimeUpdate(const Clock& new_time) = 0;
+    virtual void onTimeUpdate(Clock& new_time) = 0;
 };
 
 #endif // TIME_OBSERVER_H

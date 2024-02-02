@@ -10,10 +10,12 @@ Time manager header
 #include "Clock.h"
 #include <vector>
 
+using namespace std;
+
 class TimeManager {
 private:
     Clock simulation_time;
-    std::vector<TimeObserver*> observers;
+    vector<TimeObserver*> observers;
 
 public:
     // Constructor

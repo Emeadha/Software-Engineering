@@ -9,15 +9,17 @@
 #include "TimeObserver.h"
 #include <string>
 
+using namespace std;
+
 class Passenger : public TimeObserver {
 public:
-    std::string name;
+    string name;
     Clock current_time;
 
-    Passenger(const std::string& passenger_name);
+    Passenger(string passenger_name);
 
     // Implement the TimeObserver interface
-    virtual void onTimeUpdate(const Clock& new_time) override;
+    virtual void onTimeUpdate(Clock& new_time) override;
 };
 
 #endif // PASSENGER_H

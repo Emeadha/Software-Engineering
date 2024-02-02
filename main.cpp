@@ -13,10 +13,16 @@ Clock implementation
 #include "passenger.h"
 #include <thread>
 
+using namespace std;
+
 int main() {
     TimeManager time_manager;
 
-    Plane plane("Flight 123");
+    // Create objects
+    //Boeing 747
+    Plane plane(123, "Boeing 747", 26020, 3217, 749.7, 172, 0, 0);
+
+    //Dallas/Fort Worth International Airport
     Airport airport("International Airport");
     Passenger passenger("John Doe");
 
@@ -43,7 +49,7 @@ int main() {
         time_manager.updateSimulationTime(hours, minutes, 0);
 
         // Sleep for 1 second
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        this_thread::sleep_for(chrono::seconds(1));
     }
 
     return 0;
