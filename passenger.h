@@ -14,7 +14,7 @@ using namespace std;
 class Passenger : public TimeObserver {
 public:
     string name;
-    Clock current_time;
+    Clock Objects_clock;
 
     Passenger(string passenger_name);
 

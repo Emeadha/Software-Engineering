@@ -11,6 +11,7 @@ Clock implementation
 #include "plane.h"
 #include "airport.h"
 #include "passenger.h"
+#include "airline.h"
 #include <thread>
 
 using namespace std;
@@ -19,16 +20,12 @@ int main() {
     TimeManager time_manager;
 
     // Create objects
-    //Boeing 747
-    Plane plane(123, "Boeing 747", 26020, 3217, 749.7, 172, 0, 0);
 
-    //Dallas/Fort Worth International Airport
-    Airport airport("International Airport");
+   // Airport airport("International Airport");
     Passenger passenger("John Doe");
+    Airline airline(&time_manager, "Comfort Airlines");
 
     // Register objects as observers
-    time_manager.addObserver(&plane);
-    time_manager.addObserver(&airport);
     time_manager.addObserver(&passenger);
 
     //THIS IS THE MAIN SIMULATION LOOP FOR TIME

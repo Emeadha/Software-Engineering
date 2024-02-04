@@ -17,7 +17,7 @@ using namespace std;
 class Airport : public TimeObserver {
 public:
     string name;
-    Clock current_time;
+    Clock Objects_clock;
 
     Airport(string airport_name);
 
