@@ -27,5 +27,5 @@ void Plane::onTimeUpdate(Clock& new_time) {
     //Debugging statement
     cout << "Plane " << Plane_ID << " updated its time to "
               << new_time.hours << ":" << new_time.minutes << ":" << new_time.seconds << endl;
-    cout << "Variables: " << Plane_model << " " << Max_fuel << " " << Burn_rate << " " << Max_passengers << " " << Current_velocity << " " << Odometer << endl;
+    //cout << "Variables: " << Plane_model << " " << Max_fuel << " " << Burn_rate << " " << Max_passengers << " " << Current_velocity << " " << Odometer << endl;
 }

@@ -10,6 +10,9 @@ TimeManager::TimeManager() : simulation_time(0, 0, 0) {}
 
 void TimeManager::updateSimulationTime(int hours, int minutes, int seconds) {
     simulation_time = Clock(hours, minutes, seconds);
+    cout << "--------------------------------------------------------" << endl;
+    cout << "                       TIME UPDATE                      " << endl;
+    cout << "--------------------------------------------------------" << endl;
     notifyObservers();
 }
 

@@ -9,6 +9,7 @@ Time manager header
 #include "TimeObserver.h"
 #include "Clock.h"
 #include <vector>
+#include <iostream>
 
 using namespace std;
 

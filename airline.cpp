@@ -20,11 +20,12 @@ Airline::Airline(TimeManager *time_manager, string airline_name) : time_manager(
         registerPlane(plane);
     }
 
-    string airport_name = "New airport";
+    string airport_name;
     for(int i = 0; i < 2; i++) {
         //Just for now, want to have new airports labeled this way
         airport_name = "New airport" + to_string(i);
-        Airport* airport = new Airport(airport_name);
+        // Want to pass airport the time manager too, so it can register gates and passengers
+        Airport* airport = new Airport(time_manager, airport_name);
         //Test register plane
         registerAirport(airport);
     }

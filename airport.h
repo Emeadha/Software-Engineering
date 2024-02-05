@@ -10,16 +10,31 @@ Airport object header file
 
 
 #include "TimeObserver.h"
+#include "Clock.h"
+#include "timeManager.h"
+#include "Passenger.h"
+
 #include <string>
+#include <iostream>
+
 
 using namespace std;   
 
 class Airport : public TimeObserver {
 public:
-    string name;
+    //Variables
+    string Airport_name;
     Clock Objects_clock;
+    TimeManager* time_manager;
 
-    Airport(string airport_name);
+    //Vector for passenger objects
+    vector<Passenger*> All_passenger_groups;
+
+    //Constructor
+    Airport(TimeManager *time_manager, string airport_name);
+
+    // Register a passenger_group (to vector) and as an observer
+    void registerPassengerGroup(Passenger* passenger_group);
 
     // Implement the TimeObserver interface
     virtual void onTimeUpdate(Clock& new_time) override;

@@ -13,10 +13,10 @@ using namespace std;
 
 class Passenger : public TimeObserver {
 public:
-    string name;
+    int Passenger_group_ID;
     Clock Objects_clock;
 
-    Passenger(string passenger_name);
+    Passenger(int Passenger_group_ID);
 
     // Implement the TimeObserver interface
     virtual void onTimeUpdate(Clock& new_time) override;
