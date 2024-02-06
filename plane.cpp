@@ -22,10 +22,17 @@ Plane::Plane(int Plane_ID, string plane_name, float Max_fuel, float Burn_rate, f
 }
 
 void Plane::onTimeUpdate(Clock& new_time) {
+
+    //Start by setting done to false
+    TimeObserver::setIsNotDone();
+
     //Update the plane's time
     Objects_clock = new_time;
     //Debugging statement
     cout << "Plane " << Plane_ID << " updated its time to "
               << new_time.hours << ":" << new_time.minutes << ":" << new_time.seconds << endl;
     //cout << "Variables: " << Plane_model << " " << Max_fuel << " " << Burn_rate << " " << Max_passengers << " " << Current_velocity << " " << Odometer << endl;
+
+    //Say that we are done
+    TimeObserver::setIsDone();
 }

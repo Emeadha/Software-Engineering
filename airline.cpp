@@ -48,7 +48,14 @@ void Airline::registerAirport(Airport* airport) {
 }
 
 void Airline::onTimeUpdate(Clock& new_time) {
+
+    //Start by setting done to false
+    TimeObserver::setIsNotDone();
+
     Objects_clock = new_time;
     cout << "Airport " << Airline_name << " updated its time to "
               << new_time.hours << ":" << new_time.minutes << ":" << new_time.seconds << endl;
+
+    //Say that we are done
+    TimeObserver::setIsDone();
 }

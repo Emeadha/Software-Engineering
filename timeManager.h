@@ -10,6 +10,7 @@ Time manager header
 #include "Clock.h"
 #include <vector>
 #include <iostream>
+#include <thread>
 
 using namespace std;
 
@@ -22,6 +23,7 @@ public:
     // Constructor
     TimeManager();
 
+    void startSimulation();
     void updateSimulationTime(int hours, int minutes, int seconds);
     void addObserver(TimeObserver* observer);
     void notifyObservers();

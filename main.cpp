@@ -34,6 +34,9 @@ int main() {
     // Register objects as observers
     //time_manager.addObserver(&passenger);
 
+    // Start simulation
+    time_manager.startSimulation();
+/*
     //THIS IS THE MAIN SIMULATION LOOP FOR TIME
     //24 hours = 1440 minutes
     //Each iteration is 10 minutes
@@ -54,6 +57,6 @@ int main() {
         // Sleep for 1 second
         this_thread::sleep_for(chrono::seconds(1));
     }
-
+*/
     return 0;
 }
