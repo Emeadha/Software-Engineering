@@ -20,11 +20,12 @@ Airline::Airline(TimeManager *time_manager, string airline_name) : time_manager(
         registerPlane(plane);
     }
 
-    string airport_name = "New airport";
+    string airport_name;
     for(int i = 0; i < 2; i++) {
         //Just for now, want to have new airports labeled this way
         airport_name = "New airport" + to_string(i);
-        Airport* airport = new Airport(airport_name);
+        // Want to pass airport the time manager too, so it can register gates and passengers
+        Airport* airport = new Airport(time_manager, airport_name);
         //Test register plane
         registerAirport(airport);
     }
@@ -47,7 +48,14 @@ void Airline::registerAirport(Airport* airport) {
 }
 
 void Airline::onTimeUpdate(Clock& new_time) {
+
+    //Start by setting done to false
+    TimeObserver::setIsNotDone();
+
     Objects_clock = new_time;
     cout << "Airport " << Airline_name << " updated its time to "
               << new_time.hours << ":" << new_time.minutes << ":" << new_time.seconds << endl;
+
+    //Say that we are done
+    TimeObserver::setIsDone();
 }

@@ -5,10 +5,10 @@ CXX = g++
 CXXFLAGS = -std=c++11
 
 # Source files
-SRC_FILES = airport.cpp clock.cpp main.cpp passenger.cpp plane.cpp timeManager.cpp airline.cpp
+SRC_FILES = airport.cpp clock.cpp main.cpp passenger.cpp plane.cpp timeManager.cpp airline.cpp gate.cpp
 
 # Header files
-HEADER_FILES = airport.h clock.h passenger.h plane.h timeManager.h timeObserver.h airline.h
+HEADER_FILES = airport.h clock.h passenger.h plane.h timeManager.h timeObserver.h airline.h gate.h
 
 # Object files
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
