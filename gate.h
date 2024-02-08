@@ -1,0 +1,25 @@
+/*
+    gate.h
+
+    Gate object header file
+*/
+// gate.h
+#ifndef GATE_H
+#define GATE_H
+#include "TimeObserver.h"
+#include <string>
+
+using namespace std;
+
+class Gate : public TimeObserver {
+public:
+    int Gate_ID;
+    Clock Objects_clock;
+
+    Gate(int Gate_ID);
+
+    // Implement the TimeObserver interface
+    virtual void onTimeUpdate(Clock& new_time) override;
+};
+
+#endif // GATE_H

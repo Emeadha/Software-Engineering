@@ -12,6 +12,7 @@ Airport object header file
 #include "TimeObserver.h"
 #include "Clock.h"
 #include "timeManager.h"
+#include "gate.h"
 #include "Passenger.h"
 
 #include <string>
@@ -27,14 +28,18 @@ public:
     Clock Objects_clock;
     TimeManager* time_manager;
 
-    //Vector for passenger objects
+    //Vector for all passenger and gate objects
     vector<Passenger*> All_passenger_groups;
+    vector<Gate*> All_gates;
 
     //Constructor
     Airport(TimeManager *time_manager, string airport_name);
 
     // Register a passenger_group (to vector) and as an observer
     void registerPassengerGroup(Passenger* passenger_group);
+
+    // Register a gate (to vector) and as an observer
+    void registerGate(Gate* gate);
 
     // Implement the TimeObserver interface
     virtual void onTimeUpdate(Clock& new_time) override;
