@@ -19,6 +19,8 @@ public:
     string name;
     Clock Objects_clock;
 
+    //Hey Jake, add the variables and junk
+
     Airport(string airport_name);
 
     // Implement the TimeObserver interface
