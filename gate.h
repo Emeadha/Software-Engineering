@@ -13,6 +13,8 @@ using namespace std;
 
 class Gate : public TimeObserver {
 public:
+
+//Hey Harris, add the highligted stuff from the header!
     int Gate_ID;
     Clock Objects_clock;
 
