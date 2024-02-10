@@ -9,7 +9,7 @@
       "stopAtEntry": false,
       "externalConsole": true,
       "cwd": "c:/Users/aidan/Documents/GitHub/Software-Engineering",
-      "program": "c:/Users/aidan/Documents/GitHub/Software-Engineering/.vscode/launch",
+      "program": "c:/Users/aidan/Documents/GitHub/Software-Engineering/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
