@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/E/Documents/GitHub/Software-Engineering",
-      "program": "c:/Users/E/Documents/GitHub/Software-Engineering/build/Debug/outDebug",
+      "cwd": "c:/Users/aidan/Documents/GitHub/Software-Engineering",
+      "program": "c:/Users/aidan/Documents/GitHub/Software-Engineering/.vscode/launch",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
