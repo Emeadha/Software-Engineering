@@ -18,10 +18,13 @@ the tick-rate (currently every 10 min is 1 second for sim).
 using namespace std;
 
 int main() {
+    // -------------------------
+    // Create objects
+    // -------------------------
+
     //This is our time manager, which will be passed to all objects	
     TimeManager time_manager;
 
-    // Create objects
 
     //At first, we only create our Airline
     // Airline -> Airports + Planes
@@ -29,6 +32,9 @@ int main() {
     Airline airline(&time_manager, "Comfort Airlines");
 
 
+    // -------------------------
+    // Start 'er up!
+    // -------------------------
     // Start simulation
     time_manager.startSimulation();
 
