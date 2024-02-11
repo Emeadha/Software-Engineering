@@ -13,7 +13,7 @@ Airline::Airline(TimeManager *time_manager, string airline_name) : time_manager(
     // Create objects
     //Test plane object
     //Currently, we are creating 5 planes
-    //In the furture, we want this to be read in by a file
+    //In the future, we want this to be read in by a file
     for(int i = 0; i < 5; i++) {
         Plane* plane = new Plane(i, "Boeing 747", 26020, 3217, 749.7, 172, 0, 0);
         //Test register plane

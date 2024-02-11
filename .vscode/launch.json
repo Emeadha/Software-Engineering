@@ -9,7 +9,7 @@
       "stopAtEntry": false,
       "externalConsole": true,
       "cwd": "c:/Users/aidan/Documents/GitHub/Software-Engineering",
-      "program": "c:/Users/aidan/Documents/GitHub/Software-Engineering/build/Debug/outDebug",
+      "program": "c:/Users/aidan/Documents/GitHub/Software-Engineering/main.cpp", 
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
