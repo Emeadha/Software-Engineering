@@ -6,8 +6,8 @@ Time manager header
 // timeManager.h
 #ifndef TIME_MANAGER_H
 #define TIME_MANAGER_H
-#include "TimeObserver.h"
-#include "Clock.h"
+#include "timeObserver.h"
+#include "clock.h"
 #include <vector>
 #include <iostream>
 #include <thread>

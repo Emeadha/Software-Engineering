@@ -6,7 +6,7 @@ Plane object header file
 // Plane.h
 #ifndef PLANE_H
 #define PLANE_H
-#include "TimeObserver.h"
+#include "timeObserver.h"
 #include <string>
 
 using namespace std;

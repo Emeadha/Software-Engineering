@@ -3,7 +3,7 @@ airline.cpp
 
 */
 // Airline.cpp
-#include "Airline.h"
+#include "airline.h"
 
 // Constructor
 //We assign the time manager here, so we can use it to register new observers

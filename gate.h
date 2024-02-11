@@ -6,7 +6,7 @@
 // gate.h
 #ifndef GATE_H
 #define GATE_H
-#include "TimeObserver.h"
+#include "timeObserver.h"
 #include <string>
 
 using namespace std;

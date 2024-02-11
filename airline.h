@@ -9,11 +9,11 @@ Airline object header file
 #define AIRLINE_H
 
 
-#include "TimeObserver.h"
-#include "Clock.h"
-#include "TimeManager.h"
-#include "Plane.h"
-#include "Airport.h"
+#include "timeObserver.h"
+#include "clock.h"
+#include "timeManager.h"
+#include "plane.h"
+#include "airport.h"
 #include <string>
 #include <iostream>
 

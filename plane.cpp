@@ -4,7 +4,7 @@ Plane.cpp
 Plane object implementation file
 */
 // Plane.cpp
-#include "Plane.h"
+#include "plane.h"
 #include <iostream>
 
 

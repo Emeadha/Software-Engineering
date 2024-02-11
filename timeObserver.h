@@ -6,7 +6,7 @@ Plane object header file
 // TimeObserver.h
 #ifndef TIME_OBSERVER_H
 #define TIME_OBSERVER_H
-#include "Clock.h"
+#include "clock.h"
 
 using namespace std;
 
