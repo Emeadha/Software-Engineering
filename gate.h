@@ -1,3 +1,8 @@
+/*
+gate.h
+
+Gate object header file
+*/
 #ifndef GATE_H
 #define GATE_H
 
