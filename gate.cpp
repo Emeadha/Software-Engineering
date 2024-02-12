@@ -5,8 +5,8 @@ Gate object implementation file
 */
 
 #include "gate.h"
-#include "clock.h" // Include the header for Clock class
-#include "time_observer.h" // Include the header for TimeObserver class
+#include "clock.h"
+#include "time_observer.h" 
 #include <iostream>
 #include <iomanip>
 #include <string>
