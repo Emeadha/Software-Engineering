@@ -35,9 +35,8 @@ public:
     Clock Objects_clock; // Instance of the clock object for the gate, used to keep simulation synchronization
 
     bool Plane_docked; // Is a plane currently docked at the gate?
-    std::vector<Passenger> Passengers_at_gate;
+    std::vector<Passenger> Passengers_at_gate; // The number of passengers currently at the gate. Number sent from the airport.
     int Plane_ID; // Which plane is docked at/using the gate?
-    int Passengers_at_gate; // The number of passengers currently at the gate. Number sent from the airport.
 
     // Getters
     bool getInUse() const; // Return In use var
