@@ -28,7 +28,7 @@ private:
 
     //Vector for planes and airports
     //These are the planes the airline owns, and places it can go
-    vector<Flight> All_flights;
+    vector<Flight*> All_flights;
     vector<Plane*> All_planes;
     vector<Airport*> All_airports;
 
@@ -71,8 +71,8 @@ public:
     // "Scheduler" methods
     // --------------
 
-    // Schedule a flight
-    void scheduleFlight();
+    // Schedule all unscheduled flights
+    void scheduleFlights();
 
     // Add a flight to vector (this is what should be calle dwhen reading
     // timetable)
