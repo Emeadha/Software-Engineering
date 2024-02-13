@@ -33,6 +33,10 @@ Airline::Airline(TimeManager *time_manager, string airline_name) : time_manager(
         registerAirport(airport);
     }
    
+
+    //READ IN THEN SCHEDULE ALL FLIGHTS
+    addFlightToVector();
+    scheduleFlights();
 }
 
 //Destructor
@@ -50,14 +54,36 @@ void Airline::registerAirport(Airport* airport) {
     All_airports.push_back(airport);
 }
 
-void Airline::scheduleFlight(){
+void Airline::scheduleFlights(){
     //Want to acsess flight vector, send out flight info to all objects like 
     // planes and airports, then flip scheduled boolean to true
+
+    //Move through vector, checking to see if its been scheduled, then schedule it
+    int i = 0;
+    while (i < All_flights.size()){
+        //Check to see if the flight has already been scheduled
+        if(All_flights[i]->getScheduled() == false){
+
+            //This is where the scheduled flight will live
+            cout << "FLIGHT SCHEDULED" << endl;
+
+        }
+
+        //Increment
+        i++;
+    }
 }
 
 void Airline::addFlightToVector(){
     // Want to read flight details from Timetable then add to vector (will be
     // harcoded at first)
+
+    //FOUR FLIGHTS TOTAL ----- HARDCODED
+    //Leaves at 5:00 AM from Airport 1 to Airport 2 at 7:00 AM
+    Flight* flight = new Flight(1,1,2,5,0,0,7,0,0);
+
+    //Add to vector
+    All_flights.push_back(flight);
     
 }
 
