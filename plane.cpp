@@ -52,3 +52,11 @@ void Plane::onTimeUpdate(Clock& new_time) {
     //Say that we are done
     TimeObserver::setIsDone();
 }
+
+double Plane::getMaintenance()
+{
+
+    return this->Until_maint;
+
+
+}

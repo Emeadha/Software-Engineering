@@ -13,6 +13,8 @@ using namespace std;
 
 class Plane : public TimeObserver {
 public:
+
+    /* BEGIN VARIABLES */
     //Basic plane attributes
     int Plane_ID; //The ID number of the plane (Primary Key)
     string Plane_model; //The make of the plane, e.g. “Boeing 757”
@@ -50,6 +52,21 @@ public:
     int Target_airport_ID; //The airport the plane is scheduled to land at next.
     double Target_airport_location_distance; // Km to reach airport
     int Target_gate; //The gate of the targeted airport at which the plane is scheduled to land. 
+    /* END VARIABLES */
+
+    /* BEGIN GETTERS */
+    double getMaintenance(); //Returns Until_maintenance
+    double getOdometer(); //Returns Odometer
+    double getTripOdometer(); //Returns Trip_odometer
+    bool getInTransit(); //Checks if Is_transit is true
+    bool getIsOperable(); //Checks if Is_operable is true
+    bool getIsSeatsOpen(); //Checks if Is_seats_open is true
+    string getLocation(); //Returns distance from target airport //TODO: This should be a location object, set as a string for now for ease-of-testing other functions
+    float getFuelLevel(); //Returns Fuel_tank
+    double getDailyCost(); //Returns Daily_cost
+    int getTargetGate(); //Returns the value of Target_gate
+    int getTargetAirport(); //Returns the value of Target_airport
+    int getPassengerCount(); //Returns the number of passengers in Onboard
 
     Plane(int Plane_ID, string plane_name, float Max_fuel, float Burn_rate, float Max_velocity, int Max_passengers, float Current_velocity, double Odometer);
 
