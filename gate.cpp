@@ -7,6 +7,7 @@ Gate object implementation file
 #include "gate.h"
 #include "clock.h"
 #include "time_observer.h" 
+#include "passenger.h" 
 #include <iostream>
 #include <iomanip>
 #include <string>
