@@ -12,14 +12,6 @@ Gate object header file
 #include "clock.h" // Include the header for Clock class
 #include "time_observer.h" // Include the header for TimeObserver class
 
-class Clock {
-    // Necessary for function but idk what to put
-};
-
-class Passenger {
-    // Necessary for function but idk what to put
-};
-
 class Gate {
 public:
 
