@@ -9,6 +9,7 @@ Gate object header file
 #include <iostream>
 #include <string>
 #include <vector>
+#include "passenger.h"
 #include "clock.h" // Include the header for Clock class
 #include "time_observer.h" // Include the header for TimeObserver class
 
