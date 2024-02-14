@@ -13,12 +13,28 @@ Plane::Plane(int Plane_ID, string plane_name, float Max_fuel, float Burn_rate, f
     //Set the plane's attributes
     this->Plane_ID = Plane_ID;
     this->Plane_model = plane_name;
+    this->Fuel_tank = Fuel_tank;
     this->Max_fuel = Max_fuel;
     this->Burn_rate = Burn_rate;
+    this->Current_velocity = Current_velocity;
     this->Max_velocity = Max_velocity;
     this->Max_passengers = Max_passengers;
+    this->Onboard = Onboard;
+    this->Count_of_passengers = Count_of_passengers;
     this->Current_velocity = Current_velocity;
     this->Odometer = Odometer;
+    this->Trip_odometer = Trip_odometer;
+    this->Until_maint = Until_maint;
+    this->In_transit = In_transit;
+    this->Is_operable = Is_operable;
+    this->Is_seats_open = Is_seats_open;
+    this->Daily_cost = Daily_cost;
+    this->Loan_cost = Loan_cost;
+    this->Range = Range;
+    this->Origin_airport_ID = Origin_airport_ID;
+    this->Target_airport_ID = Target_airport_ID;
+    this->Target_airport_location_distance = Target_airport_location_distance;
+    this->Target_gate;
 }
 
 void Plane::onTimeUpdate(Clock& new_time) {
