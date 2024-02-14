@@ -47,16 +47,16 @@ public:
     virtual void onTimeUpdate(Clock& new_time) override;
 
     // Getters
-    int getAirportID() const; // Return Airport ID
-    const std::string& getAirportName() const; // Return Airport name
-    bool getAirportOpen() const; // Return whether or not open
+    int getAirportID(); // Return Airport ID
+    string getAirportName(); // Return Airport name
+    bool getAirportOpen(); // Return whether or not open
 
     // Setters
     void setAirportID(int id); // Set Airport ID
-    void setAirportName(const std::string& name); // Set Airport name
+    void setAirportName(string name); // Set Airport name
 
     // Multi-action
-    int findGate(int GateID) const; // Finds gate based on Gate_ID, returns the position in vector
+    int findGate(int GateID); // Finds gate based on Gate_ID, returns the position in vector
 };
 
 
