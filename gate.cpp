@@ -34,6 +34,11 @@ void Gate::onTimeUpdate(Clock& new_time)
 }
 
 // Getters
+
+int Gate::getGateID(){
+    return Gate_ID;
+}
+
 bool Gate::getInUse()
 {
     return In_use;

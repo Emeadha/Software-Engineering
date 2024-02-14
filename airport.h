@@ -17,6 +17,8 @@ Airport object header file
 
 #include <string>
 #include <iostream>
+#include <iomanip>
+#include <vector>
 
 
 using namespace std;   
@@ -24,9 +26,11 @@ using namespace std;
 class Airport : public TimeObserver {
 public:
     //Variables
-    string Airport_name;
-    Clock Objects_clock;
+    int Airport_ID; // Primary key for airport
+    Clock Objects_clock; // Instance of the clock object for the airport, used to keep simulation synchronization
+    string Airport_name; // Airport name
     TimeManager* time_manager;
+    bool Airport_open; // Whether or not airport is open
 
     //Vector for all passenger and gate objects
     vector<Passenger*> All_passenger_groups;
@@ -43,6 +47,19 @@ public:
 
     // Implement the TimeObserver interface
     virtual void onTimeUpdate(Clock& new_time) override;
+
+    // Getters
+    int getAirportID(); // Return Airport ID
+    string getAirportName(); // Return Airport name
+    bool getAirportOpen(); // Return whether or not open
+
+    // Setters
+    void setAirportID(int id); // Set Airport ID
+    void setAirportName(string name); // Set Airport name
+
+    // Multi-action
+    int findGate(int GateID); // Finds gate based on Gate_ID, returns the position in vector
 };
+
 
 #endif // AIRPORT_H

@@ -38,6 +38,7 @@ public:
     virtual void onTimeUpdate(Clock& new_time) override;
 
     // Getters
+    int getGateID(); // Return Gate ID (primary key)
     bool getInUse(); // Return In use var
     bool getPlaneDocked(); // Return if it is docked
     int getPlane_ID(); // Return plane ID
