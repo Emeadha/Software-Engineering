@@ -53,10 +53,76 @@ void Plane::onTimeUpdate(Clock& new_time) {
     TimeObserver::setIsDone();
 }
 
+   /* BEGIN GETTERS */
 double Plane::getMaintenance()
 {
 
     return this->Until_maint;
-
-
 }
+
+double Plane::getOdometer()
+{
+
+    return this->Odometer;
+}
+
+double Plane::getTripOdometer()
+{
+
+    return this->Trip_odometer;
+}
+
+bool Plane::getInTransit()
+{
+
+    return this->In_transit;
+}
+
+bool Plane::getIsOperable()
+{
+
+    return this->Is_operable;
+}
+
+bool Plane::getIsSeatsOpen()
+{
+
+    return this->Is_seats_open;
+}
+
+string Plane::getLocation() //TODO: This needs to return an actual location
+{
+
+    return "TEMPLATE";
+}
+
+float Plane::getFuelLevel()
+{
+
+    return this->Fuel_tank;
+}
+
+double Plane::getDailyCost()
+{
+
+    return this->Daily_cost;
+}
+
+int Plane::getTargetGate()
+{
+
+    return this->Target_gate;
+}
+
+int Plane::getTargetAirport()
+{
+
+    return this->Target_airport_ID;
+}
+
+int Plane::getPassengerCount()
+{
+
+    return this->Count_of_passengers;
+}
+   /* END GETTERS */
