@@ -4,7 +4,7 @@ Plane.cpp
 Plane object implementation file
 */
 // Plane.cpp
-#include "Plane.h"
+#include "plane.h"
 #include <iostream>
 
 
@@ -13,12 +13,28 @@ Plane::Plane(int Plane_ID, string plane_name, float Max_fuel, float Burn_rate, f
     //Set the plane's attributes
     this->Plane_ID = Plane_ID;
     this->Plane_model = plane_name;
+    this->Fuel_tank = Fuel_tank;
     this->Max_fuel = Max_fuel;
     this->Burn_rate = Burn_rate;
+    this->Current_velocity = Current_velocity;
     this->Max_velocity = Max_velocity;
     this->Max_passengers = Max_passengers;
+    this->Onboard = Onboard;
+    this->Count_of_passengers = Count_of_passengers;
     this->Current_velocity = Current_velocity;
     this->Odometer = Odometer;
+    this->Trip_odometer = Trip_odometer;
+    this->Until_maint = Until_maint;
+    this->In_transit = In_transit;
+    this->Is_operable = Is_operable;
+    this->Is_seats_open = Is_seats_open;
+    this->Daily_cost = Daily_cost;
+    this->Loan_cost = Loan_cost;
+    this->Range = Range;
+    this->Origin_airport_ID = Origin_airport_ID;
+    this->Target_airport_ID = Target_airport_ID;
+    this->Target_airport_location_distance = Target_airport_location_distance;
+    this->Target_gate;
 }
 
 void Plane::onTimeUpdate(Clock& new_time) {
@@ -36,3 +52,77 @@ void Plane::onTimeUpdate(Clock& new_time) {
     //Say that we are done
     TimeObserver::setIsDone();
 }
+
+   /* BEGIN GETTERS */
+double Plane::getMaintenance()
+{
+
+    return this->Until_maint;
+}
+
+double Plane::getOdometer()
+{
+
+    return this->Odometer;
+}
+
+double Plane::getTripOdometer()
+{
+
+    return this->Trip_odometer;
+}
+
+bool Plane::getInTransit()
+{
+
+    return this->In_transit;
+}
+
+bool Plane::getIsOperable()
+{
+
+    return this->Is_operable;
+}
+
+bool Plane::getIsSeatsOpen()
+{
+
+    return this->Is_seats_open;
+}
+
+string Plane::getLocation() //TODO: This needs to return an actual location
+{
+
+    return "TEMPLATE";
+}
+
+float Plane::getFuelLevel()
+{
+
+    return this->Fuel_tank;
+}
+
+double Plane::getDailyCost()
+{
+
+    return this->Daily_cost;
+}
+
+int Plane::getTargetGate()
+{
+
+    return this->Target_gate;
+}
+
+int Plane::getTargetAirport()
+{
+
+    return this->Target_airport_ID;
+}
+
+int Plane::getPassengerCount()
+{
+
+    return this->Count_of_passengers;
+}
+   /* END GETTERS */
