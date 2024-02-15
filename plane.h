@@ -1,6 +1,23 @@
 /*
 Plane.h
 
+
+Plane- This object represents a single plane owned by the customer. It needs to
+ have all the appropriate variables listed in the handout, i.e. Make/model and
+ corresponding passenger capacities. Plane receives a vector of passengers from
+ its origin gate, then flies to the next airport to unload this vector of
+ passengers. On each time update, plane may be flying, waiting at a gate, or in
+ maintenance. The expenses for each plane at the end of the day need to be
+ recorded by the airline object.
+
+Who makes this object? Airline
+
+Is it a time observer? Yes
+
+What’s its goal? Be scheduled for a flight, and transport passengers in between
+Airports by interacting with gates.
+
+
 Plane object header file
 */
 // Plane.h
