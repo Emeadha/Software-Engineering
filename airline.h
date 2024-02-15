@@ -2,6 +2,18 @@
 airline.h
 
 Airline object header file
+
+Airline - Airline is the overarching object with all the sum knowledge of the
+simulation. It will create and store airport, plane and flight vectors. It
+will be in charge of scheduling flights via the information read in from the
+timetable, and making dynamic decisions such as rescheduling.
+
+Who makes this object? Main
+
+Is it a time observer? Yes
+
+What’s its goal? Manage the whole simulation
+
 */
 
 // airport.h

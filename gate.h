@@ -2,6 +2,18 @@
 gate.h
 
 Gate object header file
+
+Gate - The basic intermediary for the airport, holds things like passenger
+count, flight and whether the plane is docked. Gate will not initiate
+interactions, but instead be called by either plane or airport.
+
+Who makes this object? Airport
+
+Is it a time observer? Yes
+
+What’s its goal? To act as an intermediary in between Airports and Planes for
+transporting passenger groups.
+
 */
 #ifndef GATE_H
 #define GATE_H

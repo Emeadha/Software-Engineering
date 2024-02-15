@@ -8,9 +8,10 @@ Plane object implementation file
 #include <iostream>
 
 
-Plane::Plane(int Plane_ID, string plane_name, float Max_fuel, float Burn_rate, float Max_velocity, int Max_passengers, float Current_velocity, double Odometer) : Objects_clock(0, 0, 0) {
+Plane::Plane(int Ticket_cost, int Plane_ID, string plane_name, float Max_fuel, float Burn_rate, float Max_velocity, int Max_passengers, float Current_velocity, double Odometer) : Objects_clock(0, 0, 0) {
 
     //Set the plane's attributes
+    this->Ticket_cost = Ticket_cost;
     this->Plane_ID = Plane_ID;
     this->Plane_model = plane_name;
     this->Fuel_tank = Fuel_tank;

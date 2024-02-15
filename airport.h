@@ -2,6 +2,19 @@
 airport.h
 
 Airport object header file
+
+Airport - Airport represents a singular airport location which the client has 
+access to. Airport will create both gate and passenger group objects, and
+store them in vectors. Airport will receive information regarding flights via
+the Airline, and will hold important data about itself such as geographical
+location.
+
+Who makes this object? Airline
+
+Is it a time observer? Yes
+
+What’s its goal? To hold passenger groups and gates
+
 */
 
 // airport.h
