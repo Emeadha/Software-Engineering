@@ -80,7 +80,7 @@ void Airline::addFlightToVector(){
 
     //FOUR FLIGHTS TOTAL ----- HARDCODED
     //Leaves at 5:00 AM from Airport 1 to Airport 2 at 7:00 AM
-    Flight* flight = new Flight(1,1,2,5,0,0,7,0,0);
+    Flight* flight = new Flight(100,1,1,2,5,0,0,7,0,0);
 
     //Add to vector
     All_flights.push_back(flight);

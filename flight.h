@@ -1,8 +1,6 @@
 /*
 Flight.h
 
-Basic time formatting, will be called by other classes
-
 Flight  - Essentially, flight is the basic idea of a plane going to an airport
 from an airport, at a certain time, at a certain gate. This object will be made
 by the scheduler, and used as a basic unit for things like recalculation. It
