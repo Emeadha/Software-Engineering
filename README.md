@@ -10,7 +10,7 @@
    ensure Makefile is in directory
    
    *To compile and create executable*
-   $ make
+   $ make all
 
    *To run simulation*
    $ ./airline_simulation
