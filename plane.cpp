@@ -7,6 +7,7 @@ Plane object implementation file
 #include "plane.h"
 #include <iostream>
 
+// hello
 
 Plane::Plane(int Plane_ID, string plane_name, float Max_fuel, float Burn_rate, float Max_velocity, int Max_passengers, float Current_velocity, double Odometer) : Objects_clock(0, 0, 0) {
 
