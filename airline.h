@@ -28,6 +28,7 @@ testing testing
 #include "Plane.h"
 #include "Airport.h"
 #include <string>
+#include <fstream>
 #include <iostream>
 
 using namespace std;   
@@ -38,6 +39,9 @@ private:
     //Airlines name
     string Airline_name;
 
+    //Output file name
+     ofstream flightLog;
+
     //Vector for planes and airports
     //These are the planes the airline owns, and places it can go
     vector<Flight*> All_flights;
@@ -45,6 +49,8 @@ private:
     vector<Airport*> All_airports;
 
     bool scheduleNeeded = false;
+
+    bool debugging = true;
 
 
 public:
@@ -91,6 +97,12 @@ public:
     void addFlightToVector();
 
     // Eventually want cancel flight method
+
+    // ---------------
+    // "Searching" methods
+    // ---------------
+    //Search plane ID, returns position in array
+    int findPlanePosition(int ID);
 
 
 

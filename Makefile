@@ -5,4 +5,5 @@ all:	airport.o clock.o main.o passenger.o plane.o timeManager.o airline.o gate.o
 
 clean:
 	rm *.o airline_simulation
+	rm flightLog.txt
 	echo All files cleaned

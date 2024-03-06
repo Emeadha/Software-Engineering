@@ -25,13 +25,18 @@ Plane object header file
 #define PLANE_H
 #include "timeObserver.h"
 #include <string>
+#include <fstream>
 
 using namespace std;
 
 class Plane : public TimeObserver {
-public:
+private:
 
     /* BEGIN VARIABLES */
+
+    //Output file name
+     ofstream flightLog;
+
     //Basic plane attributes
     int Plane_ID; //The ID number of the plane (Primary Key)
     string Plane_model; //The make of the plane, e.g. “Boeing 757”
@@ -71,7 +76,10 @@ public:
     int Target_gate; //The gate of the targeted airport at which the plane is scheduled to land. 
     /* END VARIABLES */
 
+public:
+
     /* BEGIN GETTERS */
+    int getPlaneID(); //Returns PlaneID
     double getMaintenance(); //Returns Until_maintenance
     double getOdometer(); //Returns Odometer
     double getTripOdometer(); //Returns Trip_odometer
@@ -85,7 +93,9 @@ public:
     int getTargetAirport(); //Returns the value of Target_airport
     int getPassengerCount(); //Returns the number of passengers in Onboard
 
+    //Constructor/destructor
     Plane(int Plane_ID, string plane_name, float Max_fuel, float Burn_rate, float Max_velocity, int Max_passengers, float Current_velocity, double Odometer);
+    ~Plane();
 
     // Implement the TimeObserver interface
     virtual void onTimeUpdate(Clock& new_time) override;

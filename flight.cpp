@@ -20,7 +20,15 @@ Flight::Flight(int Ticket_cost, int Flight_ID, int Dest_airport_ID, int Origin_a
 bool Flight::getScheduled(){
     return Scheduled;
 }
-
+int Flight::getPlaneID(){
+    return Plane_ID;
+}
+int Flight::getDestAirptID(){
+    return Dest_airport_ID;
+}
+int Flight::getOriginAirptID(){
+    return Origin_airport_ID;
+}
 
 //Setters
 void Flight::setPlaneID(int Plane_ID){

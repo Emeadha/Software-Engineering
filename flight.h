@@ -48,6 +48,11 @@ public:
     //Getters
     //ADD MORE GETTERS HERE
     bool getScheduled();
+    int getPlaneID();
+    int getDestAirptID();
+    int getOriginAirptID();
+
+    //find way to set clock times with an override function
 
     //Setters
     //ADD MORE SETTERS HERE
