@@ -48,6 +48,7 @@ Plane::Plane(int Plane_ID, string plane_name, float Max_fuel, float Burn_rate,
 
     //Don't worry about this but eventually will want way to print to log
     //flightLog << "Plane " << this->Plane_ID << " created. Model: " << this->Plane_ID << endl;
+
 }
 
 //Destructor
@@ -77,6 +78,7 @@ void Plane::takeOff(){
 
 }
    /* BEGIN GETTERS */
+
 int Plane::getPlaneID(){
     return this->Plane_ID;
 }

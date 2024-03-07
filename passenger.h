@@ -21,7 +21,7 @@
 // passenger.h
 #ifndef PASSENGER_H
 #define PASSENGER_H
-#include "TimeObserver.h"
+#include "timeObserver.h"
 #include <string>
 
 using namespace std;

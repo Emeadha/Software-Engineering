@@ -19,7 +19,7 @@ What’s its goal? Be able to receive updates from timeManager, and perform and 
 // TimeObserver.h
 #ifndef TIME_OBSERVER_H
 #define TIME_OBSERVER_H
-#include "Clock.h"
+#include "clock.h"
 
 using namespace std;
 

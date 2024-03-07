@@ -22,11 +22,11 @@ What’s its goal? To hold passenger groups and gates
 #define AIRPORT_H
 
 
-#include "TimeObserver.h"
-#include "Clock.h"
+#include "timeObserver.h"
+#include "clock.h"
 #include "timeManager.h"
 #include "gate.h"
-#include "Passenger.h"
+#include "passenger.h"
 
 #include <string>
 #include <iostream>

@@ -21,12 +21,13 @@ testing testing
 #define AIRLINE_H
 
 
-#include "TimeObserver.h"
-#include "Clock.h"
-#include "TimeManager.h"
+#include "timeObserver.h"
+#include "clock.h"
+#include "timeManager.h"
 #include "flight.h"
-#include "Plane.h"
-#include "Airport.h"
+#include "plane.h"
+#include "airport.h"
+
 #include <string>
 #include <fstream>
 #include <iostream>
