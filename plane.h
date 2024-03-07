@@ -91,8 +91,25 @@ public:
     float getFuelLevel(); //Returns Fuel_tank
     double getDailyCost(); //Returns Daily_cost
     int getTargetGate(); //Returns the value of Target_gate
-    int getTargetAirport(); //Returns the value of Target_airport
+    int getTargetAirport();  //Returns the value of Target_airport
     int getPassengerCount(); //Returns the number of passengers in Onboard
+
+    /* BEGIN SETTERS */
+    void resetTripOdometer(); //Sets Trip_odometer to 0
+    void setFuelTank(float fuel); //Sets Fuel_Tank to a specific value.
+    void refuelToFull(); //Sets Fuel_Tank to be equal to Max_fuel
+    void setTargetGate(int gateID); //Sets the value of Target_gate
+    void setTargetAirport(int airportID); //Sets the value of Target_airport
+    void boardPassengers(int passengers); //Add all passengers waiting to board to Onboard. This should be called by the airport. //TODO: Currently set as an int for prototyping purposes, needs to be changed to vector of passenger objects at some point
+    int disembarkPassengers(); //Remove all passengers from Onboard. Called by the airport //TODO: Currently set as an int for prototyping purposes, needs to be changed to a vector of passenger objects at some point..
+    /* END SETTERS */
+
+    /* BEGIN MISCELLANEOUS FUNCTIONS */
+    void landAndDock(); //Docks plane at airport, requests passenger operations, fuel operations
+    double calcCost(); //Calculates the value of Daily Cost, takes in information from fuel cost, loan etc.
+    void fly(); //On each given tick and only if In_transit is true, progress towards the target airport’s location by amount specified by velocity variable. This method will affect the values of many variables such as fuel level, odometer, distance to target airport, etc.
+    void doMaintenance(); //Sets Is_operable to false for 1.5 days (36 hours/2160 minutes), then sets Is_operable to true and resets Until_maintencance to 200
+    /* END MISCELLANEOUS FUNCTIONS */
 
     //Constructor/destructor
     Plane(int Plane_ID, string plane_name, float Max_fuel, float Burn_rate, float Max_velocity, int Max_passengers, float Current_velocity, double Odometer);
