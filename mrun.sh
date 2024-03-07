@@ -1,0 +1,3 @@
+make
+
+./airline_simulation

@@ -76,6 +76,7 @@ private:
     int Target_gate; //The gate of the targeted airport at which the plane is scheduled to land. 
     /* END VARIABLES */
 
+
 public:
 
     /* BEGIN GETTERS */

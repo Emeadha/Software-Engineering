@@ -4,7 +4,7 @@ passenger.cpp
 Passenger object implementation file
 */
 // Passenger.cpp
-#include "Passenger.h"
+#include "passenger.h"
 #include <iostream>
 
 Passenger::Passenger(int Passenger_group_ID) :  Objects_clock(0, 0, 0) {

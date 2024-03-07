@@ -16,8 +16,8 @@ What’s its goal? Hold a vector of all observers, and send out updates of the n
 // timeManager.h
 #ifndef TIME_MANAGER_H
 #define TIME_MANAGER_H
-#include "TimeObserver.h"
-#include "Clock.h"
+#include "timeObserver.h"
+#include "clock.h"
 #include <vector>
 #include <iostream>
 #include <thread>

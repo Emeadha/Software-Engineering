@@ -4,7 +4,7 @@ timeManager.cpp
 Time manager implementation file
 */
 // TimeManager.cpp
-#include "TimeManager.h"
+#include "timeManager.h"
 
 TimeManager::TimeManager() : simulation_time(0, 0, 0) {}
 

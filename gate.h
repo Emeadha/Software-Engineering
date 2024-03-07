@@ -18,7 +18,10 @@ transporting passenger groups.
 #ifndef GATE_H
 #define GATE_H
 
+#include "timeObserver.h"
+
 #include <iostream>
+
 #include <string>
 #include <iomanip>
 #include <vector>
