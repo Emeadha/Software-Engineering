@@ -1,6 +1,23 @@
 /*
 Plane.h
 
+
+Plane- This object represents a single plane owned by the customer. It needs to
+ have all the appropriate variables listed in the handout, i.e. Make/model and
+ corresponding passenger capacities. Plane receives a vector of passengers from
+ its origin gate, then flies to the next airport to unload this vector of
+ passengers. On each time update, plane may be flying, waiting at a gate, or in
+ maintenance. The expenses for each plane at the end of the day need to be
+ recorded by the airline object.
+
+Who makes this object? Airline
+
+Is it a time observer? Yes
+
+What’s its goal? Be scheduled for a flight, and transport passengers in between
+Airports by interacting with gates.
+
+
 Plane object header file
 */
 // Plane.h
@@ -8,13 +25,18 @@ Plane object header file
 #define PLANE_H
 #include "timeObserver.h"
 #include <string>
+#include <fstream>
 
 using namespace std;
 
 class Plane : public TimeObserver {
-public:
+private:
 
     /* BEGIN VARIABLES */
+
+    //Output file name
+     ofstream flightLog;
+
     //Basic plane attributes
     int Plane_ID; //The ID number of the plane (Primary Key)
     string Plane_model; //The make of the plane, e.g. “Boeing 757”
@@ -54,7 +76,11 @@ public:
     int Target_gate; //The gate of the targeted airport at which the plane is scheduled to land. 
     /* END VARIABLES */
 
+
+public:
+
     /* BEGIN GETTERS */
+    int getPlaneID(); //Returns PlaneID
     double getMaintenance(); //Returns Until_maintenance
     double getOdometer(); //Returns Odometer
     double getTripOdometer(); //Returns Trip_odometer
@@ -68,7 +94,9 @@ public:
     int getTargetAirport(); //Returns the value of Target_airport
     int getPassengerCount(); //Returns the number of passengers in Onboard
 
+    //Constructor/destructor
     Plane(int Plane_ID, string plane_name, float Max_fuel, float Burn_rate, float Max_velocity, int Max_passengers, float Current_velocity, double Odometer);
+    ~Plane();
 
     // Implement the TimeObserver interface
     virtual void onTimeUpdate(Clock& new_time) override;

@@ -7,8 +7,11 @@ Plane object implementation file
 #include "plane.h"
 #include <iostream>
 
+// hello
 
-Plane::Plane(int Plane_ID, string plane_name, float Max_fuel, float Burn_rate, float Max_velocity, int Max_passengers, float Current_velocity, double Odometer) : Objects_clock(0, 0, 0) {
+Plane::Plane(int Plane_ID, string plane_name, float Max_fuel, float Burn_rate, 
+    float Max_velocity, int Max_passengers, float Current_velocity, 
+    double Odometer) : Objects_clock(0, 0, 0), flightLog("flightLog.txt"){
 
     //Set the plane's attributes
     this->Plane_ID = Plane_ID;
@@ -35,8 +38,17 @@ Plane::Plane(int Plane_ID, string plane_name, float Max_fuel, float Burn_rate, f
     this->Target_airport_ID = Target_airport_ID;
     this->Target_airport_location_distance = Target_airport_location_distance;
     this->Target_gate;
+
+    //Don't worry about this but eventually will want way to print to log
+    //flightLog << "Plane " << this->Plane_ID << " created. Model: " << this->Plane_ID << endl;
+
 }
 
+//Destructor
+Plane::~Plane(){
+    //Close output file
+    flightLog.close();
+}
 void Plane::onTimeUpdate(Clock& new_time) {
 
     //Start by setting done to false
@@ -54,6 +66,10 @@ void Plane::onTimeUpdate(Clock& new_time) {
 }
 
    /* BEGIN GETTERS */
+
+int Plane::getPlaneID(){
+    return this->Plane_ID;
+}
 double Plane::getMaintenance()
 {
 

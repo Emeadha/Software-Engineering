@@ -1,30 +1,9 @@
-# Makefile
+#When calling make all
+all:	airport.o clock.o main.o passenger.o plane.o timeManager.o airline.o gate.o flight.o
+	g++ -o airline_simulation airport.o clock.o main.o passenger.o plane.o timeManager.o airline.o gate.o flight.o
+	echo Compilation is all green to green!
 
-# Compiler and flags
-CXX = g++
-CXXFLAGS = -std=c++11
-
-# Source files
-SRC_FILES = airport.cpp clock.cpp main.cpp passenger.cpp plane.cpp timeManager.cpp airline.cpp gate.cpp
-
-# Header files
-HEADER_FILES = airport.h clock.h passenger.h plane.h timeManager.h timeObserver.h airline.h gate.h
-
-# Object files
-OBJ_FILES = $(SRC_FILES:.cpp=.o)
-
-# Target executable
-TARGET = airline_simulation
-
-# Build rule
-$(TARGET): $(OBJ_FILES)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJ_FILES)
-
-# Object file rule
-%.o: %.cpp $(HEADER_FILES)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-# Clean rule
 clean:
-	rm -f $(TARGET) $(OBJ_FILES)
-
+	rm *.o airline_simulation
+	rm flightLog.txt
+	echo All files cleaned
