@@ -4,8 +4,9 @@ Plane.cpp
 Plane object implementation file
 */
 // Plane.cpp
-#include "plane.h"
+#include "Plane.h"
 #include <iostream>
+using namespace std;
 
 // hello
 
@@ -13,7 +14,7 @@ Plane::Plane(int Plane_ID, string plane_name, float Max_fuel, float Burn_rate,
     float Max_velocity, int Max_passengers, float Current_velocity, 
     double Odometer) : Objects_clock(0, 0, 0), flightLog("flightLog.txt"){
 
-    //Set the plane's attributes
+    //Set the plane's attributess
     this->Plane_ID = Plane_ID;
     this->Plane_model = plane_name;
     this->Fuel_tank = Fuel_tank;
@@ -38,6 +39,12 @@ Plane::Plane(int Plane_ID, string plane_name, float Max_fuel, float Burn_rate,
     this->Target_airport_ID = Target_airport_ID;
     this->Target_airport_location_distance = Target_airport_location_distance;
     this->Target_gate;
+    this->isFlying;
+    this->isGrounded;
+    this->isMaintenance;
+    this->isWaiting;
+    this->isBoarding;
+    this->isUnboarding;
 
     //Don't worry about this but eventually will want way to print to log
     //flightLog << "Plane " << this->Plane_ID << " created. Model: " << this->Plane_ID << endl;
@@ -63,7 +70,12 @@ void Plane::onTimeUpdate(Clock& new_time) {
     //Say that we are done
     TimeObserver::setIsDone();
 }
+void Plane::takeOff(){
+    isFlying = true;
+    cout << " the plane is flying" << endl;
 
+
+}
    /* BEGIN GETTERS */
 int Plane::getPlaneID(){
     return this->Plane_ID;
