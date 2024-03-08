@@ -94,7 +94,9 @@ void Airline::scheduleFlights(){
 
             //Set plane values
             //All_planes[planePositionInArray]->setTargetAirport(tempDestID);
-
+            //All_planes[planePositionInArray]->setArrivalTime(tempArrivalTime);
+            //All_planes[planePositionInArray]->setDepartTime(tempDepartTime);
+            
             //Print creation to flight log
             flightLog << "Flight scheduled from Arpt: " << All_flights[i]->getOriginAirptID()
             << " to Arpt: " << All_flights[i]->getDestAirptID() << " PlaneID used: " << All_flights[i]->getPlaneID()
