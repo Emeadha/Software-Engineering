@@ -22,6 +22,13 @@ public:
     // Constructor
     Clock(int h, int m, int s);
 
+//---------
+// PLEASE NOTE, STILL BUGS IN THIS CODE TO BE CUAGHT
+// - Way to catch bad subtraction values
+// - Way to check if values are out of bounds
+// - etc.
+// --------------
+
     //Overloading operators for clock (makes life a lot easier)
     //Equals operator, assigns clock on left to that of right
     Clock& operator=(const Clock otherClock){
@@ -34,7 +41,7 @@ public:
     //Addition, adds value of clock on right to the left
     Clock& operator+(const Clock otherClock){
         //Check if we exceed 24 hours
-        if(this->hours + otherClock.hours < 25){
+        if(this->hours + otherClock.hours <= 24){
             this->hours += otherClock.hours;
         }
         else{
@@ -61,7 +68,23 @@ public:
 
     }
     //Subtraction, reduces left clock by values on right
-    Clock& operator-(const Clock otherClock);
+    Clock& operator-(const Clock otherClock){
+        //Ensure we dont drop below 0 for our clock
+        if((this->hours - otherClock.hours) >= 0){
+            this->hours = this->hours - otherClock.hours;
+        }
+        //If minuets goes below zero we decrement hours
+        if((this->minutes - otherClock.minutes) >= 0){
+            this->minutes = this->hours - otherClock.minutes;
+        }
+        //If seconds drop below zero we decrement mins
+        if((this->seconds - otherClock.seconds) >= 0){
+            this->seconds = this->seconds - otherClock.seconds;
+        }
+
+        return *this;
+
+    }
 };
 
 #endif // CLOCK_H
