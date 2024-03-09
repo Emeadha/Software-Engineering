@@ -38,6 +38,13 @@ public:
 // --------------
 
     //Overloading operators for clock (makes life a lot easier)
+    //Overloading operators for clock (makes life a lot easier)
+    //Equals operator, assigns clock on left to that of right
+    friend ostream& operator<<(ostream& os, const Clock Clock){
+        os << "[" << Clock.hours << ":" << Clock.minutes << ":" << Clock.seconds << "]";
+
+        return os;
+    }
     //Equals operator, assigns clock on left to that of right
     Clock& operator=(const Clock otherClock){
         this->hours = otherClock.hours;

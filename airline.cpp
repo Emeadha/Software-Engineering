@@ -69,7 +69,7 @@ void Airline::scheduleFlights(){
             2. Find out associated plane ID
             3. Check if plane is currently availible or already scheduled
             4. If so, Modify plane variables to accomodate flight
-            5. Flip scheduled to true
+            5. Flip scheduled to true, and the planes availibility to false
             */
 
     //Move through vector, checking to see if its been scheduled, then schedule it
@@ -113,8 +113,8 @@ void Airline::scheduleFlights(){
             }
             
             //Print creation to flight log
-            flightLog << "Flight scheduled from Arpt: " << All_flights[i]->getOriginAirptID()
-            << " to Arpt: " << All_flights[i]->getDestAirptID() << " PlaneID used: " << All_flights[i]->getPlaneID()
+            flightLog << "Flight scheduled! Leaves from Arpt: " << All_flights[i]->getOriginAirptID() << " @" << tempDepartTime
+            << " to Arpt: " << All_flights[i]->getDestAirptID() << " @" << tempArrivalTime << " PlaneID used: " << All_flights[i]->getPlaneID()
             << endl;
 
 
