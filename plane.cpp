@@ -73,9 +73,20 @@ void Plane::onTimeUpdate(Clock& new_time) {
 }
 void Plane::takeOff(){
     isFlying = true;
-    cout << " the plane is flying" << endl;
+    cout << " the plane has taken off and is flying" << endl;
 
 
+}
+void Plane::onLanding(){
+    isFlying = false;
+    cout << " the plane has not taken off and is grounded" << endl;
+}
+
+void Plane::checkFuelLevel(double duration, double miles){
+    if(isFlying=true){
+        cout <<"Fuel level is" << Fuel_tank << endl;
+
+    }
 }
    /* BEGIN GETTERS */
 

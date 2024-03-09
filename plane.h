@@ -52,8 +52,8 @@ private:
     float Max_velocity; //Maximum velocity in KM/hour, ideal velocity i.e. what the plane can be expected to spend most of a flight at when not in takeoff/landing is 90% of this.
 
     //Plane Status 
-    bool isFlying; //This is the status of the plane. Declared True id the plane is flying. False if the plane is not flying
-    bool isGrounded; //This is the status of the plane if its grounded.
+    bool isFlying; //This is the status of the plane. Declared True if the plane has taken off. False if the plane is not flying
+    bool isGrounded; //This is the status of the plane if its grounded or has not taken off.
     bool isMaintenance; //This is the maintenance status of the plane
     bool isWaiting; //This is the waiting status of the plane 
     bool isBoarding; //This is the boarding status of the plane
@@ -131,8 +131,15 @@ public:
     // Implement the TimeObserver interface
     virtual void onTimeUpdate(Clock& new_time) override;
 
-    // The takeoff method. Checking to see if plane is flying or not
-    virtual void takeOff();
+    virtual void takeOff();// The takeoff method. Checking to see if plane is flying 
+    virtual void onLanding(); // The landing method. Called when the plane is not flying 
+    
+
+
+    // The Checkfuel level method. It will check the fuel level and update the fuel level.
+    virtual void checkFuelLevel(double duration, double miles);
+
+    
 };
 
 #endif // PLANE_H
