@@ -29,6 +29,12 @@ int Flight::getDestAirptID(){
 int Flight::getOriginAirptID(){
     return Origin_airport_ID;
 }
+Clock Flight::getArrivalTime(){
+    return Arrival_time;
+}
+Clock Flight::getDepartureTime(){
+    return Departure_time;
+}
 
 //Setters
 void Flight::setPlaneID(int Plane_ID){
@@ -48,4 +54,10 @@ void Flight::setScheduledTrue(){
 }
 void Flight::setScheduledFalse(){
     this->Scheduled = false;
+}
+void Flight::setArrivalTime(Clock New_arrival_time){
+    this->Arrival_time = New_arrival_time;
+}
+void Flight::setDepartureTime(Clock New_depature_time){
+    this->Departure_time = New_depature_time;
 }

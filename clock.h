@@ -22,6 +22,14 @@ public:
     // Constructor
     Clock(int h, int m, int s);
 
+    //Default constructor  
+    Clock(){
+        this->hours = 0;
+        this->minutes = 0;
+        this->seconds = 0;
+    }
+
+
 //---------
 // PLEASE NOTE, STILL BUGS IN THIS CODE TO BE CUAGHT
 // - Way to catch bad subtraction values

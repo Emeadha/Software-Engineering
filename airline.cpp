@@ -76,26 +76,41 @@ void Airline::scheduleFlights(){
     //Set our temporary variables
     int i = 0, tempPlaneID = 0, tempDestID = 0;
     int planePositionInArray = 0;
+    Clock tempArrivalTime, tempDepartTime;
 
     while (i < All_flights.size()){
         //Check to see if the flight has already been scheduled
         if(All_flights[i]->getScheduled() == false){
-           
-            //FUTURE -> Check if plane is currently on a route
 
             //Get this flights temp. information 
             tempPlaneID = All_flights[i]->getPlaneID();
-            tempDestID = All_flights[i]->getDestAirptID();
-            //tempArrivalTime = All_flights[i]->getArrivalTime();
-            //tempDepartTime = All_flights[i]->getDepartTime();
 
             //Find plane in question by searching through vector
             planePositionInArray = findPlanePosition(tempPlaneID);
 
-            //Set plane values
-            //All_planes[planePositionInArray]->setTargetAirport(tempDestID);
-            //All_planes[planePositionInArray]->setArrivalTime(tempArrivalTime);
-            //All_planes[planePositionInArray]->setDepartTime(tempDepartTime);
+            //Check to make sure plane exists in vector
+            if(planePositionInArray == -1){
+                cerr << "Error! Plane not found in plane registry" << endl;
+            }
+            else{
+                //Check if plane is ready to receive a new assignment
+                if(All_planes[planePositionInArray]->getIsReadyForAssignment()==true){
+                    //Get our relevant information from flight
+                    tempDestID = All_flights[i]->getDestAirptID();
+                    tempArrivalTime = All_flights[i]->getArrivalTime();
+                    tempDepartTime = All_flights[i]->getDepartureTime();
+
+                    //Assign receieved values to plane
+                    All_planes[planePositionInArray]->setTargetAirport(tempDestID);
+                    All_planes[planePositionInArray]->setArrivalTime(tempArrivalTime);
+                    All_planes[planePositionInArray]->setDepartureTime(tempDepartTime);
+
+                    //Set no longer ready for assignment
+                    All_planes[planePositionInArray]->setIsReadyForAssignment(false);
+                    //Set this flight in vector to scheduled
+                    All_flights[i]->setScheduledTrue();
+                }
+            }
             
             //Print creation to flight log
             flightLog << "Flight scheduled from Arpt: " << All_flights[i]->getOriginAirptID()
@@ -149,6 +164,6 @@ void Airline::onTimeUpdate(Clock& new_time) {
     cout << "Airport " << Airline_name << " updated its time to "
               << new_time.hours << ":" << new_time.minutes << ":" << new_time.seconds << endl;
 
-    //Say that we are done
+    //Say that we are do3ne
     TimeObserver::setIsDone();
 }

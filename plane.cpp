@@ -29,7 +29,7 @@ Plane::Plane(int Plane_ID, string plane_name, float Max_fuel, float Burn_rate,
     this->Odometer = Odometer;
     this->Trip_odometer = Trip_odometer;
     this->Until_maint = Until_maint;
-    this->In_transit = In_transit;
+    this->Is_ready_for_assignment = true;
     this->Is_operable = Is_operable;
     this->Is_seats_open = Is_seats_open;
     this->Daily_cost = Daily_cost;
@@ -39,8 +39,8 @@ Plane::Plane(int Plane_ID, string plane_name, float Max_fuel, float Burn_rate,
     this->Target_airport_ID = Target_airport_ID;
     this->Target_airport_location_distance = Target_airport_location_distance;
     this->Target_gate;
-    this->isFlying;
-    this->isGrounded;
+    this->isFlying = false;
+    this->isGrounded = true;
     this->isMaintenance;
     this->isWaiting;
     this->isBoarding;
@@ -100,10 +100,10 @@ double Plane::getTripOdometer()
     return this->Trip_odometer;
 }
 
-bool Plane::getInTransit()
+bool Plane::getIsReadyForAssignment()
 {
 
-    return this->In_transit;
+    return this->Is_ready_for_assignment;
 }
 
 bool Plane::getIsOperable()
@@ -154,3 +154,20 @@ int Plane::getPassengerCount()
     return this->Count_of_passengers;
 }
    /* END GETTERS */
+
+   /* BEGIN SETTERS*/
+void Plane::setArrivalTime(Clock newTime){
+        this->Arrival_time = newTime;
+}
+
+void Plane::setDepartureTime(Clock newTime){
+        this->Departure_time = newTime;
+}
+void Plane::setIsReadyForAssignment(bool isReady){
+    this->Is_ready_for_assignment = isReady;
+}
+void Plane::setTargetAirport(int airportID){
+    this->Target_airport_ID = airportID;
+}
+
+    /* END SETTERS*/

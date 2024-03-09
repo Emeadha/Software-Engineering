@@ -51,6 +51,8 @@ public:
     int getPlaneID();
     int getDestAirptID();
     int getOriginAirptID();
+    Clock getArrivalTime();
+    Clock getDepartureTime();
 
     //find way to set clock times with an override function
 
@@ -60,6 +62,8 @@ public:
     void setOGateID(int O_gate_ID);
     void setDGateID(int D_gate_ID);
     void setDistance(int Distance);
+    void setArrivalTime(Clock New_arrival_time);
+    void setDepartureTime(Clock New_departure_time);
 
     void setScheduledFalse();
     void setScheduledTrue();

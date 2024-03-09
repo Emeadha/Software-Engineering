@@ -41,6 +41,8 @@ private:
     int Plane_ID; //The ID number of the plane (Primary Key)
     string Plane_model; //The make of the plane, e.g. “Boeing 757”
     Clock Objects_clock; //Instance of the clock object for the plane, used to keep simulation synchronization
+    Clock Arrival_time;
+    Clock Departure_time;
 
     //Fuel and travel variables
     float Fuel_tank; //How much fuel does the plane have remaining?
@@ -56,6 +58,10 @@ private:
     bool isWaiting; //This is the waiting status of the plane 
     bool isBoarding; //This is the boarding status of the plane
     bool isUnboarding; //This is the unboarding status of the plane. 
+     //Availability bools
+    bool Is_ready_for_assignment; //Is the plane ready for next scheduler assignment?
+    bool Is_operable; //Can the plane currently be used for transport?
+    bool Is_seats_open; //Is the plane not completely full of passengers?
 
     //Travel distance trackers
     double Odometer; //How many miles the plane has flown, in total.
@@ -66,11 +72,6 @@ private:
     int Max_passengers;//How many passengers the plane can carry
     int Onboard; //Count of passengers //TODO: Make this *actually* a passenger vector, not just an int
     int Count_of_passengers; // Number of passengers onboard
-
-    //Availability bools
-    bool In_transit; //Is the plane in flight?
-    bool Is_operable; //Can the plane currently be used for transport?
-    bool Is_seats_open; //Is the plane not completely full of passengers?
 
     //Costs
     double Daily_cost; //The overall cost to operate a plane, per day, in USD. Includes loan cost, fuel cost etc. Calculated by calcCost.
@@ -92,7 +93,7 @@ public:
     double getMaintenance(); //Returns Until_maintenance
     double getOdometer(); //Returns Odometer
     double getTripOdometer(); //Returns Trip_odometer
-    bool getInTransit(); //Checks if Is_transit is true
+    bool getIsReadyForAssignment(); //Checks if Is_transit is true
     bool getIsOperable(); //Checks if Is_operable is true
     bool getIsSeatsOpen(); //Checks if Is_seats_open is true
     string getLocation(); //Returns distance from target airport //TODO: This should be a location object, set as a string for now for ease-of-testing other functions
@@ -104,8 +105,12 @@ public:
 
     /* BEGIN SETTERS */
     void resetTripOdometer(); //Sets Trip_odometer to 0
+    void setIsReadyForAssignment(bool isReady); //Set ready/not ready for next assignment
     void setFuelTank(float fuel); //Sets Fuel_Tank to a specific value.
     void refuelToFull(); //Sets Fuel_Tank to be equal to Max_fuel
+    void setArrivalTime(Clock newTime); //Set clock object for arrival time
+    void setDepartureTime(Clock newTime);//Set clock for departure time
+
     void setTargetGate(int gateID); //Sets the value of Target_gate
     void setTargetAirport(int airportID); //Sets the value of Target_airport
     void boardPassengers(int passengers); //Add all passengers waiting to board to Onboard. This should be called by the airport. //TODO: Currently set as an int for prototyping purposes, needs to be changed to vector of passenger objects at some point
