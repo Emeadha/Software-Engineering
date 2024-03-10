@@ -61,6 +61,16 @@ void Plane::onTimeUpdate(Clock& new_time) {
     //Start by setting done to false
     TimeObserver::setIsNotDone();
 
+    //If in maintenance, remove 10 minutes from the timer. If the timer hits zero, set the plane to no longer be in maintenance.
+    if (untilMaintDone > 0)
+    {
+       untilMaintDone -= 10;
+       if (untilMaintDone <= 0)
+       {
+          setMaintStatus(false);
+       }
+    }
+
     //Update the plane's time
     Objects_clock = new_time;
     //Debugging statement
@@ -167,12 +177,18 @@ int Plane::getPassengerCount()
    /* END GETTERS */
 
    /* BEGIN SETTERS*/
+
+void Plane::setMaintStatus(bool maintStatus)
+{
+    isMaintenance = maintStatus;
+}
+
 void Plane::setArrivalTime(Clock newTime){
-        this->Arrival_time = newTime;
+    this->Arrival_time = newTime;
 }
 
 void Plane::setDepartureTime(Clock newTime){
-        this->Departure_time = newTime;
+    this->Departure_time = newTime;
 }
 void Plane::setIsReadyForAssignment(bool isReady){
     this->Is_ready_for_assignment = isReady;
@@ -182,3 +198,26 @@ void Plane::setTargetAirport(int airportID){
 }
 
     /* END SETTERS*/
+
+    /* BEGIN MISCELLANEOUS FUNCTIONS */
+void landAndDock()
+{
+
+}
+
+double Plane::calcCost()
+{
+   return 0; //TODO: This is just here to supress compiler warning
+}
+
+void Plane::fly()
+{
+
+}
+
+void Plane::doMaintenance()
+{
+    untilMaintDone = 2160;
+    isMaintenance = true;
+}
+    /* END MISCELLANEOUS FUNCTIONS */
