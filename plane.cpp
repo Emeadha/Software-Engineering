@@ -185,10 +185,24 @@ int Plane::getPassengerCount()
    /* END GETTERS */
 
    /* BEGIN SETTERS*/
+void Plane::resetTripOdometer()
+{
+     this->Trip_odometer = 0;
+}
+
+void Plane::setFuelTank(float fuel)
+{
+     this->Fuel_tank = fuel;
+}   
+
+void Plane::refuelToFull()
+{
+     this->Fuel_tank = this->Max_fuel;
+}   
 
 void Plane::setMaintStatus(bool maintStatus)
 {
-    isMaintenance = maintStatus;
+    this->isMaintenance = maintStatus;
 }
 
 void Plane::setArrivalTime(Clock newTime){
@@ -201,6 +215,10 @@ void Plane::setDepartureTime(Clock newTime){
 void Plane::setIsReadyForAssignment(bool isReady){
     this->Is_ready_for_assignment = isReady;
 }
+void Plane::setTargetGate(int gate){
+    this->Target_gate = gate;
+}   
+
 void Plane::setTargetAirport(int airportID){
     this->Target_airport_ID = airportID;
 }
@@ -225,7 +243,7 @@ void Plane::fly()
 
 void Plane::doMaintenance()
 {
-    untilMaintDone = 2160;
-    isMaintenance = true;
+    this->untilMaintDone = 2160;
+    this->isMaintenance = true;
 }
     /* END MISCELLANEOUS FUNCTIONS */

@@ -108,7 +108,7 @@ public:
     void resetTripOdometer(); //Sets Trip_odometer to 0
     void setIsReadyForAssignment(bool isReady); //Set ready/not ready for next assignment
     void setFuelTank(float fuel); //Sets Fuel_Tank to a specific value.
-    void refuelToFull(); //Sets Fuel_Tank to be equal to Max_fuel
+    void refuelToFull(); //Sets Fuel_tank to be equal to Max_fuel
     void setMaintStatus(bool isInMaint); //Sets whether the plane is in maintenance or not
     void setArrivalTime(Clock newTime); //Set clock object for arrival time
     void setDepartureTime(Clock newTime);//Set clock for departure time
