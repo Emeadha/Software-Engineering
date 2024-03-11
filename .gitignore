@@ -1,4 +1,3 @@
-
 .vscode/settings.json
 *.json
 *.json
@@ -6,5 +5,4 @@
 *.o
 *.swp
 flightLog.txt
-airline_simulation
 airline_simulation
