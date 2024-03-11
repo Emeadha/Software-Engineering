@@ -92,17 +92,37 @@ void Plane::onLanding(){
     cout << " the plane has not taken off and is grounded" << endl;
 }
 
-void Plane::checkFuelLevel(double duration, string plane_name){
+void Plane::checkFuelLevel(double& duration, string plane_name){
     if(isFlying == true){
         cout <<"Fuel level is" << this->Fuel_tank << endl;
         duration = 250.5; //test value
         double fuelused; 
-        double fuelrate = 3217.0; //liters per hour for a boeing 737-800
+        double fuelrate; //liters per hour for aircraft
+        
+        if(plane_name == "Boeing 737-600" || plane_name == "Boeing 737-800"){
+        fuelrate=3217;
         fuelused = duration * (fuelrate/60.0);
         this->Fuel_tank -= fuelused;
-        
         cout << "Fuel used" << fuelused << endl;
         cout << " Fuel Tank Level: " << this->Fuel_tank << "liters" << endl;
+
+        }
+        if(plane_name == "airbus A100"){
+        fuelrate=2479;
+        fuelused = duration * (fuelrate/60.0);
+        this->Fuel_tank -= fuelused;
+        cout << "Fuel used" << fuelused << endl;
+        cout << " Fuel Tank Level: " << this->Fuel_tank << "liters" << endl;
+
+        }
+        if(plane_name == "airbus A220"){
+        fuelrate=2600;
+        fuelused = duration * (fuelrate/60.0);
+        this->Fuel_tank -= fuelused;
+        cout << "Fuel used" << fuelused << endl;
+        cout << " Fuel Tank Level: " << this->Fuel_tank << "liters" << endl;
+
+        }
 
     }
 }
