@@ -137,7 +137,7 @@ public:
 
 
     // The Checkfuel level method. It will check the fuel level and update the fuel level.
-    virtual void checkFuelLevel(double duration, double miles);
+    virtual void checkFuelLevel(double duration, string plane_name);
 
     
 };
