@@ -58,6 +58,7 @@ private:
     bool isWaiting; //This is the waiting status of the plane 
     bool isBoarding; //This is the boarding status of the plane
     bool isUnboarding; //This is the unboarding status of the plane. 
+    int untilMaintDone; //Time until maintenence is done, in minutes. 0 if plane is not in maintenence.
      //Availability bools
     bool Is_ready_for_assignment; //Is the plane ready for next scheduler assignment?
     bool Is_operable; //Can the plane currently be used for transport?
@@ -108,6 +109,7 @@ public:
     void setIsReadyForAssignment(bool isReady); //Set ready/not ready for next assignment
     void setFuelTank(float fuel); //Sets Fuel_Tank to a specific value.
     void refuelToFull(); //Sets Fuel_Tank to be equal to Max_fuel
+    void setMaintStatus(bool isInMaint); //Sets whether the plane is in maintenance or not
     void setArrivalTime(Clock newTime); //Set clock object for arrival time
     void setDepartureTime(Clock newTime);//Set clock for departure time
 

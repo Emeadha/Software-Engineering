@@ -5,3 +5,5 @@
 .vscode/settings.json
 *.o
 *.swp
+flightLog.txt
+airline_simulation
