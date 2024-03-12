@@ -123,7 +123,12 @@ public:
     void landAndDock(); //Docks plane at airport, requests passenger operations, fuel operations
     double calcCost(); //Calculates the value of Daily Cost, takes in information from fuel cost, loan etc.
     void fly(); //On each given tick and only if In_transit is true, progress towards the target airport’s location by amount specified by velocity variable. This method will affect the values of many variables such as fuel level, odometer, distance to target airport, etc.
-    void doMaintenance(); //Sets Is_operable to false for 1.5 days (36 hours/2160 minutes), then sets Is_operable to true and resets Until_maintencance to 200
+    void board(); //Board passengers from gate
+    void unboard(); //Move passengers to gate
+    void sendToMaintenance(); //Assign plane to maintence for a given time
+    void doMaintenance(); //Chips away at maintenence time, eventually sets to false after it hits zero
+    void goTakeOff();// The takeoff method. Checking to see if plane is flying 
+    void goLanding(); // The landing method. Called when the plane is not flying 
     /* END MISCELLANEOUS FUNCTIONS */
 
     //Constructor/destructor
@@ -132,14 +137,11 @@ public:
 
     // Implement the TimeObserver interface
     virtual void onTimeUpdate(Clock& new_time) override;
-
-    virtual void takeOff();// The takeoff method. Checking to see if plane is flying 
-    virtual void onLanding(); // The landing method. Called when the plane is not flying 
     
 
 
     // The Checkfuel level method. It will check the fuel level and update the fuel level.
-    virtual void checkFuelLevel(double duration, string plane_name);
+    void checkFuelLevel(double duration, string plane_name);
 
     
 };
