@@ -78,6 +78,23 @@ void Plane::onTimeUpdate(Clock& new_time) {
               << new_time.hours << ":" << new_time.minutes << ":" << new_time.seconds << endl;
     //cout << "Variables: " << Plane_model << " " << Max_fuel << " " << Burn_rate << " " << Max_passengers << " " << Current_velocity << " " << Odometer << endl;
 
+    // Check if the plane is flying
+    if (isFlying) {
+        // Decrement fuel based on flight duration, where is the duration value coming from??
+        checkFuelLevel(10, Plane_model); 
+        
+        
+        //Decrement distance based on flight duration. Trip Odometer represents How many miles the plane has flown in its current flight.
+        
+        double distanceTraveled = Current_velocity * (10.0 / 60.0); // Assuming 10 minutes flight duration
+        Trip_odometer -= distanceTraveled;
+
+        // Check if the distance has hit zero
+        if (Trip_odometer <= 0) {
+            onLanding();
+        }
+    }
+
     //Say that we are done
     TimeObserver::setIsDone();
 }
@@ -89,40 +106,34 @@ void Plane::takeOff(){
 }
 void Plane::onLanding(){
     isFlying = false;
-    cout << " the plane has not taken off and is grounded" << endl;
+    Current_velocity =0;
+    cout << " the plane has landed" << endl;
 }
 
-void Plane::checkFuelLevel(double& duration, string plane_name){
+void Plane::checkFuelLevel(double duration, string plane_name){
     if(isFlying == true){
         cout <<"Fuel level is" << this->Fuel_tank << endl;
-        duration = 250.5; //test value
-        double fuelused; 
-        double fuelrate; //liters per hour for aircraft
         
-        if(plane_name == "Boeing 737-600" || plane_name == "Boeing 737-800"){
-        fuelrate=3217;
-        fuelused = duration * (fuelrate/60.0);
+        double fuelused; 
+        
+        
+        if(plane_name == "B600" || plane_name == "B800"){
+        Burn_rate=3217;
+        } 
+        else if(plane_name == "A100"){
+        Burn_rate=2479;
+        }
+        else if(plane_name == "A300"){
+        Burn_rate=2600;
+        }
+        else{
+            cout << "Plane model invalid" << endl;
+        }
+        fuelused = duration * (Burn_rate/60.0);
         this->Fuel_tank -= fuelused;
         cout << "Fuel used" << fuelused << endl;
         cout << " Fuel Tank Level: " << this->Fuel_tank << "liters" << endl;
 
-        }
-        if(plane_name == "airbus A100"){
-        fuelrate=2479;
-        fuelused = duration * (fuelrate/60.0);
-        this->Fuel_tank -= fuelused;
-        cout << "Fuel used" << fuelused << endl;
-        cout << " Fuel Tank Level: " << this->Fuel_tank << "liters" << endl;
-
-        }
-        if(plane_name == "airbus A220"){
-        fuelrate=2600;
-        fuelused = duration * (fuelrate/60.0);
-        this->Fuel_tank -= fuelused;
-        cout << "Fuel used" << fuelused << endl;
-        cout << " Fuel Tank Level: " << this->Fuel_tank << "liters" << endl;
-
-        }
 
     }
 }
