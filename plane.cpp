@@ -57,19 +57,16 @@ Plane::~Plane(){
     flightLog.close();
 }
 void Plane::onTimeUpdate(Clock& new_time) {
+    //Getting the difference in hours, minutes, and seconds 
+    int diff_hours = new_time.hours - Objects_clock.hours;
+    int diff_minutes = new_time.minutes - Objects_clock.minutes;
+    int diff_seconds = new_time.seconds - Objects_clock.seconds; 
+    //converting and storing the time difference to be referenced. 
+    double difference_minutes = diff_hours * 60.0 + diff_minutes + diff_seconds/ 60.0;
 
     //Start by setting done to false
     TimeObserver::setIsNotDone();
 
-    //If in maintenance, remove 10 minutes from the timer. If the timer hits zero, set the plane to no longer be in maintenance.
-    if (untilMaintDone > 0)
-    {
-       untilMaintDone -= 10;
-       if (untilMaintDone <= 0)
-       {
-          setMaintStatus(false);
-       }
-    }
 
     //Update the plane's time
     Objects_clock = new_time;
@@ -78,34 +75,121 @@ void Plane::onTimeUpdate(Clock& new_time) {
               << new_time.hours << ":" << new_time.minutes << ":" << new_time.seconds << endl;
     //cout << "Variables: " << Plane_model << " " << Max_fuel << " " << Burn_rate << " " << Max_passengers << " " << Current_velocity << " " << Odometer << endl;
 
+    if(isFlying){
+        //Fly for the next 10 min
+        fly(difference_minutes);
+    }
+    else if(isGrounded){
+        //See why we are grounded
+        if(isWaiting){
+            //Decrement time in waiting
+            //NEED THIS METHOD
+        }
+        else if(isBoarding){
+            //Board passengers
+            //Wow! Full flight
+            boardPassengers(Max_passengers);
+        }
+        else if(isUnboarding){
+            //Unboard passengers
+            disembarkPassengers();
+        }
+        else if(isMaintenance){
+            //Decrement time left in maintenence
+            doMaintenance();
+        }
+        else{
+            cerr << "Error invalid plane state! [PLANE.CPP-LINE148] (grounded tree)" << endl;
+        }
+    }
+    else{
+        cerr << "Error! Invalid plane state! [PLANE.CPP-LINE152]" << endl;
+    }
+
     //Say that we are done
     TimeObserver::setIsDone();
 }
-void Plane::takeOff(){
+void Plane::fly(double duration){
+    // Decrement fuel based on flight duration, where is the duration value coming from??
+        checkFuelLevel(duration); 
+         
+        //Decrement distance based on flight duration. Trip Odometer represents How many miles the plane has flown in its current flight.
+        
+        double distanceTraveled = Current_velocity * (duration / 60.0); 
+        Trip_odometer -= distanceTraveled;
+
+        // Check if the distance has hit zero
+        if (Trip_odometer <= 0) {
+            //Land and prepare to unboard
+            landAndDock();
+        }
+}
+void Plane::goTakeOff(){
     isFlying = true;
     cout << " the plane has taken off and is flying" << endl;
 
-
 }
-void Plane::onLanding(){
+void Plane::goLanding(){
     isFlying = false;
-    cout << " the plane has not taken off and is grounded" << endl;
+    Current_velocity =0;
+    cout << " the plane has landed" << endl;
 }
-
-void Plane::checkFuelLevel(double duration, string plane_name){
-    if(isFlying == true){
-        cout <<"Fuel level is" << this->Fuel_tank << endl;
-        duration = 250.5; //test value
-        double fuelused; 
-        double fuelrate = 3217.0; //liters per hour for a boeing 737-800
-        fuelused = duration * (fuelrate/60.0);
-        this->Fuel_tank -= fuelused;
-        
-        cout << "Fuel used" << fuelused << endl;
-        cout << " Fuel Tank Level: " << this->Fuel_tank << "liters" << endl;
-
+void Plane::boardPassengers(int passengers){
+    //TEMP ACTION WILL EVENTUALLY BE MORE COMPLEX
+    //Hey look at that a full flight!
+    Onboard = passengers;
+}
+int Plane::disembarkPassengers(){
+    //TEMP ACTION WILL EVENTUALLY BE MORE COMPLEX
+    Onboard = 0;
+    cout << "Disembarked all passengers." << endl;
+    return Onboard;
+}
+void Plane::inWaitingTime(double duration){
+    waitingTime -= duration; 
+    if (waitingTime < 0) {
+        waitingTime = 0; //waiting time doesn't go negative
     }
 }
+
+
+void Plane::checkFuelLevel(double duration){
+
+    if(isFlying == true){
+        cout <<"Fuel level is" << this->Fuel_tank << endl;
+        
+        double fuelused; 
+        
+        
+        if(Plane_model == "B600" || Plane_model == "B800"){
+        Burn_rate=3217;
+        } 
+        else if(Plane_model == "A100"){
+        Burn_rate=2479;
+        }
+        else if(Plane_model == "A300"){
+        Burn_rate=2600;
+        }
+        else{
+            cout << "Plane model invalid" << endl;
+        }
+        fuelused = duration * (Burn_rate/60.0);
+        this->Fuel_tank -= fuelused;
+        
+        if (Fuel_tank <= 0){
+            Fuel_tank=0;
+            cout << " Fuel Tank is empty. Refuel before takeoff" << endl;}
+            else{
+            cout << "Fuel used" << fuelused << endl;
+            cout << " Fuel Tank Level: " << this->Fuel_tank << "liters" << endl;
+            }
+
+
+    }
+
+    
+}
+
    /* BEGIN GETTERS */
 
 int Plane::getPlaneID(){
@@ -226,8 +310,14 @@ void Plane::setTargetAirport(int airportID){
     /* END SETTERS*/
 
     /* BEGIN MISCELLANEOUS FUNCTIONS */
-void landAndDock()
+void Plane::landAndDock()
 {
+    //Land the plane
+    goLanding();
+
+    isFlying = false; 
+    //Prepare next step, that being unboarding
+    isUnboarding = true;
 
 }
 
@@ -236,14 +326,25 @@ double Plane::calcCost()
    return 0; //TODO: This is just here to supress compiler warning
 }
 
-void Plane::fly()
-{
-
-}
-
 void Plane::doMaintenance()
 {
-    this->untilMaintDone = 2160;
+    //WE NEED TWO DIFFERENT METHODS FOR MAINTENCE
+    //1. Sets maintence time, and sets maintence to true
+    //2. Chips away at maintence time then eventually sets to false
+
+    //If in maintenance, remove 10 minutes from the timer. If the timer hits zero, set the plane to no longer be in maintenance.
+    if (untilMaintDone > 0)
+    {
+       untilMaintDone -= 10;
+       if (untilMaintDone <= 0)
+       {
+          setMaintStatus(false);
+       }
+    }
+
+}
+void Plane::sendToMaintenance(){
+     this->untilMaintDone = 2160;
     this->isMaintenance = true;
 }
     /* END MISCELLANEOUS FUNCTIONS */
