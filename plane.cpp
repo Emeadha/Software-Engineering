@@ -57,6 +57,12 @@ Plane::~Plane(){
     flightLog.close();
 }
 void Plane::onTimeUpdate(Clock& new_time) {
+    //Getting the difference in hours, minutes, and seconds 
+    int diff_hours = new_time.hours - Objects_clock.hours;
+    int diff_minutes = new_time.minutes - Objects_clock.minutes;
+    int diff_seconds = new_time.seconds - Objects_clock.seconds; 
+    //converting and storing the time difference to be referenced. 
+    double difference_minutes = diff_hours * 60.0 + diff_minutes + diff_seconds/ 60.0;
 
     //Start by setting done to false
     TimeObserver::setIsNotDone();
@@ -71,7 +77,7 @@ void Plane::onTimeUpdate(Clock& new_time) {
 
     if(isFlying){
         //Fly for the next 10 min
-        fly();
+        fly(difference_minutes);
     }
     else if(isGrounded){
         //See why we are grounded
@@ -103,13 +109,13 @@ void Plane::onTimeUpdate(Clock& new_time) {
     //Say that we are done
     TimeObserver::setIsDone();
 }
-void Plane::fly(){
+void Plane::fly(double duration){
     // Decrement fuel based on flight duration, where is the duration value coming from??
-        checkFuelLevel(10, Plane_model); 
+        checkFuelLevel(duration); 
          
         //Decrement distance based on flight duration. Trip Odometer represents How many miles the plane has flown in its current flight.
         
-        double distanceTraveled = Current_velocity * (10.0 / 60.0); // Assuming 10 minutes flight duration
+        double distanceTraveled = Current_velocity * (duration / 60.0); 
         Trip_odometer -= distanceTraveled;
 
         // Check if the distance has hit zero
@@ -136,10 +142,18 @@ void Plane::boardPassengers(int passengers){
 int Plane::disembarkPassengers(){
     //TEMP ACTION WILL EVENTUALLY BE MORE COMPLEX
     Onboard = 0;
+    cout << "Disembarked all passengers." << endl;
     return Onboard;
 }
+void Plane::inWaitingTime(double duration){
+    waitingTime -= duration; 
+    if (waitingTime < 0) {
+        waitingTime = 0; //waiting time doesn't go negative
+    }
+}
 
-void Plane::checkFuelLevel(double duration, string plane_name){
+
+void Plane::checkFuelLevel(double duration){
 
     if(isFlying == true){
         cout <<"Fuel level is" << this->Fuel_tank << endl;
@@ -147,13 +161,13 @@ void Plane::checkFuelLevel(double duration, string plane_name){
         double fuelused; 
         
         
-        if(plane_name == "B600" || plane_name == "B800"){
+        if(Plane_model == "B600" || Plane_model == "B800"){
         Burn_rate=3217;
         } 
-        else if(plane_name == "A100"){
+        else if(Plane_model == "A100"){
         Burn_rate=2479;
         }
-        else if(plane_name == "A300"){
+        else if(Plane_model == "A300"){
         Burn_rate=2600;
         }
         else{
@@ -161,8 +175,14 @@ void Plane::checkFuelLevel(double duration, string plane_name){
         }
         fuelused = duration * (Burn_rate/60.0);
         this->Fuel_tank -= fuelused;
-        cout << "Fuel used" << fuelused << endl;
-        cout << " Fuel Tank Level: " << this->Fuel_tank << "liters" << endl;
+        
+        if (Fuel_tank <= 0){
+            Fuel_tank=0;
+            cout << " Fuel Tank is empty. Refuel before takeoff" << endl;}
+            else{
+            cout << "Fuel used" << fuelused << endl;
+            cout << " Fuel Tank Level: " << this->Fuel_tank << "liters" << endl;
+            }
 
 
     }
@@ -295,6 +315,7 @@ void Plane::landAndDock()
     //Land the plane
     goLanding();
 
+    isFlying = false; 
     //Prepare next step, that being unboarding
     isUnboarding = true;
 
