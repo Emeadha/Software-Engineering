@@ -58,8 +58,9 @@ private:
     bool isWaiting; //This is the waiting status of the plane 
     bool isBoarding; //This is the boarding status of the plane
     bool isUnboarding; //This is the unboarding status of the plane. 
-    int untilMaintDone; //Time until maintenence is done, in minutes. 0 if plane is not in maintenence.
-     //Availability bools
+    int untilMaintDone; //Time until maintenance is done, in minutes. 0 if plane is not in maintenance.
+
+    //Availability bools
     bool Is_ready_for_assignment; //Is the plane ready for next scheduler assignment?
     bool Is_operable; //Can the plane currently be used for transport?
     bool Is_seats_open; //Is the plane not completely full of passengers?
@@ -125,8 +126,8 @@ public:
     double calcCost(); //Calculates the value of Daily Cost, takes in information from fuel cost, loan etc.
     void fly(double duration); //On each given tick and only if In_transit is true, progress towards the target airport’s location by amount specified by velocity variable. This method will affect the values of many variables such as fuel level, odometer, distance to target airport, etc.
    
-    void sendToMaintenance(); //Assign plane to maintence for a given time
-    void doMaintenance(); //Chips away at maintenence time, eventually sets to false after it hits zero
+    void sendToMaintenance(); //Assign plane to maintenance for a given time
+    void doMaintenance(); //Chips away at maintenance time, eventually sets to false after it hits zero
     void goTakeOff();// The takeoff method. Checking to see if plane is flying 
     void goLanding(); // The landing method. Called when the plane is not flying
     void inWaitingTime(); // The Waiting method. Called when the plane is grounded and waiting.  
