@@ -39,12 +39,14 @@ Plane::Plane(int Plane_ID, string plane_name, float Max_fuel, float Burn_rate,
     this->Target_airport_ID = Target_airport_ID;
     this->Target_airport_location_distance = Target_airport_location_distance;
     this->Target_gate;
+
+    //Start plane off by waiting on the tarmac
     this->isFlying = false;
     this->isGrounded = true;
-    this->isMaintenance;
-    this->isWaiting;
-    this->isBoarding;
-    this->isUnboarding;
+    this->isMaintenance = false;
+    this->isWaiting = true;
+    this->isBoarding = false;
+    this->isUnboarding = false;
 
     //Don't worry about this but eventually will want way to print to log
     //flightLog << "Plane " << this->Plane_ID << " created. Model: " << this->Plane_ID << endl;
@@ -138,6 +140,9 @@ void Plane::boardPassengers(int passengers){
     //TEMP ACTION WILL EVENTUALLY BE MORE COMPLEX
     //Hey look at that a full flight!
     Onboard = passengers;
+
+    //For now, will immediatley take off
+    goTakeOff();
 }
 int Plane::disembarkPassengers(){
     //TEMP ACTION WILL EVENTUALLY BE MORE COMPLEX
@@ -145,11 +150,34 @@ int Plane::disembarkPassengers(){
     cout << "Disembarked all passengers." << endl;
     return Onboard;
 }
-void Plane::inWaitingTime(double duration){
+void Plane::inWaitingTime(){
+    //This is a temp fix, but for right now plane is going to wait until 10 min before
+    // takeoff then board, then fly
+    //The reason for this is waiting is its base state
+
+    if(this->Objects_clock == Departure_time){
+        //Go board passengers
+        isBoarding = true;
+    }
+
+    /*
     waitingTime -= duration; 
     if (waitingTime < 0) {
         waitingTime = 0; //waiting time doesn't go negative
     }
+    */
+}
+void Plane::assignFlight(int targetAirportID, Clock arrivalTime, Clock departTime){
+    //Assign our old flight target ID to be our new origin
+    this->Origin_airport_ID = this->Target_airport_ID;
+
+    //Assign values passed in 
+    this->Target_airport_ID = targetAirportID;
+    this->Arrival_time = arrivalTime;
+    this->Departure_time = departTime;
+
+    //Flip assigned to false
+    this->Is_ready_for_assignment = false;
 }
 
 

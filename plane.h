@@ -124,13 +124,15 @@ public:
     void landAndDock(); //Docks plane at airport, requests passenger operations, fuel operations
     double calcCost(); //Calculates the value of Daily Cost, takes in information from fuel cost, loan etc.
     void fly(double duration); //On each given tick and only if In_transit is true, progress towards the target airport’s location by amount specified by velocity variable. This method will affect the values of many variables such as fuel level, odometer, distance to target airport, etc.
-    //void board(); //Board passengers from gate
-    //void unboard(); //Move passengers to gate
+   
     void sendToMaintenance(); //Assign plane to maintence for a given time
     void doMaintenance(); //Chips away at maintenence time, eventually sets to false after it hits zero
     void goTakeOff();// The takeoff method. Checking to see if plane is flying 
     void goLanding(); // The landing method. Called when the plane is not flying
-    void inWaitingTime(double duration); // The Waiting method. Called when the plane is grounded and waiting.  
+    void inWaitingTime(); // The Waiting method. Called when the plane is grounded and waiting.  
+
+    void assignFlight(int targetAirportID, Clock arrivalTime, Clock departTime); //Called by scheduler, gives needed values to assign a new flight.
+
     /* END MISCELLANEOUS FUNCTIONS */
 
     //Constructor/destructor
