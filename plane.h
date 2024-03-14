@@ -58,8 +58,9 @@ private:
     bool isWaiting; //This is the waiting status of the plane 
     bool isBoarding; //This is the boarding status of the plane
     bool isUnboarding; //This is the unboarding status of the plane. 
-    int untilMaintDone; //Time until maintenence is done, in minutes. 0 if plane is not in maintenence.
-     //Availability bools
+    int untilMaintDone; //Time until maintenance is done, in minutes. 0 if plane is not in maintenance.
+
+    //Availability bools
     bool Is_ready_for_assignment; //Is the plane ready for next scheduler assignment?
     bool Is_operable; //Can the plane currently be used for transport?
     bool Is_seats_open; //Is the plane not completely full of passengers?
