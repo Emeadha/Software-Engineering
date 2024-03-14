@@ -125,8 +125,8 @@ public:
     double calcCost(); //Calculates the value of Daily Cost, takes in information from fuel cost, loan etc.
     void fly(double duration); //On each given tick and only if In_transit is true, progress towards the target airport’s location by amount specified by velocity variable. This method will affect the values of many variables such as fuel level, odometer, distance to target airport, etc.
    
-    void sendToMaintenance(); //Assign plane to maintence for a given time
-    void doMaintenance(); //Chips away at maintenence time, eventually sets to false after it hits zero
+    void sendToMaintenance(); //Assign plane to maintenance for a given time
+    void doMaintenance(); //Chips away at maintenance time, eventually sets to false after it hits zero
     void goTakeOff();// The takeoff method. Checking to see if plane is flying 
     void goLanding(); // The landing method. Called when the plane is not flying
     void inWaitingTime(); // The Waiting method. Called when the plane is grounded and waiting.  
