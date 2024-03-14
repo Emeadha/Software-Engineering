@@ -39,14 +39,6 @@ Airport::Airport(TimeManager *time_manager, string airport_name)
         
     }
 
-    // Create gate objects
-    /*for(int i = 0; i < 5; i++) 
-    {
-        Gate* gate = new Gate(i);
-        //Register gate
-        registerGate(gate);
-    }*/
-
 }
 
 //Register a passenger_group (to vector) and as an observer
@@ -73,6 +65,21 @@ void Airport::onTimeUpdate(Clock& new_time)
     Objects_clock = new_time;
     cout << "Airport " << Airport_name << " updated its time to "
               << new_time.hours << ":" << new_time.minutes << ":" << new_time.seconds << endl;
+
+    //Will iterate through the map to see if the passenger groups are at target gate and will move them if not
+    for(auto& entry : passengerToStart)
+    {
+        //Assigning the current passenger pointer to the passengerGroup variable
+        Passenger* passengerGroup = entry.first;
+        //Assigning the current gate pointer to the currentGate variable
+        Gate* currentGate = entry.second;
+        //Assigning the target gate for the passenger group to the variable target gate
+        Gate* targetGate = passengerToTarget[passengerGroup];
+
+        //If not at target gate, calls passengerTravel to simulate passengers arriving at target gate
+        if(currentGate != targetGate)
+            passengerTravel(currentGate, targetGate, passengerGroup);
+    }
 
     //Say that we are done
     TimeObserver::setIsDone();
@@ -143,12 +150,21 @@ void Airport::assignGates()
 
         //Assigning passenger groups to a start gate
         Gate* startGate = All_gates[i * 2];
-        //This is assigning a startGate with a passenger group using map
+        //This is assigning a startGate to a passenger group within the map
         passengerToStart[passengerGroup] = startGate;
 
         //Assigning passenger groups to a target gate 
         Gate* targetGate = All_gates[i * 2 + 1];
-        //This is assinging a targetGate with a passenger group using map
+        //This is assinging a targetGate to a passenger group within the map
         passengerToTarget[passengerGroup] = targetGate;
     }
+}
+
+//Will decrement a clock so that once clock is at 0 it will signify a passenger's arrvival at target gate
+void Airport::passengerTravel(Gate* currentGate, Gate* targetGate, Passenger* passengerGroup)
+{
+    if(currentGate != targetGate)
+        passengerToStart[passengerGroup] = targetGate; //currently assigns straight to targetGate
+
+    //needs to be able to decrement until the passenger has arrived at target gate
 }

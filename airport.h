@@ -81,8 +81,8 @@ public:
     //Assigns start and target gates for groups of passengers
     void assignGates();
 
-    //Will track whether or not the passenger groups have arrived at target gate
-    void passengerTravel();
+    //Will signify passenger groups arrival at target gate
+    void passengerTravel(Gate* currentGate, Gate* targetGate, Passenger* passengerGroup);
 
 };
 
