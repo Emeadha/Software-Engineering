@@ -34,6 +34,9 @@ private:
     int D_gate_ID = 0;
     int O_gate_ID = 0;
     double Distance = 0;
+    string Flight_type = "";
+    string Dest_airport_name = "";
+    string Origin_airport_name = "";
     Clock Departure_time;
     Clock Arrival_time;
 
@@ -43,7 +46,7 @@ private:
 public:
 
     // Constructor
-    Flight(int Ticket_cost, int Flight_ID, int Dest_airport_ID, int Origin_airport_ID, int D_hour, int D_min, int D_sec, int A_hour, int A_min, int A_sec);
+    Flight(int Ticket_cost, int Flight_ID, string Flight_type, string Dest_airport_ID, string Origin_airport_ID, int D_hour, int D_min, int D_sec, int A_hour, int A_min, int A_sec);
     
     //Getters
     //ADD MORE GETTERS HERE

@@ -13,6 +13,7 @@ the tick-rate (currently every 10 min is 1 second for sim).
 #include "airport.h"
 #include "passenger.h"
 #include "airline.h"
+#include "input.h"
 #include <thread>
 
 using namespace std;
@@ -31,6 +32,8 @@ int main() {
     // Airports -> Gates + Passengers
     Airline airline(&time_manager, "Comfort Airlines");
 
+
+    Input input(&time_manager);
 
     // -------------------------
     // Start 'er up!

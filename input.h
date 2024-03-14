@@ -26,10 +26,11 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
 using namespace std;
 
-class Input : public TimeObserver {
+class Input {
 
 private:
     Flight* flight; //Flight object to access setters
@@ -42,7 +43,7 @@ public:
     TimeManager* time_manager; //TimeManager object to add observers per new object
     Clock Objects_clock; //Clock object
     Input(TimeManager *time_manager); //Basic constructor that calls all 3 read input functions.
-    ~Input(); //Destructor?
+    //~Input(); //Destructor?
 	      
     void read_airports(); //Read in inputs for airport data. Airport method needs setters for longitude and latitude.
     void register_airport(Airport* airport); //Add each new airport to be an observer and add it to the vector All_airports.
