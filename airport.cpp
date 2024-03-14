@@ -41,7 +41,8 @@ Airport::Airport(TimeManager *time_manager, string airport_name)
 //Register a passenger_group (to vector) and as an observer
 void Airport::registerPassengerGroup(Passenger* passenger_group)
 {
-    time_manager->addObserver(passenger_group);
+    //Note: Passenger no longer time Observer
+    //Only add to vector
     All_passenger_groups.push_back(passenger_group);
 }
 
