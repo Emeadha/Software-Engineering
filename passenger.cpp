@@ -22,4 +22,16 @@ void Passenger::onTimeUpdate(Clock& new_time) {
 
     //Say that we are done
     TimeObserver::setIsDone();
+
+    /*//Assigning start gate
+    void Passenger::setStartGate(Gate* startGate)
+    {
+        startGate = gate;
+    }
+
+    //Assigning target gate
+    void Passenger::setTargetGate(Gate* targetGate)
+    {
+        targetGate = gate; 
+    }*/
 }

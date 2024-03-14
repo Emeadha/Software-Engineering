@@ -23,6 +23,8 @@
 #define PASSENGER_H
 #include "timeObserver.h"
 #include <string>
+#include <vector>
+#include <iostream> 
 
 using namespace std;
 
@@ -32,6 +34,12 @@ public:
     Clock Objects_clock;
 
     Passenger(int Passenger_group_ID);
+
+    /*//Will assign the start gate to passenger group - used in airport
+    void setStartGate(Gate* startGate);
+
+    //Will assign the target gate to passenger group - used in airport
+    void setTargetGate(Gate* targetGate);*/
 
     // Implement the TimeObserver interface
     virtual void onTimeUpdate(Clock& new_time) override;

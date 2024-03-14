@@ -5,6 +5,8 @@ airport.cpp
 // Airport.cpp
 
 #include "airport.h"
+#include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -26,15 +28,24 @@ Airport::Airport(TimeManager *time_manager, string airport_name)
         Passenger* passenger_group = new Passenger(i);
         //Register passenger group
         registerPassengerGroup(passenger_group);
+
+        //Creating and registering start gates
+        Gate* start_gate = new Gate(i);
+        registerGate(start_gate);
+
+        //Creating and registering target gates
+        Gate* target_gate = new Gate(i);
+        registerGate(target_gate);
+        
     }
 
     // Create gate objects
-    for(int i = 0; i < 5; i++) 
+    /*for(int i = 0; i < 5; i++) 
     {
         Gate* gate = new Gate(i);
         //Register gate
         registerGate(gate);
-    }
+    }*/
 
 }
 
@@ -118,4 +129,26 @@ int Airport::findGate(int GateID)
     }
     // If no gate with the given ID is found, return -1 to indicate that the gate is not found
     return -1;
+}
+
+//Assigns each passenger group to a start and target gate
+void Airport::assignGates()
+{
+    int numPassengerGroups = All_passenger_groups.size();
+    int numGates = All_gates.size();
+
+    for(int i = 0; i < numPassengerGroups; i++)
+    {
+        Passenger* passengerGroup = All_passenger_groups[i];
+
+        //Assigning passenger groups to a start gate
+        Gate* startGate = All_gates[i * 2];
+        //This is assigning a startGate with a passenger group using map
+        passengerToStart[passengerGroup] = startGate;
+
+        //Assigning passenger groups to a target gate 
+        Gate* targetGate = All_gates[i * 2 + 1];
+        //This is assinging a targetGate with a passenger group using map
+        passengerToTarget[passengerGroup] = targetGate;
+    }
 }

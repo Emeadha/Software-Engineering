@@ -32,6 +32,7 @@ What’s its goal? To hold passenger groups and gates
 #include <iostream>
 #include <iomanip>
 #include <vector>
+#include <map>
 
 
 using namespace std;   
@@ -72,6 +73,17 @@ public:
 
     // Multi-action
     int findGate(int GateID); // Finds gate based on Gate_ID, returns the position in vector
+
+    //Mapping for passengers to start and target gates
+    map<Passenger*, Gate*> passengerToStart;
+    map<Passenger*, Gate*> passengerToTarget;
+
+    //Assigns start and target gates for groups of passengers
+    void assignGates();
+
+    //Will track whether or not the passenger groups have arrived at target gate
+    void passengerTravel();
+
 };
 
 
