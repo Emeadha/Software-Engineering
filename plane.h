@@ -63,6 +63,7 @@ private:
     bool Is_ready_for_assignment; //Is the plane ready for next scheduler assignment?
     bool Is_operable; //Can the plane currently be used for transport?
     bool Is_seats_open; //Is the plane not completely full of passengers?
+    int waitingTime; //Variable used for waiting time
 
     //Travel distance trackers
     double Odometer; //How many miles the plane has flown, in total.
@@ -122,13 +123,14 @@ public:
     /* BEGIN MISCELLANEOUS FUNCTIONS */
     void landAndDock(); //Docks plane at airport, requests passenger operations, fuel operations
     double calcCost(); //Calculates the value of Daily Cost, takes in information from fuel cost, loan etc.
-    void fly(); //On each given tick and only if In_transit is true, progress towards the target airport’s location by amount specified by velocity variable. This method will affect the values of many variables such as fuel level, odometer, distance to target airport, etc.
+    void fly(double duration); //On each given tick and only if In_transit is true, progress towards the target airport’s location by amount specified by velocity variable. This method will affect the values of many variables such as fuel level, odometer, distance to target airport, etc.
     //void board(); //Board passengers from gate
     //void unboard(); //Move passengers to gate
     void sendToMaintenance(); //Assign plane to maintence for a given time
     void doMaintenance(); //Chips away at maintenence time, eventually sets to false after it hits zero
     void goTakeOff();// The takeoff method. Checking to see if plane is flying 
-    void goLanding(); // The landing method. Called when the plane is not flying 
+    void goLanding(); // The landing method. Called when the plane is not flying
+    void inWaitingTime(double duration); // The Waiting method. Called when the plane is grounded and waiting.  
     /* END MISCELLANEOUS FUNCTIONS */
 
     //Constructor/destructor
@@ -141,7 +143,7 @@ public:
 
 
     // The Checkfuel level method. It will check the fuel level and update the fuel level.
-    void checkFuelLevel(double duration, string plane_name);
+    void checkFuelLevel(double duration);
 
     
 };
