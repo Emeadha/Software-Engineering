@@ -53,6 +53,18 @@ public:
 
         return *this;
     }
+    //Equals operator, assigns clock on left to that of right
+    bool operator==(const Clock otherClock){
+        if(this->hours == otherClock.hours &&
+        this->minutes == otherClock.minutes &&
+        this->seconds == otherClock.seconds){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
     //Addition, adds value of clock on right to the left
     Clock& operator+(const Clock otherClock){
         //Check if we exceed 24 hours
