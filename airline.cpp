@@ -99,13 +99,9 @@ void Airline::scheduleFlights(){
                     tempArrivalTime = All_flights[i]->getArrivalTime();
                     tempDepartTime = All_flights[i]->getDepartureTime();
 
-                    //Assign receieved values to plane
-                    All_planes[planePositionInArray]->setTargetAirport(tempDestID);
-                    All_planes[planePositionInArray]->setArrivalTime(tempArrivalTime);
-                    All_planes[planePositionInArray]->setDepartureTime(tempDepartTime);
+                    //Assign receieved values to plane, and set ready to assign as false
+                    All_planes[planePositionInArray]->assignFlight(tempDestID, tempArrivalTime, tempDepartTime);
 
-                    //Set no longer ready for assignment
-                    All_planes[planePositionInArray]->setIsReadyForAssignment(false);
                     //Set this flight in vector to scheduled
                     All_flights[i]->setScheduledTrue();
                 }
