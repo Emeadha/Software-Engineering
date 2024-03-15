@@ -11,8 +11,7 @@ airport.cpp
 using namespace std;
 
 // Constructor
-Airport::Airport(TimeManager *time_manager, string airport_name)
-    : time_manager(time_manager), Objects_clock(0, 0, 0) 
+Airport::Airport(string airport_name): Objects_clock(0, 0, 0) 
 {
     this->Airport_name = airport_name;
 
@@ -21,8 +20,15 @@ Airport::Airport(TimeManager *time_manager, string airport_name)
 
     // Set the initial value of Airport_open 
     Airport_open = true;
+}
 
-    // Create passenger objects
+//Add reference to TimeManager object, then complete object creation
+void Airport::setTimeManager(TimeManager *time_manager){
+
+    //Assign our time_manager
+    this->time_manager = time_manager;
+
+    // Continue with object creation
     for(int i = 0; i < 5; i++) 
     {
         Passenger* passenger_group = new Passenger(i);
@@ -38,9 +44,7 @@ Airport::Airport(TimeManager *time_manager, string airport_name)
         registerGate(target_gate);
         
     }
-
 }
-
 //Register a passenger_group (to vector) and as an observer
 void Airport::registerPassengerGroup(Passenger* passenger_group)
 {

@@ -51,7 +51,7 @@ public:
     vector<Gate*> All_gates;
 
     //Constructor
-    Airport(TimeManager *time_manager, string airport_name);
+    Airport(string airport_name);
 
     // Register a passenger_group (to vector) and as an observer
     void registerPassengerGroup(Passenger* passenger_group);
@@ -68,6 +68,7 @@ public:
     bool getAirportOpen(); // Return whether or not open
 
     // Setters
+    void setTimeManager(TimeManager *time_manager); //CRITICAL STEP - passes a a refernce to time manager
     void setAirportID(int id); // Set Airport ID
     void setAirportName(string name); // Set Airport name
 

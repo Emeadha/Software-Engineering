@@ -28,7 +28,11 @@ Airline::Airline(TimeManager *time_manager, string airline_name) : time_manager(
         //Just for now, want to have new airports labeled this way
         airport_name = "New airport" + to_string(i);
         // Want to pass airport the time manager too, so it can register gates and passengers
-        Airport* airport = new Airport(time_manager, airport_name);
+        Airport* airport = new Airport(airport_name);
+
+        //Pass Airport its time observer
+        airport->setTimeManager(time_manager);
+        
         //Test register plane
         registerAirport(airport);
     }
