@@ -27,6 +27,7 @@ testing testing
 #include "flight.h"
 #include "plane.h"
 #include "airport.h"
+#include "input.h"
 
 #include <string>
 #include <fstream>
@@ -62,6 +63,7 @@ public:
 
     //Our clock object
     Clock Objects_clock;
+
 
     // --------------
     // Constructor/Destructor

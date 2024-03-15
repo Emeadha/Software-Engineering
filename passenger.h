@@ -28,7 +28,7 @@
 
 using namespace std;
 
-class Passenger : public TimeObserver {
+class Passenger {
 public:
     int Passenger_group_ID;
     Clock Objects_clock;
@@ -42,7 +42,7 @@ public:
     void setTargetGate(Gate* targetGate);*/
 
     // Implement the TimeObserver interface
-    virtual void onTimeUpdate(Clock& new_time) override;
+    // virtual void onTimeUpdate(Clock& new_time) override;
 };
 
 #endif // PASSENGER_H

@@ -11,6 +11,9 @@ Passenger::Passenger(int Passenger_group_ID) :  Objects_clock(0, 0, 0) {
     this->Passenger_group_ID = Passenger_group_ID;
 }
 
+
+//TEST CHANGE - To avoid conflicts, passenger no longer time observer
+/*
 void Passenger::onTimeUpdate(Clock& new_time) {
 
     //Start by setting done to false
@@ -35,3 +38,4 @@ void Passenger::onTimeUpdate(Clock& new_time) {
         targetGate = gate; 
     }*/
 }
+*/
