@@ -155,12 +155,12 @@ void Airport::assignGates()
 
         //Assigning passenger groups to a target gate 
         Gate* targetGate = All_gates[i * 2 + 1];
-        //This is assinging a targetGate to a passenger group within the map
+        //This is assigning a targetGate to a passenger group within the map
         passengerToTarget[passengerGroup] = targetGate;
     }
 }
 
-//Will decrement a clock so that once clock is at 0 it will signify a passenger's arrvival at target gate
+//Will decrement a clock so that once clock is at 0 it will signify a passenger's arrival at target gate
 void Airport::passengerTravel(Gate* currentGate, Gate* targetGate, Passenger* passengerGroup)
 {
     if(currentGate != targetGate)
