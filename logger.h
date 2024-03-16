@@ -12,12 +12,11 @@ namespace logger {
         Logger() {}
 
         // Methods to receive updates from planes, flights, and airports
-        void logPlaneUpdate(string& pid, int p_status);
-        void logFlightUpdate(string& fid, int f_status);
-        void logAirportUpdate(string& aid, int a_status);
+	void logPlaneUpdate(const std::string& pid, int p_status);
+	void logFlightUpdate(const std::string& fid, int f_status);
+	void logAirportUpdate(const std::string& aid, int a_status);
+	void exportLogsToFile(const std::string& filename);
 
-        // Method to export logs to a file
-        void exportLogsToFile(string& filename);
 
         // Method for manual logging updates for testing purposes
         void manualLogUpdates();
