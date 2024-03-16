@@ -49,6 +49,7 @@ public:
     //Vector for all passenger and gate objects
     vector<Passenger*> All_passenger_groups;
     vector<Gate*> All_gates;
+    vector<Gate> gates;
 
     //Constructor
     Airport(string airport_name);
@@ -75,15 +76,11 @@ public:
     // Multi-action
     int findGate(int GateID); // Finds gate based on Gate_ID, returns the position in vector
 
-    //Mapping for passengers to start and target gates
-    map<Passenger*, Gate*> passengerToStart;
-    map<Passenger*, Gate*> passengerToTarget;
+    //will decrement delay object
+    void movePassengers();
 
-    //Assigns start and target gates for groups of passengers
-    void assignGates();
-
-    //Will signify passenger groups arrival at target gate
-    void passengerTravel(Gate* currentGate, Gate* targetGate, Passenger* passengerGroup);
+    //will "move" passenger grous to assigned gate
+    void moveToGate();
 
 };
 

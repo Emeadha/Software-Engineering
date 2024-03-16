@@ -86,10 +86,19 @@ void Gate::createPassengers(int groupID)
     {
         passengerGroups.push_back(groupID);
     }
-
     //clockDelay();
 }
 
+vector<passengerMovement>& Gate::getPassengerMovements()
+{
+    return passengerMovements;
+}
+
+void Gate::removePassengerMovement(int groupID)
+{
+    passengerMovements.erase(remove_if(passengerMovements.begin(), passengerMovements.end(), [&]
+    (const passengerMovement& movement) { return movement.groupID == groupID; }), passengerMovements.end());
+}
 //Will create 6 gates to the gate vector
 void Gate::createGates(int gateID)
 {
@@ -106,12 +115,23 @@ void Gate::assignGates(vector<Passenger>& passengers)
 
     for(int x = 0; x < groupCount; x++) 
     {
+        int startGate = randomEngine() % gateCount;
+        int targetGate = (startGate + 1 + (randomEngine() % (gateCount - 1)));
+
         for(int j = 0; j < 2; j++)
         {
-            int index = randomEngine() % gateCount;
-            gates[index].createPassengers(passengers[x].Passenger_group_ID);
+            int gateID = (j == 0) ? startGate : targetGate;
+            gates[gateID].createPassengers(passengers[x].Passenger_group_ID);
         }
+         //initializing using parameters from struct
+        passengerMovement movement;
+        movement.groupID = passengers[x].Passenger_group_ID;
+        movement.startGateID = startGate;
+        movement.targetGateID = targetGate;
+        //movement.remainingTime = trav el time
+        passengerMovements.push_back(movement);
     }
+
 }
     
 

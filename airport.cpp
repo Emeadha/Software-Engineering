@@ -28,7 +28,7 @@ void Airport::setTimeManager(TimeManager *time_manager){
     //Assign our time_manager
     this->time_manager = time_manager;
 
-    // Continue with object creation
+    /* Continue with object creation
     for(int i = 0; i < 5; i++) 
     {
         Passenger* passenger_group = new Passenger(i);
@@ -43,7 +43,7 @@ void Airport::setTimeManager(TimeManager *time_manager){
         Gate* target_gate = new Gate(i);
         registerGate(target_gate);
         
-    }
+    }*/
 }
 //Register a passenger_group (to vector) and as an observer
 void Airport::registerPassengerGroup(Passenger* passenger_group)
@@ -71,20 +71,7 @@ void Airport::onTimeUpdate(Clock& new_time)
     cout << "Airport " << Airport_name << " updated its time to "
               << new_time.hours << ":" << new_time.minutes << ":" << new_time.seconds << endl;
 
-    //Will iterate through the map to see if the passenger groups are at target gate and will move them if not
-    for(auto& entry : passengerToStart)
-    {
-        //Assigning the current passenger pointer to the passengerGroup variable
-        Passenger* passengerGroup = entry.first;
-        //Assigning the current gate pointer to the currentGate variable
-        Gate* currentGate = entry.second;
-        //Assigning the target gate for the passenger group to the variable target gate
-        Gate* targetGate = passengerToTarget[passengerGroup];
-
-        //If not at target gate, calls passengerTravel to simulate passengers arriving at target gate
-        if(currentGate != targetGate)
-            passengerTravel(currentGate, targetGate, passengerGroup);
-    }
+    
 
     //Say that we are done
     TimeObserver::setIsDone();
@@ -130,7 +117,7 @@ void Airport::setAirportName(string name)
 int Airport::findGate(int GateID) 
 {
     // Iterate through all gates in the vector
-    for (size_t i = 0; i < All_gates.size(); ++i) 
+    for (size_t i = 0; i < gates.size(); ++i) 
     {
         // Check if the Gate_ID of the current gate matches the provided GateID
         if (All_gates[i]->getGateID() == GateID) 
@@ -144,32 +131,25 @@ int Airport::findGate(int GateID)
 }
 
 //Assigns each passenger group to a start and target gate
-void Airport::assignGates()
+void Airport::movePassengers()
 {
-    int numPassengerGroups = All_passenger_groups.size();
-    int numGates = All_gates.size();
-
-    for(int i = 0; i < numPassengerGroups; i++)
+    for(Gate& gate : gates)
     {
-        Passenger* passengerGroup = All_passenger_groups[i];
-
-        //Assigning passenger groups to a start gate
-        Gate* startGate = All_gates[i * 2];
-        //This is assigning a startGate to a passenger group within the map
-        passengerToStart[passengerGroup] = startGate;
-
-        //Assigning passenger groups to a target gate 
-        Gate* targetGate = All_gates[i * 2 + 1];
-        //This is assigning a targetGate to a passenger group within the map
-        passengerToTarget[passengerGroup] = targetGate;
+        for(passengerMovement& movement : gate.getPassengerMovements())
+        {
+            movement.remainingTime -= 10;
+            if(movement.remainingTime <= 0)
+            {
+                gates[movement.targetGateID].createPassengers(movement.groupID);
+                gate.removePassengerMovement(movement.groupID);
+            }
+        }
     }
+
 }
 
 //Will decrement a clock so that once clock is at 0 it will signify a passenger's arrival at target gate
-void Airport::passengerTravel(Gate* currentGate, Gate* targetGate, Passenger* passengerGroup)
+void Airport::moveToGate()
 {
-    if(currentGate != targetGate)
-        passengerToStart[passengerGroup] = targetGate; //currently assigns straight to targetGate
 
-    //needs to be able to decrement until the passenger has arrived at target gate
 }

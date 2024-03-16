@@ -32,6 +32,15 @@ transporting passenger groups.
 
 using namespace std;
 
+//struct to hold info regarding passenger movement between gates
+struct passengerMovement
+{
+    int groupID;
+    int startGateID;
+    int targetGateID;
+    int remainingTime; 
+};
+
 class Gate : public TimeObserver{
 
 private:
@@ -69,6 +78,11 @@ public:
     //vectors for gates and passenger groups
     vector<Gate> gates;
     vector<int> passengerGroups;
+    vector<passengerMovement> passengerMovements;
+
+    vector<passengerMovement>& getPassengerMovements();
+
+    void removePassengerMovement(int groupID);
 
     //Creates passenger groups inside vector
     void createPassengers(int groupID);
