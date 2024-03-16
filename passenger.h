@@ -30,11 +30,11 @@ using namespace std;
 
 class Passenger {
 public:
-    int Passenger_group_ID;
-    Clock Objects_clock;
-    Clock delay;
-    bool atGate;
-    Passenger(int Passenger_group_ID);
+    int Passenger_group_ID; //The ID of a group of passengers, for tracking
+    Clock Objects_clock; //Instance of the clock object for the passenger, used to keep simulation synchronization
+    Clock delay; // How long to transit between gates, set by airport, i.e. gate 10 to 30 = 15 min delay
+    bool atGate; // Are they at a gate?
+    Passenger(int Passenger_group_ID); //Constructor
 
     //10 minute delay added when passenger groups are created
     void clockDelay();

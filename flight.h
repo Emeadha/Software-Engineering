@@ -28,22 +28,22 @@ private:
 
     //Basic details that make up a flight
     //Assigned during construction
-    int Flight_ID = 0;
-    float Ticket_cost = 0;
-    string Flight_type = "";
-    string Dest_airport_name = "";
-    string Origin_airport_name = "";
-    Clock Departure_time;
-    Clock Arrival_time;
+    int Flight_ID = 0; //The number that identifies the flight
+    float Ticket_cost = 0; //The cost of a ticket for a flight (currently all tickets for a given flight are the same price)
+    string Flight_type = ""; //TODO: What is this?
+    string Dest_airport_name = ""; //The name of the airport where a flight ends
+    string Origin_airport_name = ""; //The name of the airport where a flight begins
+    Clock Departure_time; //Scheduled departure time
+    Clock Arrival_time; //Estimated arrival time at origin airport/gate
 
     double Distance;
 
     //Calculated during scheduling
-    int Dest_airport_ID = 0;
-    int Origin_airport_ID = 0;
-    int D_gate_ID = 0;
-    int O_gate_ID = 0;
-    int Plane_ID = 0;
+    int Dest_airport_ID = 0; //The ID number of the airport for the plane to land at
+    int Origin_airport_ID = 0; //The airport that a plane starts at when a flight begins
+    int D_gate_ID = 0; //Destination gate at target airport
+    int O_gate_ID = 0; //Origin gate at origin airport
+    int Plane_ID = 0; //The ID number of the plane used for a flight
     // EVENTUALLY MOVE HERE double Distance;
     
 
@@ -57,26 +57,26 @@ public:
     
     //Getters
     //ADD MORE GETTERS HERE
-    bool getScheduled();
-    int getPlaneID();
-    int getDestAirptID();
-    int getOriginAirptID();
-    Clock getArrivalTime();
-    Clock getDepartureTime();
+    bool getScheduled(); //Returns whether the flight has been given a time to begin
+    int getPlaneID(); //Return plane ID
+    int getDestAirptID(); //Return target airport ID
+    int getOriginAirptID(); //Return origin airport ID
+    Clock getArrivalTime(); //Return estimated arrival time at target airport
+    Clock getDepartureTime(); //Returns scheduled departure time from origin 
 
     //find way to set clock times with an override function
 
     //Setters
     //ADD MORE SETTERS HERE
-    void setPlaneID(int Plane_ID);
-    void setOGateID(int O_gate_ID);
-    void setDGateID(int D_gate_ID);
-    void setDistance(int Distance);
-    void setArrivalTime(Clock New_arrival_time);
-    void setDepartureTime(Clock New_departure_time);
+    void setPlaneID(int Plane_ID); //Sets the ID number of the plane to be used for the flight
+    void setOGateID(int O_gate_ID); //Sets gate for the flight to depart from
+    void setDGateID(int D_gate_ID); //Sets gate for the flight to arrive at
+    void setDistance(int Distance); //Sets distance to fly
+    void setArrivalTime(Clock New_arrival_time); //Sets estimated arrival time
+    void setDepartureTime(Clock New_departure_time); //Sets scheduled departure time
 
-    void setScheduledFalse();
-    void setScheduledTrue();
+    void setScheduledFalse(); //Sets “Scheduled" variable to false
+    void setScheduledTrue(); //Sets “Scheduled" variable to true
 
 };
 

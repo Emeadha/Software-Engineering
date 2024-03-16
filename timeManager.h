@@ -26,17 +26,17 @@ using namespace std;
 
 class TimeManager {
 private:
-    Clock simulation_time;
-    vector<TimeObserver*> observers;
+    Clock simulation_time; // Holds current world time
+    vector<TimeObserver*> observers
 
 public:
     // Constructor
     TimeManager();
 
-    void startSimulation();
-    void updateSimulationTime(int hours, int minutes, int seconds);
-    void addObserver(TimeObserver* observer);
-    void notifyObservers();
+    void startSimulation(); //Initializes all time values to 0 and does some basic error checking
+    void updateSimulationTime(int hours, int minutes, int seconds); // Notifies all objects with clock objects that time has progressed by a given increment. Uses a try catch, if it fails should 
+    void addObserver(TimeObserver* observer); //Adds an observer to the vector of time observers
+    void notifyObservers(); //Notify all observers of a time update, called by updateSimulationTime
 };
 
 #endif // TIME_MANAGER_H
