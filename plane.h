@@ -122,14 +122,14 @@ public:
     /* END SETTERS */
 
     /* BEGIN MISCELLANEOUS FUNCTIONS */
-    void landAndDock(); //Docks plane at airport, requests passenger operations, fuel operations
+    void landAndDock(double duration); //Docks plane at airport, requests passenger operations, fuel operations
     double calcCost(); //Calculates the value of Daily Cost, takes in information from fuel cost, loan etc.
     void fly(double duration); //On each given tick and only if In_transit is true, progress towards the target airport’s location by amount specified by velocity variable. This method will affect the values of many variables such as fuel level, odometer, distance to target airport, etc.
    
     void sendToMaintenance(); //Assign plane to maintenance for a given time
     void doMaintenance(); //Chips away at maintenance time, eventually sets to false after it hits zero
-    void goTakeOff();// The takeoff method. Checking to see if plane is flying 
-    void goLanding(); // The landing method. Called when the plane is not flying
+    void goTakeOff(double duration);// The takeoff method. Checking to see if plane is flying 
+    void goLanding(double duration); // The landing method. Called when the plane is not flying
     void inWaitingTime(); // The Waiting method. Called when the plane is grounded and waiting.  
 
     void assignFlight(int targetAirportID, Clock arrivalTime, Clock departTime); //Called by scheduler, gives needed values to assign a new flight.
@@ -142,6 +142,10 @@ public:
 
     // Implement the TimeObserver interface
     virtual void onTimeUpdate(Clock& new_time) override;
+    
+
+    // The method used for updating the plane status 
+    void planeStatus(double duration, Clock& new_time);
     
 
 
