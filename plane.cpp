@@ -77,15 +77,16 @@ void Plane::onTimeUpdate(Clock& new_time) {
               << new_time.hours << ":" << new_time.minutes << ":" << new_time.seconds << endl;
     //cout << "Variables: " << Plane_model << " " << Max_fuel << " " << Burn_rate << " " << Max_passengers << " " << Current_velocity << " " << Odometer << endl;
 
-    if(isFlying){
-        //Fly for the next 10 min
+    /*if(!isFlying){
+        //Calling Fly for the next 10 min
         fly(difference_minutes);
     }
     else if(isGrounded){
         //See why we are grounded
         if(isWaiting){
             //Decrement time in waiting
-            //NEED THIS METHOD
+            inWaitingTime();
+            
         }
         else if(isBoarding){
             //Board passengers
@@ -95,10 +96,52 @@ void Plane::onTimeUpdate(Clock& new_time) {
         else if(isUnboarding){
             //Unboard passengers
             disembarkPassengers();
+            Is_ready_for_assignment = true;
+            
         }
         else if(isMaintenance){
             //Decrement time left in maintenence
             doMaintenance();
+        }
+        else if(Is_ready_for_assignment=true){
+            assignFlight(Target_airport_ID, Arrival_time, Departure_time);
+        }
+        else{
+            cerr << "Error invalid plane state! [PLANE.CPP-LINE148] (grounded tree)" << endl;
+        }
+    }
+    else{
+        cerr << "Error! Invalid plane state! [PLANE.CPP-LINE152]" << endl;
+    }
+*/
+    if(isWaiting=true){
+    //Calling assignflight for the next 10 min
+        assignFlight(Target_airport_ID, Arrival_time, Departure_time);
+    }
+    else if(isGrounded){
+        //See why we are grounded
+        if(isWaiting){
+            //Decrement time in waiting
+            inWaitingTime();
+            
+        }
+        else if(isBoarding){
+            //Board passengers
+            //Wow! Full flight
+            boardPassengers(Max_passengers);
+        }
+        else if(isUnboarding){
+            //Unboard passengers
+            disembarkPassengers();
+            Is_ready_for_assignment = true;
+            
+        }
+        else if(isMaintenance){
+            //Decrement time left in maintenence
+            doMaintenance();
+        }
+        else if(Is_ready_for_assignment=true){
+            assignFlight(Target_airport_ID, Arrival_time, Departure_time);
         }
         else{
             cerr << "Error invalid plane state! [PLANE.CPP-LINE148] (grounded tree)" << endl;
@@ -111,6 +154,7 @@ void Plane::onTimeUpdate(Clock& new_time) {
     //Say that we are done
     TimeObserver::setIsDone();
 }
+
 void Plane::fly(double duration){
     // Decrement fuel based on flight duration, where is the duration value coming from??
         checkFuelLevel(duration); 
@@ -119,27 +163,35 @@ void Plane::fly(double duration){
         
         double distanceTraveled = Current_velocity * (duration / 60.0); 
         Trip_odometer -= distanceTraveled;
+        cout << Objects_clock.hours <<":"<< Objects_clock.minutes << " " << "the plane is flying "<< endl;
 
         // Check if the distance has hit zero
         if (Trip_odometer <= 0) {
             //Land and prepare to unboard
             landAndDock();
         }
+        
+        Is_ready_for_assignment = false;
+        
 }
 void Plane::goTakeOff(){
-    isFlying = true;
-    cout << " the plane has taken off and is flying" << endl;
+    isFlying = false;
+    cout << "The plane took off at " << Objects_clock.hours << ":" << Objects_clock.minutes << " and is flying." << endl;
+    //calling the fly method 
+    fly(10);
+    
 
 }
 void Plane::goLanding(){
     isFlying = false;
     Current_velocity =0;
-    cout << " the plane has landed" << endl;
+    cout << "The plane landed at " << Objects_clock.hours << ":" << Objects_clock.minutes << endl;
 }
 void Plane::boardPassengers(int passengers){
     //TEMP ACTION WILL EVENTUALLY BE MORE COMPLEX
     //Hey look at that a full flight!
     Onboard = passengers;
+    cout << Onboard << " Passengers are boarding." << endl;
 
     //For now, will immediatley take off
     goTakeOff();
@@ -147,18 +199,24 @@ void Plane::boardPassengers(int passengers){
 int Plane::disembarkPassengers(){
     //TEMP ACTION WILL EVENTUALLY BE MORE COMPLEX
     Onboard = 0;
-    cout << "Disembarked all passengers." << endl;
+    cout << "Disembarking all passengers." << endl;
+    isWaiting = true;
     return Onboard;
+    return isWaiting;
 }
 void Plane::inWaitingTime(){
     //This is a temp fix, but for right now plane is going to wait until 10 min before
     // takeoff then board, then fly
     //The reason for this is waiting is its base state
+    cout << "Plane is in waiting." << endl;
 
     if(this->Objects_clock == Departure_time){
         //Go board passengers
         isBoarding = true;
+        isWaiting=false;
+        
     }
+    Is_ready_for_assignment=true;
 
     /*
     waitingTime -= duration; 
@@ -178,6 +236,8 @@ void Plane::assignFlight(int targetAirportID, Clock arrivalTime, Clock departTim
 
     //Flip assigned to false
     this->Is_ready_for_assignment = false;
+    cout << "Plane Has been assigned a flight." << endl;
+    boardPassengers(Max_passengers);
 }
 
 
@@ -346,6 +406,7 @@ void Plane::landAndDock()
     isFlying = false; 
     //Prepare next step, that being unboarding
     isUnboarding = true;
+    disembarkPassengers();
 
 }
 
