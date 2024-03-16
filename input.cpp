@@ -97,6 +97,7 @@ void Input::read_planes()
 	string line;
 
 	//plane variables
+	string plane_name;
     string plane_model;
     int max_passengers;
     double max_fuel;
@@ -146,14 +147,17 @@ void Input::read_planes()
 
 			istringstream iss(line);
 			char comma;
+
+			//getline for plane_name, ending at comma
+			getline(iss, plane_name, ',');
 			//getline for plane_model, ending at comma
 			getline(iss, plane_model, ',');
 			//read in other variables, skipping commas
 			iss >> max_passengers >> comma >> max_fuel >> comma >> burn_rate >> comma >> max_speed;
-			//cout << plane_model << ", " << max_passengers << ", " << max_fuel << ", " << burn_rate << ", " << max_speed << endl;
+			//cout << plane_name << ", " << plane_model << ", " << max_passengers << ", " << max_fuel << ", " << burn_rate << ", " << max_speed << endl;
 
 
-	    	Plane* plane = new Plane(i, plane_model, max_fuel, burn_rate, max_speed, max_passengers,0,0);
+	    	Plane* plane = new Plane(i, plane_name, plane_model, max_fuel, burn_rate, max_speed, max_passengers);
 
 			// SEG FAULT WHEN PLANE HAS TIME MANAGER
 
@@ -178,7 +182,7 @@ void Input::read_flights()
 
     ifstream infile(default_file);
 	//variables for flight
-    string flight_type_id;
+    string flight_type_name;
     string origin;
     string dest;
     double distance;
@@ -227,8 +231,8 @@ void Input::read_flights()
 
 			iss >> ticket_price >> comma;
 			//cout << ticket_price << endl;
-			getline(iss, flight_type_id, ',');
-			//cout << flight_type_id << endl;
+			getline(iss, flight_type_name, ',');
+			//cout << flight_type_name << endl;
 			getline(iss, origin, ',');
 			//cout << origin << endl;
 			getline(iss, dest, ',');
@@ -236,9 +240,9 @@ void Input::read_flights()
 
 			iss >> departure_h >> comma >> departure_m >> comma >>departure_s >> comma >>arrival_h >> comma >>arrival_m >> comma >> arrival_s >> comma >>distance;
 
-			//cout << ticket_price << ", " << origin << ", " << dest << ", " << flight_type_id << ", " << origin << ", " <<  dest << ", " <<  departure_h << ", " << departure_m << ", " << departure_s << ", " << arrival_h << ", " << arrival_m << ", " << arrival_s << ", " << distance << endl;
+			//cout << ticket_price << ", " << origin << ", " << dest << ", " << flight_type_name << ", " << origin << ", " <<  dest << ", " <<  departure_h << ", " << departure_m << ", " << departure_s << ", " << arrival_h << ", " << arrival_m << ", " << arrival_s << ", " << distance << endl;
 	
-		    Flight* flight = new Flight(ticket_price, i, flight_type_id, dest, origin, departure_h, departure_m, departure_s, arrival_h, arrival_m, arrival_s);
+		    Flight* flight = new Flight(i, ticket_price, flight_type_name, dest, origin, departure_h, departure_m, departure_s, arrival_h, arrival_m, arrival_s);
 		    register_flight(flight);
 	
 		}
