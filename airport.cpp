@@ -67,6 +67,7 @@ void Airport::onTimeUpdate(Clock& new_time)
     //Start by setting done to false
     TimeObserver::setIsNotDone();
 
+    //Report time update to cout
     Objects_clock = new_time;
     cout << "Airport " << Airport_name << " updated its time to "
               << new_time.hours << ":" << new_time.minutes << ":" << new_time.seconds << endl;
@@ -152,4 +153,5 @@ void Airport::movePassengers()
 void Airport::moveToGate()
 {
 
+    //needs to be able to decrement until the passenger has arrived at target gate
 }

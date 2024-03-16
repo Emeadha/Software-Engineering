@@ -172,6 +172,7 @@ void Airline::onTimeUpdate(Clock& new_time) {
     //Start by setting done to false
     TimeObserver::setIsNotDone();
 
+    //Report time update to cout
     Objects_clock = new_time;
     cout << "Airport " << Airline_name << " updated its time to "
               << new_time.hours << ":" << new_time.minutes << ":" << new_time.seconds << endl;
