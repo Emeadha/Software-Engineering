@@ -3,14 +3,11 @@
 *
 *	Used to read in inputs from input files for 
 *	objects such as flight, plane, and airport.
-*	Not currently integrated but written out
-*	and documented with plans to integrate.
 *
-*	Flight, plane, and airport objects need to 
-*	have setters that input can access
+*	Airport constructor has issues regarding time_manager
+*   parameter, giving seg faults when attempted access in read_airports().
 *
-*
-*
+*   
 *
 *
 */
@@ -54,6 +51,10 @@ public:
     void read_flights(); //Read in inputs for flight data. I'm not sure if I went in the right direction with this one since I hadn't seen the scheduleFlights object in Flight.
 			 //For current read_flights function, need setters for FlightID, Origin, Destination, TotalTime, Distance, DepartureTime, ArrivalTime, TicketPrice.
     void register_flight(Flight* flight); //Add each new flight to the vector All_flights. No need to add as an observer.
+
+    vector<Airport*>& get_airport_vector();
+    vector<Plane*>& get_plane_vector();
+    vector<Flight*>& get_flight_vector();
 };
 
 #endif // INPUT_H

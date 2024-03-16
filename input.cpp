@@ -1,3 +1,14 @@
+/*
+* input.cpp
+*
+* Header file: input.h
+*
+* Read from input files for airport, plane, and flight objects
+*
+*/
+
+
+
 #include "input.h"
 #include <fstream>
 
@@ -16,11 +27,9 @@ void Input::read_airports()
 	string line;
 
 
-    //Variables being read in
+    //Variable being read in
     string airport_name; 
-    //double longitude;
-    //double latitude;
-
+	
     //Attempt to open the default file
     ifstream infile(default_file);
 
@@ -28,39 +37,16 @@ void Input::read_airports()
     if(infile.is_open())
     {
         cout << "Default file '" << default_file << "' found. Processing input." << endl;
+	}
 
-		//Read in line count, then create a for loop to run that many times.
-		infile >> line_count; 
-		//cout << line_count << endl;
-
-		//getline to get past the line_count line
-		getline(infile, line); 
-
-		for(int i = 0; i < line_count; i++)
-		{
-			//cout << i << endl;
-			//getline for airport_name since it's the only variable on the line
-			getline(infile, airport_name);
-
-			//cout << airport_name << endl;
-
-			//SEG FAULT CONCERNING CONSTRUCTOR AND REGISTER AIRPORT
-
-			//Airport* airport = new Airport(time_manager, airport_name); //Construct airport object with new name and ?id?
-		    //register_airport(airport);
-
-	    
-		}
-		cout << "Airport processing complete." << endl;
-    	}
     	//If the default file is not found, prompt the user for a file until it is found.
     else
-    	{
+    {
         	cout << "Default file '" << default_file << "' not found. Please insert the input file name for airport info." << endl;
 			cin >> user_input_file;
 
 		//Attempt to open file
-		ifstream infile(user_input_file);
+		infile.open(user_input_file);
 
 		//While file not found, ask until it is found.
 		while(!infile.is_open())
@@ -68,14 +54,14 @@ void Input::read_airports()
 	    	cout << "Input file '" << user_input_file << "' not found. Please insert another file name." << endl;
 		    cin >> user_input_file;
 
-		    ifstream infile(user_input_file);
+		    infile.open(user_input_file);
 		}
 		cout << "Input file '" << user_input_file << "' found. Processing input." << endl;
-
+		}
 		//Same read in as before
 
 		infile >> line_count;
-		cout << line_count;
+		//cout << line_count;
 
 		//getline to skip line_count line
 		getline(infile, line);
@@ -88,15 +74,14 @@ void Input::read_airports()
 
 			//cout << airport_name << endl;
 
-
-	    	//Airport* airport = new Airport(time_manager, airport_name);
-		   	//register_airport(airport);
+			
+	    	Airport* airport = new Airport(airport_name);
+		   	register_airport(airport);
 		   
 		}
 		
-		cout << "Airport processing complete." << endl;
+	cout << "Airport processing complete." << endl;
 
-    }
 }
 void Input::register_airport(Airport* airport)
 {
@@ -123,60 +108,27 @@ void Input::read_planes()
     if(infile.is_open())
     {
         cout << "Default file '" << default_file << "' found. Processing input." << endl;
-
-		//read in the line count
-		infile >> line_count; 
-		//cout << line_count << endl;
-
-		//getline to skip line_count line
-		getline(infile, line);
-
-		for(int i = 0; i < line_count; i++)
-		{
-			//cout << i << endl;
-	    	//get the whole line
-			getline(infile, line);
-			//istringstream used to splice the line
-			istringstream iss(line);
-			//used to grab commas since it's a .csv file
-			char comma;
-
-			//getline through istringstream allows for a delimeter that stops reading when it is found
-			//in this case it will always be a comma since it's a .csv
-
-			//NOTE: getline is only used for string and iss/infile can be used for other variable types
-			getline(iss, plane_model, ',');
-			//read in the rest of the variables, while skipping commas
-			iss >> max_passengers >> comma >> max_fuel >> comma >> burn_rate >> comma >> max_speed;
-			//cout << plane_model << ", " << max_passengers << ", " << max_fuel << ", " << burn_rate << ", " << max_speed << endl;
-
-
-	    	Plane* plane = new Plane(i, plane_model, max_fuel, burn_rate, max_speed, max_passengers,0,0);
-
-			// SEG FAULT WHEN REGISTER PLANE IS CALLED
-
-	    	//register_plane(plane);
-	    
-
-		}
-	cout << "Plane processing complete." << endl;
     }
     else
     {
 		cout << "Default file '" << default_file << "' not found. Please insert the input file name for plane info." << endl;
 		cin >> user_input_file;
 
-		ifstream infile(user_input_file);
+		//Attempt to open file
+		infile.open(user_input_file);
 
+		//While file not found, ask until it is found.
 		while(!infile.is_open())
 		{
-			//Prompt the user for an input file since the default file was not found.
 	    	cout << "Input file '" << user_input_file << "' not found. Please insert another file name." << endl;
-	    	cin >> user_input_file;
-	    	ifstream infile(user_input_file);
+		    cin >> user_input_file;
+
+		    infile.open(user_input_file);
 		}
-		//Once found, being reading
 		cout << "Input file '" << user_input_file << "' found. Processing input." << endl;
+	}
+	
+
 
 		infile >> line_count;
 
@@ -203,19 +155,17 @@ void Input::read_planes()
 
 	    	Plane* plane = new Plane(i, plane_model, max_fuel, burn_rate, max_speed, max_passengers,0,0);
 
-			// SEG FAULT WHEN REGISTER PLANE IS CALLED
+			// SEG FAULT WHEN PLANE HAS TIME MANAGER
 
-	    	//register_plane(plane);
+	    	register_plane(plane);
 	    
 
 		}
 	cout << "Plane processing complete." << endl;
-    }
 }
 void Input::register_plane(Plane* plane)
 {
     //Same process but for planes
-	time_manager->addObserver(plane);
     All_planes.push_back(plane);
 }
 void Input::read_flights()
@@ -239,65 +189,27 @@ void Input::read_flights()
     if(infile.is_open())
     {
 		//if default file opens, read that in
-		cout << "Default file '" << default_file << "' found. Processing input." << endl;
-		infile >> line_count;
-		//cout << line_count << endl;
-		
-		//getline to go past the line_count line
-		getline(infile, line);
-
-		for(int i = 0; i < line_count; i++)
-		{
-			//cout << i << endl;	
-		
-			//get full line as string
-			getline(infile, line);
-
-			istringstream iss(line);
-
-			char comma;
-			//read in ticket_price (double) and skip comma
-			iss >> ticket_price >> comma;
-			//cout << ticket_price << ", ";
-
-			//begin reading in string values, ignoring commas
-			getline(iss, flight_type_id, ',');
-			//cout << flight_type_id << ", ";
-			getline(iss, origin, ',');
-			//cout << origin << ", ";
-			getline(iss, dest, ',');
-			//cout << dest << ", ";
-
-			//read in all following variables, skipping commas
-			iss >> departure_h >> comma >> departure_m >> comma >>departure_s >> comma >>arrival_h >> comma >>arrival_m >> comma >> arrival_s >> comma >>distance;
-
-			//cout << ticket_price << ", " << flight_type_id << ", " << origin << ", " <<  dest << ", " <<  departure_h << ", " << departure_m << ", " << departure_s << ", " << arrival_h << ", " << arrival_m << ", " << arrival_s << ", " << distance << endl;
-		    Flight* flight = new Flight(ticket_price, i, flight_type_id, dest, origin, departure_h, departure_m, departure_s, arrival_h, arrival_m, arrival_s);
-	    	register_flight(flight);
-
-		}
-
-		cout << "Flight processing complete." << endl;
-    
+		cout << "Default file '" << default_file << "' found. Processing input." << endl;		
 	}
     else
     {
 		cout << "Default file '" << default_file << "' not found. Please insert the input file name for flight info." << endl;
 		cin >> user_input_file;
+		cout << user_input_file;
 
-		ifstream infile(user_input_file);
+		infile.open(user_input_file);
 
 		while(!infile.is_open())
 		{
 		    cout << "Input file '" << user_input_file << "' not found. Please insert another file name." << endl;
 		    cin >> user_input_file;
 
-		    ifstream infile(user_input_file);
+		    infile.open(user_input_file);
 		}
 		cout << "Input file '" << user_input_file << "' found. Processing input." << endl; 
-
+	}
 		infile >> line_count;
-		cout << line_count << endl;
+		//cout << line_count << endl;
 
 		//getline grabs the line_count line
 		getline(infile, line);
@@ -305,7 +217,7 @@ void Input::read_flights()
 
 		for(int i = 0; i < line_count; i++)
 		{
-			cout << i << endl;	
+			//cout << i << endl;	
 		
 			getline(infile, line);
 
@@ -324,17 +236,29 @@ void Input::read_flights()
 
 			iss >> departure_h >> comma >> departure_m >> comma >>departure_s >> comma >>arrival_h >> comma >>arrival_m >> comma >> arrival_s >> comma >>distance;
 
-			//cout << ticket_price << ", " << flight_type_id << ", " << origin << ", " <<  dest << ", " <<  departure_h << ", " << departure_m << ", " << departure_s << ", " << arrival_h << ", " << arrival_m << ", " << arrival_s << ", " << distance << endl;
+			//cout << ticket_price << ", " << origin << ", " << dest << ", " << flight_type_id << ", " << origin << ", " <<  dest << ", " <<  departure_h << ", " << departure_m << ", " << departure_s << ", " << arrival_h << ", " << arrival_m << ", " << arrival_s << ", " << distance << endl;
 	
 		    Flight* flight = new Flight(ticket_price, i, flight_type_id, dest, origin, departure_h, departure_m, departure_s, arrival_h, arrival_m, arrival_s);
 		    register_flight(flight);
 	
 		}
-		cout << "Flight processing complete." << endl;
-    }
+	cout << "Flight processing complete." << endl;
 }
 void Input::register_flight(Flight* flight)
 {
     //Don't create as an observer since this is something to be scheduled.
     All_flights.push_back(flight);
+}
+//Return vectors to airline (probably) so they can be registered as time observers
+vector<Airport*>& Input::get_airport_vector()
+{
+	return All_airports;
+}
+vector<Plane*>& Input::get_plane_vector()
+{
+	return All_planes;
+}
+vector<Flight*>& Input::get_flight_vector()
+{
+	return All_flights;
 }
