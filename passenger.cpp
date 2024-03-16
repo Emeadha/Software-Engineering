@@ -9,6 +9,14 @@ Passenger object implementation file
 
 Passenger::Passenger(int Passenger_group_ID) :  Objects_clock(0, 0, 0) {
     this->Passenger_group_ID = Passenger_group_ID;
+
+}
+
+
+//10 minute delay that will be added when passengers are created
+void Passenger::clockDelay()
+{
+    
 }
 
 

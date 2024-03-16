@@ -5,7 +5,10 @@ Gate object implementation file
 */
 
 #include "gate.h"
-
+#include <iostream>
+#include <random>
+#include <algorithm>
+#include <vector>
 
 // Constructor
 Gate::Gate(int gateID) : Objects_clock(Clock(0, 0, 0))
@@ -76,6 +79,41 @@ void Gate::setPlane_ID(int planeID)
     Plane_ID = planeID;
 }
 
+//Adds passenger groups to vector passengerGroups
+void Gate::createPassengers(int groupID)
+{
+    for(int i = 0; i < 5; i++)
+    {
+        passengerGroups.push_back(groupID);
+    }
+
+    //clockDelay();
+}
+
+//Will create 6 gates to the gate vector
+void Gate::createGates(int gateID)
+{
+    for(int i = 1; i <= 6; i++)
+        gates.emplace_back(gateID);
+}
+
+//Will assign each of the passenger groups to 2 gates
+void Gate::assignGates(vector<Passenger>& passengers)
+{
+    shuffle(gates.begin(), gates.end(), randomEngine);
+    int gateCount = gates.size();
+    int groupCount = passengers.size();
+
+    for(int x = 0; x < groupCount; x++) 
+    {
+        for(int j = 0; j < 2; j++)
+        {
+            int index = randomEngine() % gateCount;
+            gates[index].createPassengers(passengers[x].Passenger_group_ID);
+        }
+    }
+}
+    
 
 /*
 //Multi-action

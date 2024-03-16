@@ -32,8 +32,12 @@ class Passenger {
 public:
     int Passenger_group_ID;
     Clock Objects_clock;
-
+    Clock delay;
+    bool atGate;
     Passenger(int Passenger_group_ID);
+
+    //10 minute delay added when passenger groups are created
+    void clockDelay();
 
     /*//Will assign the start gate to passenger group - used in airport
     void setStartGate(Gate* startGate);

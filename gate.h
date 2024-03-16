@@ -22,6 +22,7 @@ transporting passenger groups.
 
 #include <iostream>
 
+#include <random>
 #include <string>
 #include <iomanip>
 #include <vector>
@@ -43,7 +44,8 @@ private:
 
     vector<Passenger> Passengers_at_gate; // The number of passengers currently at the gate. Number sent from the airport.
     int Plane_ID; // Which plane is docked at/using the gate?
-
+    
+    mt19937 randomEngine; //random number generator
 public:
 
     // Constructor
@@ -63,6 +65,19 @@ public:
     void setInUse(bool inUse); // Set in use variable
     void setPlaneDocked(bool planeDocked); // Set if the plane is docked
     void setPlane_ID(int planeID); // Set plane ID
+
+    //vectors for gates and passenger groups
+    vector<Gate> gates;
+    vector<int> passengerGroups;
+
+    //Creates passenger groups inside vector
+    void createPassengers(int groupID);
+
+    //Creating multiple gates for gate vector
+    void createGates(int gateID);
+
+    //Assigning gates to passenger groups
+    void assignGates(vector<Passenger>& passengers);
 
     // Multi-action methods
     //void board(vector<Passenger>& passengers); // Call plane board option and send the passenger vector
