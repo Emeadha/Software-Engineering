@@ -44,6 +44,9 @@ private:
     Clock Arrival_time;
     Clock Departure_time;
 
+    //Variables for particular time update
+    double duration;
+
     //Fuel and travel variables
     float Fuel_tank; //How much fuel does the plane have remaining?
     float Max_fuel; //How much fuel can the plane hold at maximum?
@@ -69,6 +72,7 @@ private:
     //Travel distance trackers
     double Odometer; //How many miles the plane has flown, in total.
     double Trip_odometer; //How many miles the plane has flown in its current flight.
+    double distanceToTarget; //How far until plane reaches target destination
     double Until_maint; //How long until the plane needs maintenance. Starts at 200 (hours of flight time).
 
     //Passenger variables
@@ -121,36 +125,28 @@ public:
     int disembarkPassengers(); //Remove all passengers from Onboard. Called by the airport //TODO: Currently set as an int for prototyping purposes, needs to be changed to a vector of passenger objects at some point..
     /* END SETTERS */
 
-    /* BEGIN MISCELLANEOUS FUNCTIONS */
-    void landAndDock(double duration); //Docks plane at airport, requests passenger operations, fuel operations
-    double calcCost(); //Calculates the value of Daily Cost, takes in information from fuel cost, loan etc.
-    void fly(double duration); //On each given tick and only if In_transit is true, progress towards the target airport’s location by amount specified by velocity variable. This method will affect the values of many variables such as fuel level, odometer, distance to target airport, etc.
-   
+    /*BEGIN OPERATION FUNCTIONS*/
+    void fly(); //Called from checkStatus if flying is true, progress towards the target airport’s location by amount specified by velocity variable. This method will affect the values of many variables such as fuel level, odometer, distance to target airport, etc.
     void sendToMaintenance(); //Assign plane to maintenance for a given time
     void doMaintenance(); //Chips away at maintenance time, eventually sets to false after it hits zero
-    void goTakeOff(double duration);// The takeoff method. Checking to see if plane is flying 
-    void goLanding(double duration); // The landing method. Called when the plane is not flying
-    void inWaitingTime(); // The Waiting method. Called when the plane is grounded and waiting.  
+    void goTakeOff();// The takeoff method. Checking to see if plane is flying 
+    void goLanding(); // The landing method. Called when the plane is not flying
+    void inWaitingTime(); // The Waiting method. Called when the plane is grounded and waiting. 
+    //void landAndDock(); //Docks plane at airport, requests passenger operations, fuel operations
+    /*END OPERATION FUNCTIONS*/
 
+    /* BEGIN MISCELLANEOUS FUNCTIONS */
+    double calcCost(); //Calculates the value of Daily Cost, takes in information from fuel cost, loan etc. 
     void assignFlight(int targetAirportID, Clock arrivalTime, Clock departTime); //Called by scheduler, gives needed values to assign a new flight.
-
+    virtual void onTimeUpdate(Clock& new_time) override; //Implements time update ability, inherited from observer
+    void planeStatus(); // The method used for checking the plane status and making right decison
+    void checkFuelLevel(); // The Checkfuel level method. It will check the fuel level and update the fuel level.
+    double findDuration(Clock& new_time); //Find duration of THIS update
     /* END MISCELLANEOUS FUNCTIONS */
 
     //Constructor/destructor
     Plane(int Plane_ID, string plane_name, float Max_fuel, float Burn_rate, float Max_velocity, int Max_passengers, float Current_velocity, double Odometer);
     ~Plane();
-
-    // Implement the TimeObserver interface
-    virtual void onTimeUpdate(Clock& new_time) override;
-    
-
-    // The method used for updating the plane status 
-    void planeStatus(double duration, Clock& new_time);
-    
-
-
-    // The Checkfuel level method. It will check the fuel level and update the fuel level.
-    void checkFuelLevel(double duration);
 
     
 };
