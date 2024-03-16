@@ -10,35 +10,40 @@ using namespace std;
 
 // hello
 
-Plane::Plane(int Plane_ID, string plane_name, float Max_fuel, float Burn_rate, 
-    float Max_velocity, int Max_passengers, float Current_velocity, 
-    double Odometer) : Objects_clock(0, 0, 0){
+Plane::Plane(int Plane_ID, string Plane_name, string Plane_model, float Max_fuel, float Burn_rate, 
+    float Max_velocity, int Max_passengers) : Objects_clock(0, 0, 0){
 
-    //Set the plane's attributess
+    //Set the plane's main attributess
     this->Plane_ID = Plane_ID;
-    this->Plane_model = plane_name;
-    this->Fuel_tank = Fuel_tank;
+    this->Plane_name = Plane_name;
+    this->Plane_model = Plane_model;
+
+    //Set starting values
     this->Max_fuel = Max_fuel;
+    this->Fuel_tank = Max_fuel;
     this->Burn_rate = Burn_rate;
-    this->Current_velocity = Current_velocity;
     this->Max_velocity = Max_velocity;
     this->Max_passengers = Max_passengers;
-    this->Onboard = Onboard;
-    this->Count_of_passengers = Count_of_passengers;
-    this->Current_velocity = Current_velocity;
-    this->Odometer = Odometer;
-    this->Trip_odometer = Trip_odometer;
-    this->Until_maint = Until_maint;
+
+    //Defualt values
+    this->Current_velocity = 0;
+    this->Onboard = 0;
+    this->Odometer = 0;
+    this->Trip_odometer = 0;
+    this->Until_maint = 999999999;
+
     this->Is_ready_for_assignment = true;
-    this->Is_operable = Is_operable;
-    this->Is_seats_open = Is_seats_open;
-    this->Daily_cost = Daily_cost;
-    this->Loan_cost = Loan_cost;
-    this->Range = Range;
-    this->Origin_airport_ID = Origin_airport_ID;
-    this->Target_airport_ID = Target_airport_ID;
-    this->Target_airport_location_distance = Target_airport_location_distance;
-    this->Target_gate;
+    this->Is_operable = true;
+    this->Is_seats_open = true;
+    this->Daily_cost = 100;
+    this->Loan_cost = 50;
+    this->Range = 99999999999;
+
+    //To be set by scheduler
+    this->Origin_airport_ID = -1;
+    this->Target_airport_ID = -1;
+    this->Target_airport_location_distance = 0;
+    this->Target_gate = 0;
 
     //Start plane off by waiting on the tarmac
     this->isFlying = false;
@@ -143,7 +148,7 @@ void Plane::fly(){
     checkFuelLevel(); 
      
     //Decrement distance based on flight duration. Trip Odometer represents How many miles the plane has flown in its current flight.
-    double distanceTraveled = Current_velocity * (this->duration / 60.0); 
+    double distanceTraveled = this->Current_velocity * (this->duration / 60.0); 
 
     //Set our odometer values
     this->Odometer += distanceTraveled;
@@ -164,11 +169,15 @@ void Plane::fly(){
 }
 void Plane::goTakeOff(){
     
-    isFlying = false;
-    cout << "Plane " << Plane_ID<< " took off at " << Objects_clock.hours << ":" << Objects_clock.minutes << " and is flying." << endl;
+    this->isFlying = false;
+    cout << "Plane " << Plane_ID<< " took off at " << this->Objects_clock << " and is flying." << endl;
 
     //Set is flying to ture for NEXT update 
-    isFlying = true;
+    this->isFlying = true;
+
+    //TEMP
+    //Set velocity
+    this->Current_velocity = this->Max_velocity;
     
 }
 void Plane::goLanding(){
@@ -177,19 +186,19 @@ void Plane::goLanding(){
     //Objects_clock.hours = total_minutes / 60; // Updating the hours
     //Objects_clock.minutes = total_minutes % 60; // Updating the minutes
 
-    isFlying = false;
-    Current_velocity =0;
+    this->isFlying = false;
+    this->Current_velocity =0;
 
     //Set unboarding for NEXT update
-    isUnboarding = true;
+    this->isUnboarding = true;
     
-    cout << "Plane " << Plane_ID << " landed at " << Objects_clock.hours << ":" << Objects_clock.minutes << endl;
+    cout << "Plane " << Plane_ID << " landed @" << this->Objects_clock << endl;
 }
 void Plane::boardPassengers(int passengers){
     //TEMP ACTION WILL EVENTUALLY BE MORE COMPLEX
     //Hey look at that a full flight!
     Onboard = passengers;
-    cout << Onboard << " Passengers are boarding." << endl;
+    cout << "Plane " << Plane_ID << " boarded " << Onboard << "passengers @"<< this->Objects_clock << endl;
 
     //For now, will immediatley take off
     goTakeOff();
@@ -197,7 +206,7 @@ void Plane::boardPassengers(int passengers){
 int Plane::disembarkPassengers(){
     //TEMP ACTION WILL EVENTUALLY BE MORE COMPLEX
     Onboard = 0;
-    cout << "Disembarking all passengers." << endl;
+    cout << "Plane " << Plane_ID << " disembarked passengers @" << this->Objects_clock << endl;
 
     Trip_odometer = 0; //Resetting the trip odometer back to 0
 
@@ -211,7 +220,7 @@ void Plane::inWaitingTime(){
     //This is a temp fix, but for right now plane is going to wait until 10 min before
     // takeoff then board, then fly
     //The reason for this is waiting is its base state
-    cout << "Plane " <<  Plane_ID << " is in waiting." << endl;
+    cout << "Plane " <<  Plane_ID << " is in waiting state." << endl;
 
     if(this->Objects_clock == Departure_time){
         //Go board passengers
@@ -239,7 +248,8 @@ void Plane::assignFlight(int targetAirportID, Clock arrivalTime, Clock departTim
 
     //Flip assigned to false
     this->Is_ready_for_assignment = false;
-    cout << "Plane " << Plane_ID << " has been assigned a flight." << endl;
+    cout << "Plane " << Plane_ID << " has been assigned a flight to: Airport " << 
+        this->Target_airport_ID << ", departing @" << this->Departure_time << endl;
     boardPassengers(Max_passengers);
 }
 

@@ -9,13 +9,16 @@ Flight implementation
 #include "flight.h"
 
 //Big ugly constructor
-Flight::Flight(int Ticket_cost, int Flight_ID, string Flight_type, string Dest_airport_ID, string Origin_airport_ID, int D_hour, int D_min, int D_sec, int A_hour, int A_min, int A_sec) 
-    : Departure_time(D_hour,D_hour,D_sec), Arrival_time(A_hour,A_min,A_sec) {
-        this->Ticket_cost = Ticket_cost;
-        this->Dest_airport_name = Dest_airport_ID;
-        this->Origin_airport_name = Origin_airport_ID;
+Flight::Flight(int Flight_ID, int Ticket_cost, string Flight_type, string Dest_airport_name,
+        string Origin_airport_name, int D_hour, int D_min, int D_sec, int A_hour, int A_min, int A_sec) 
+        : Departure_time(D_hour,D_hour,D_sec), Arrival_time(A_hour,A_min,A_sec) {
+
         this->Flight_ID = Flight_ID;
+        this->Ticket_cost = Ticket_cost;
         this->Flight_type = Flight_type; 
+        this->Dest_airport_name = Dest_airport_name;
+        this->Origin_airport_name = Origin_airport_name;
+    
 }
 
 //Getters 

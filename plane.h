@@ -39,6 +39,7 @@ private:
 
     //Basic plane attributes
     int Plane_ID; //The ID number of the plane (Primary Key)
+    string Plane_name; //Tail number
     string Plane_model; //The make of the plane, e.g. “Boeing 757”
     Clock Objects_clock; //Instance of the clock object for the plane, used to keep simulation synchronization
     Clock Arrival_time;
@@ -78,7 +79,7 @@ private:
     //Passenger variables
     int Max_passengers;//How many passengers the plane can carry
     int Onboard; //Count of passengers //TODO: Make this *actually* a passenger vector, not just an int
-    int Count_of_passengers; // Number of passengers onboard
+    int Count_of_passengers = 0; // Number of passengers onboard
 
     //Costs
     double Daily_cost; //The overall cost to operate a plane, per day, in USD. Includes loan cost, fuel cost etc. Calculated by calcCost.
@@ -145,7 +146,7 @@ public:
     /* END MISCELLANEOUS FUNCTIONS */
 
     //Constructor/destructor
-    Plane(int Plane_ID, string plane_name, float Max_fuel, float Burn_rate, float Max_velocity, int Max_passengers, float Current_velocity, double Odometer);
+    Plane(int Plane_ID, string Plane_name, string Plane_model, float Max_fuel, float Burn_rate, float Max_velocity, int Max_passengers);
     ~Plane();
 
     

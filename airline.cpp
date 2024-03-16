@@ -18,7 +18,8 @@ Airline::Airline(TimeManager *time_manager, string airline_name) : time_manager(
     //Currently, we are creating 5 planes
     //In the future, we want this to be read in by a file
     for(int i = 0; i < 5; i++) {
-        Plane* plane = new Plane(i, "Boeing 747", 26020, 3217, 749.7, 172, 0, 0);
+        string plane_name = "QWERTY" + to_string(i);
+        Plane* plane = new Plane(i, plane_name, "Boeing 747", 26020, 3217, 749.7, 172);
         //Test register plane
         registerPlane(plane);
     }
@@ -145,9 +146,15 @@ void Airline::addFlightToVector(){
     // Want to read flight details from Timetable then add to vector (will be
     // harcoded at first)
 
-    //FOUR FLIGHTS TOTAL ----- HARDCODED
-    //Leaves at 5:00 AM from Airport 1 to Airport 2 at 7:00 AM
-    Flight* flight = new Flight(100,1, "", "","",5,0,0,7,0,0);
+    //TWO FLIGHTS TOTAL ----- HARDCODED
+    //Leaves at 5:00 AM from Airport ATL to Airport CTL at 7:00 AM
+    Flight* flight = new Flight(0,100, "Test", "CTL","ATL",5,0,0,7,0,0);
+
+    //Add to vector
+    All_flights.push_back(flight);
+
+    //Leaves at 12:00 PM from Airport SYR to Airport CTL at 3:00 PM
+    flight = new Flight(0,100, "Test", "JFK","SYR",12,0,0,3,0,0);
 
     //Add to vector
     All_flights.push_back(flight);

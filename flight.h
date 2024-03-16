@@ -21,24 +21,31 @@ two airports, and the information such as ticket cost associated with it.
 #define FLIGHT_H
 
 #include "clock.h"
+#include <string>
 
 class Flight {
 private:
 
     //Basic details that make up a flight
-    float Ticket_cost = 0;
+    //Assigned during construction
     int Flight_ID = 0;
-    int Plane_ID = 0;
-    int Dest_airport_ID = 0;
-    int Origin_airport_ID = 0;
-    int D_gate_ID = 0;
-    int O_gate_ID = 0;
-    double Distance = 0;
+    float Ticket_cost = 0;
     string Flight_type = "";
     string Dest_airport_name = "";
     string Origin_airport_name = "";
     Clock Departure_time;
     Clock Arrival_time;
+
+    double Distance;
+
+    //Calculated during scheduling
+    int Dest_airport_ID = 0;
+    int Origin_airport_ID = 0;
+    int D_gate_ID = 0;
+    int O_gate_ID = 0;
+    int Plane_ID = 0;
+    // EVENTUALLY MOVE HERE double Distance;
+    
 
     // Has this already been scheduled?
     bool Scheduled = false;
