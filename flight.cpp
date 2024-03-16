@@ -10,7 +10,7 @@ Flight implementation
 
 //Big ugly constructor
 Flight::Flight(int Flight_ID, int Ticket_cost, string Flight_type, string Dest_airport_name,
-        string Origin_airport_name, int D_hour, int D_min, int D_sec, int A_hour, int A_min, int A_sec) 
+        string Origin_airport_name, int D_hour, int D_min, int D_sec, int A_hour, int A_min, int A_sec, double distance) 
         : Departure_time(D_hour,D_hour,D_sec), Arrival_time(A_hour,A_min,A_sec) {
 
         this->Flight_ID = Flight_ID;
@@ -33,6 +33,9 @@ int Flight::getDestAirptID(){
 }
 int Flight::getOriginAirptID(){
     return Origin_airport_ID;
+}
+double Flight::getDistance(){
+    return Distance;
 }
 Clock Flight::getArrivalTime(){
     return Arrival_time;

@@ -138,7 +138,7 @@ public:
 
     /* BEGIN MISCELLANEOUS FUNCTIONS */
     double calcCost(); //Calculates the value of Daily Cost, takes in information from fuel cost, loan etc. 
-    void assignFlight(int targetAirportID, Clock arrivalTime, Clock departTime); //Called by scheduler, gives needed values to assign a new flight.
+    void assignFlight(int targetAirportID, Clock arrivalTime, Clock departTime, double distance); //Called by scheduler, gives needed values to assign a new flight.
     virtual void onTimeUpdate(Clock& new_time) override; //Implements time update ability, inherited from observer
     void planeStatus(); // The method used for checking the plane status and making right decison
     void checkFuelLevel(); // The Checkfuel level method. It will check the fuel level and update the fuel level.

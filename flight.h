@@ -53,7 +53,7 @@ private:
 public:
 
     // Constructor
-    Flight(int Ticket_cost, int Flight_ID, string Flight_type, string Dest_airport_ID, string Origin_airport_ID, int D_hour, int D_min, int D_sec, int A_hour, int A_min, int A_sec);
+    Flight(int Ticket_cost, int Flight_ID, string Flight_type, string Dest_airport_ID, string Origin_airport_ID, int D_hour, int D_min, int D_sec, int A_hour, int A_min, int A_sec, double distance);
     
     //Getters
     //ADD MORE GETTERS HERE
@@ -61,6 +61,7 @@ public:
     int getPlaneID();
     int getDestAirptID();
     int getOriginAirptID();
+    double getDistance();
     Clock getArrivalTime();
     Clock getDepartureTime();
 

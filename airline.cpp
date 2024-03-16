@@ -19,7 +19,7 @@ Airline::Airline(TimeManager *time_manager, string airline_name) : time_manager(
     //In the future, we want this to be read in by a file
     for(int i = 0; i < 5; i++) {
         string plane_name = "QWERTY" + to_string(i);
-        Plane* plane = new Plane(i, plane_name, "Boeing 747", 26020, 3217, 749.7, 172);
+        Plane* plane = new Plane(i, plane_name, "B600", 26020, 3217, 749.7, 172);
         //Test register plane
         registerPlane(plane);
     }
@@ -81,6 +81,7 @@ void Airline::scheduleFlights(){
     int i = 0, tempPlaneID = 0, tempDestID = 0;
     int planePositionInArray = 0;
     Clock tempArrivalTime, tempDepartTime;
+    double tempDistance;
 
     while (i < All_flights.size()){
         //Check to see if the flight has already been scheduled
@@ -103,9 +104,10 @@ void Airline::scheduleFlights(){
                     tempDestID = All_flights[i]->getDestAirptID();
                     tempArrivalTime = All_flights[i]->getArrivalTime();
                     tempDepartTime = All_flights[i]->getDepartureTime();
+                    tempDistance = All_flights[i]->getDistance();
 
                     //Assign receieved values to plane, and set ready to assign as false
-                    All_planes[planePositionInArray]->assignFlight(tempDestID, tempArrivalTime, tempDepartTime);
+                    All_planes[planePositionInArray]->assignFlight(tempDestID, tempArrivalTime, tempDepartTime, tempDistance);
 
                     //Set this flight in vector to scheduled
                     All_flights[i]->setScheduledTrue();
@@ -148,13 +150,17 @@ void Airline::addFlightToVector(){
 
     //TWO FLIGHTS TOTAL ----- HARDCODED
     //Leaves at 5:00 AM from Airport ATL to Airport CTL at 7:00 AM
-    Flight* flight = new Flight(0,100, "Test", "CTL","ATL",5,0,0,7,0,0);
+    Flight* flight = new Flight(0,100, "Test", "CTL","ATL",5,0,0,7,0,0,2000);
+
+    flight->setPlaneID(0);
 
     //Add to vector
     All_flights.push_back(flight);
 
     //Leaves at 12:00 PM from Airport SYR to Airport CTL at 3:00 PM
-    flight = new Flight(0,100, "Test", "JFK","SYR",12,0,0,3,0,0);
+    flight = new Flight(0,100, "Test", "JFK","SYR",12,0,0,3,0,0,3000);
+
+    flight->setPlaneID(1);
 
     //Add to vector
     All_flights.push_back(flight);

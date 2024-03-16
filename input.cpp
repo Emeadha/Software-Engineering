@@ -242,7 +242,7 @@ void Input::read_flights()
 
 			//cout << ticket_price << ", " << origin << ", " << dest << ", " << flight_type_name << ", " << origin << ", " <<  dest << ", " <<  departure_h << ", " << departure_m << ", " << departure_s << ", " << arrival_h << ", " << arrival_m << ", " << arrival_s << ", " << distance << endl;
 	
-		    Flight* flight = new Flight(i, ticket_price, flight_type_name, dest, origin, departure_h, departure_m, departure_s, arrival_h, arrival_m, arrival_s);
+		    Flight* flight = new Flight(i, ticket_price, flight_type_name, dest, origin, departure_h, departure_m, departure_s, arrival_h, arrival_m, arrival_s, distance);
 		    register_flight(flight);
 	
 		}

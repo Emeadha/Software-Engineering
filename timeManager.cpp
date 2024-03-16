@@ -37,7 +37,7 @@ void TimeManager::startSimulation(){
         }
 
         // Sleep for 1 second
-        this_thread::sleep_for(chrono::seconds(1));
+        //this_thread::sleep_for(chrono::seconds(1));
 /*
         //More advanced system with threads may be nessessary
         while(waitFlag == true){

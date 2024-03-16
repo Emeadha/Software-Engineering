@@ -187,7 +187,7 @@ void Plane::goLanding(){
     //Objects_clock.minutes = total_minutes % 60; // Updating the minutes
 
     this->isFlying = false;
-    this->Current_velocity =0;
+    this->Current_velocity = 0;
 
     //Set unboarding for NEXT update
     this->isUnboarding = true;
@@ -200,6 +200,9 @@ void Plane::boardPassengers(int passengers){
     Onboard = passengers;
     cout << "Plane " << Plane_ID << " boarded " << Onboard << "passengers @"<< this->Objects_clock << endl;
 
+    //Disable boolean
+    isBoarding = false;
+    
     //For now, will immediatley take off
     goTakeOff();
 }
@@ -213,6 +216,7 @@ int Plane::disembarkPassengers(){
     //Plane is waiting for next assignment
     isWaiting = true;
     Is_ready_for_assignment = true;
+    isUnboarding = false;
 
     return Onboard;
 }
@@ -222,13 +226,15 @@ void Plane::inWaitingTime(){
     //The reason for this is waiting is its base state
     cout << "Plane " <<  Plane_ID << " is in waiting state." << endl;
 
-    if(this->Objects_clock == Departure_time){
+    //Will transition to flying if..
+    // 1. It has been assigned a upcoming flight (ready for assignment = false)
+    // 2. It is time to leave (departure time check)
+    if((this->Objects_clock >= Departure_time) && (this->Is_ready_for_assignment == false)){
         //Go board passengers
         isBoarding = true;
         isWaiting=false;
         
     }
-    Is_ready_for_assignment=true;
 
     /*
     waitingTime -= duration; 
@@ -237,7 +243,7 @@ void Plane::inWaitingTime(){
     }
     */
 }
-void Plane::assignFlight(int targetAirportID, Clock arrivalTime, Clock departTime){
+void Plane::assignFlight(int targetAirportID, Clock arrivalTime, Clock departTime, double distance){
     //Assign our old flight target ID to be our new origin
     this->Origin_airport_ID = this->Target_airport_ID;
 
@@ -245,19 +251,19 @@ void Plane::assignFlight(int targetAirportID, Clock arrivalTime, Clock departTim
     this->Target_airport_ID = targetAirportID;
     this->Arrival_time = arrivalTime;
     this->Departure_time = departTime;
+    this->Target_airport_location_distance = distance;
 
     //Flip assigned to false
     this->Is_ready_for_assignment = false;
     cout << "Plane " << Plane_ID << " has been assigned a flight to: Airport " << 
         this->Target_airport_ID << ", departing @" << this->Departure_time << endl;
-    boardPassengers(Max_passengers);
 }
 
 
 void Plane::checkFuelLevel(){
 
     if(isFlying == true){
-        cout <<"Fuel level is" << this->Fuel_tank << endl;
+        cout <<"Fuel level currently is: " << this->Fuel_tank << endl;
         
         double fuelused; 
         
