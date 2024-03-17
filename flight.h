@@ -61,6 +61,7 @@ public:
     int getPlaneID(); //Return plane ID
     int getDestAirptID(); //Return target airport ID
     int getOriginAirptID(); //Return origin airport ID
+    double getDistance();
     Clock getArrivalTime(); //Return estimated arrival time at target airport
     Clock getDepartureTime(); //Returns scheduled departure time from origin 
 

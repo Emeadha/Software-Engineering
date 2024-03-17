@@ -27,7 +27,7 @@ using namespace std;
 class TimeManager {
 private:
     Clock simulation_time; // Holds current world time
-    vector<TimeObserver*> observers
+    vector<TimeObserver*> observers;
 
 public:
     // Constructor
