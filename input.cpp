@@ -12,7 +12,7 @@
 #include "input.h"
 #include <fstream>
 
-Input::Input(TimeManager *time_manager)
+Input::Input()
 {
     read_airports(); // Calls to read in input for airports, planes, and flights
     read_planes();

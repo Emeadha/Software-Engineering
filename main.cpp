@@ -25,15 +25,13 @@ int main() {
 
     //This is our time manager, which will be passed to all objects	
     TimeManager time_manager;
+    Input input;
 
 
     //At first, we only create our Airline
     // Airline -> Airports + Planes
     // Airports -> Gates + Passengers
-    Airline airline(&time_manager, "Comfort Airlines");
-
-
-    Input input(&time_manager);
+    Airline airline(&time_manager, "Comfort Airlines", input);
 
     // -------------------------
     // Start 'er up!

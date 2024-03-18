@@ -7,23 +7,35 @@ airline.cpp
 
 // Constructor
 //We assign the time manager here, so we can use it to register new observers
-Airline::Airline(TimeManager *time_manager, string airline_name) : time_manager(time_manager),  Objects_clock(0, 0, 0), flightLog("flightLog.txt") {
+Airline::Airline(TimeManager *time_manager, string airline_name, Input Input_object)
+        : time_manager(time_manager),  Objects_clock(0, 0, 0), flightLog("flightLog.txt"), Input_object(Input_object) {
     this->Airline_name = airline_name;
 
     // ---------------------
     // Create/Register objects
     // ---------------------
 
-    //Making plane objects
-    //Currently, we are creating 5 planes
-    //In the future, we want this to be read in by a file
+    /*
     for(int i = 0; i < 5; i++) {
         string plane_name = "QWERTY" + to_string(i);
         Plane* plane = new Plane(i, plane_name, "B600", 26020, 3217, 749.7, 172);
         //Test register plane
         registerPlane(plane);
     }
+    */
 
+    //Get plane vector from input object
+    All_planes = Input_object.get_plane_vector();
+    for(int j=0; j<All_planes.size(); j++){
+        registerPlane(All_planes[j]);
+    }
+
+    All_airports = Input_object.get_airport_vector();
+    for(int j=0; j<All_airports.size(); j++){
+        registerAirport(All_airports[j]);
+    }
+
+    /*
     string airport_name;
     for(int i = 0; i < 2; i++) {
         //Just for now, want to have new airports labeled this way
@@ -37,6 +49,7 @@ Airline::Airline(TimeManager *time_manager, string airline_name) : time_manager(
         //Test register plane
         registerAirport(airport);
     }
+    */
 
     //READ IN THEN SCHEDULE ALL FLIGHTS
     addFlightToVector();
@@ -49,16 +62,14 @@ Airline::~Airline(){
     flightLog.close();
 }
 
-//Register a plane as an observer, AND adds it to the list of planes
+//Register a plane as an observer
 void Airline::registerPlane(Plane* plane) {
     time_manager->addObserver(plane);
-    All_planes.push_back(plane);
 }
 
 //Register an airport likewise
 void Airline::registerAirport(Airport* airport) {
     time_manager->addObserver(airport);
-    All_airports.push_back(airport);
 }
 
 

@@ -61,6 +61,9 @@ public:
     //Time manager object
     TimeManager* time_manager;
 
+    //Input object
+    Input Input_object;
+
     //Our clock object
     Clock Objects_clock;
 
@@ -69,7 +72,7 @@ public:
     // Constructor/Destructor
     // --------------
 
-    Airline(TimeManager *time_manager, string airport_name);
+    Airline(TimeManager *time_manager, string airport_name, Input Input_object);
 
     //Destructor
     ~Airline();

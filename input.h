@@ -39,7 +39,7 @@ private:
 public:
     TimeManager* time_manager; //TimeManager object to add observers per new object
     Clock Objects_clock; //Clock object
-    Input(TimeManager *time_manager); //Basic constructor that calls all 3 read input functions.
+    Input(); //Basic constructor that calls all 3 read input functions.
     //~Input(); //Destructor?
 	      
     void read_airports(); //Read in inputs for airport data. Airport method needs setters for longitude and latitude.
