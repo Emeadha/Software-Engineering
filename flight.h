@@ -31,6 +31,7 @@ private:
     int Flight_ID = 0; //The number that identifies the flight
     float Ticket_cost = 0; //The cost of a ticket for a flight (currently all tickets for a given flight are the same price)
     string Flight_type = ""; //TODO: What is this?
+    string Plane_name = ""; // 'Tail #' of given plane
     string Dest_airport_name = ""; //The name of the airport where a flight ends
     string Origin_airport_name = ""; //The name of the airport where a flight begins
     Clock Departure_time; //Scheduled departure time
@@ -53,15 +54,18 @@ private:
 public:
 
     // Constructor
-    Flight(int Ticket_cost, int Flight_ID, string Flight_type, string Dest_airport_ID, string Origin_airport_ID, int D_hour, int D_min, int D_sec, int A_hour, int A_min, int A_sec, double distance);
+    Flight(int Ticket_cost, int Flight_ID, string Flight_type, string Plane_name, string Dest_airport_name, string Origin_airport_name, int D_hour, int D_min, int D_sec, int A_hour, int A_min, int A_sec, double distance);
     
     //Getters
     //ADD MORE GETTERS HERE
     bool getScheduled(); //Returns whether the flight has been given a time to begin
     int getPlaneID(); //Return plane ID
+    string getPlaneName(); //Returns 'tail number' of plane
     int getDestAirptID(); //Return target airport ID
     int getOriginAirptID(); //Return origin airport ID
     double getDistance();
+    string getDestAirptName();
+    string getOriginAirptName();
     Clock getArrivalTime(); //Return estimated arrival time at target airport
     Clock getDepartureTime(); //Returns scheduled departure time from origin 
 
@@ -70,6 +74,9 @@ public:
     //Setters
     //ADD MORE SETTERS HERE
     void setPlaneID(int Plane_ID); //Sets the ID number of the plane to be used for the flight
+    void setDestAirptID(int Dest_airport_ID); //Set ID dest airport
+    void setOriginAirptID(int Origin_airport_ID); // Set ID of origin airport
+
     void setOGateID(int O_gate_ID); //Sets gate for the flight to depart from
     void setDGateID(int D_gate_ID); //Sets gate for the flight to arrive at
     void setDistance(int Distance); //Sets distance to fly

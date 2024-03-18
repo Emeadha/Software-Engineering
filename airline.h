@@ -95,12 +95,9 @@ public:
     // "Scheduler" methods
     // --------------
 
-    // Schedule all unscheduled flights
-    void scheduleFlights();
+    void scheduleFlights(); // Schedule all unscheduled flights
 
-    // Add a flight to vector (this is what should be calle dwhen reading
-    // timetable)
-    void addFlightToVector();
+    void loadFlights();//Loads flights from vector (passed by input object), then fill out rest of missing info
 
     // Eventually want cancel flight method
 
@@ -108,7 +105,8 @@ public:
     // "Searching" methods
     // ---------------
     //Search plane ID, returns position in array
-    int findPlanePosition(int ID);
+    int findPlaneID(string plane_name);
+    int findAirportID(string airport_name);
 
 
 

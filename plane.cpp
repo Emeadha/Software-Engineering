@@ -302,6 +302,9 @@ void Plane::checkFuelLevel(){
 int Plane::getPlaneID(){
     return this->Plane_ID;
 }
+string Plane::getPlaneName(){
+    return this->Plane_name;
+}
 double Plane::getMaintenance()
 {
 

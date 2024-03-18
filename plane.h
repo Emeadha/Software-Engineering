@@ -98,6 +98,7 @@ public:
 
     /* BEGIN GETTERS */
     int getPlaneID(); //Returns PlaneID
+    string getPlaneName(); //Returns 'tail number' of plane
     double getMaintenance(); //Returns Until_maintenance
     double getOdometer(); //Returns Odometer
     double getTripOdometer(); //Returns Trip_odometer

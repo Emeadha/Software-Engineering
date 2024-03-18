@@ -12,47 +12,27 @@ Airline::Airline(TimeManager *time_manager, string airline_name, Input Input_obj
     this->Airline_name = airline_name;
 
     // ---------------------
-    // Create/Register objects
+    // Receive from input object/Register objects
     // ---------------------
-
-    /*
-    for(int i = 0; i < 5; i++) {
-        string plane_name = "QWERTY" + to_string(i);
-        Plane* plane = new Plane(i, plane_name, "B600", 26020, 3217, 749.7, 172);
-        //Test register plane
-        registerPlane(plane);
-    }
-    */
 
     //Get plane vector from input object
     All_planes = Input_object.get_plane_vector();
     for(int j=0; j<All_planes.size(); j++){
+        //Register with time manager
         registerPlane(All_planes[j]);
     }
 
+    //Get airport vector from input object
     All_airports = Input_object.get_airport_vector();
     for(int j=0; j<All_airports.size(); j++){
+        //register with time manager
         registerAirport(All_airports[j]);
     }
 
-    /*
-    string airport_name;
-    for(int i = 0; i < 2; i++) {
-        //Just for now, want to have new airports labeled this way
-        airport_name = "New airport" + to_string(i);
-        // Want to pass airport the time manager too, so it can register gates and passengers
-        Airport* airport = new Airport(airport_name);
+    //Load flights and fill in missing info based off airport and plane data
+   loadFlights();
 
-        //Pass Airport its time observer
-        airport->setTimeManager(time_manager);
-        
-        //Test register plane
-        registerAirport(airport);
-    }
-    */
-
-    //READ IN THEN SCHEDULE ALL FLIGHTS
-    addFlightToVector();
+    //Go ahead and schedule flights now
     scheduleFlights();
 }
 
@@ -78,15 +58,6 @@ void Airline::scheduleFlights(){
     //Want to acsess flight vector, send out flight info to all objects like 
     // planes and airports, then flip scheduled boolean to true
 
-            /*
-            STEPS TO SCHEDULE FLIGHT
-            1. Check and see if unscheduled
-            2. Find out associated plane ID
-            3. Check if plane is currently availible or already scheduled
-            4. If so, Modify plane variables to accomodate flight
-            5. Flip scheduled to true, and the planes availibility to false
-            */
-
     //Move through vector, checking to see if its been scheduled, then schedule it
     //Set our temporary variables
     int i = 0, tempPlaneID = 0, tempDestID = 0;
@@ -98,19 +69,24 @@ void Airline::scheduleFlights(){
         //Check to see if the flight has already been scheduled
         if(All_flights[i]->getScheduled() == false){
 
-            //Get this flights temp. information 
+            //STEPS
+            //1. Get plane ID from flight vector
+            //2. Iterate through all unscheduled flights
+            //2.5 (We only want to grab unscheduled flights with a plane that isn't busy)
+            //3. Get nessesary info from flight
+            //4. Assign to plane
+            //5. Flip to scheduled (assignFlight takes care of saying the plane itsef is scheduled)
+
+            //Start by grabbing planeID from flight
             tempPlaneID = All_flights[i]->getPlaneID();
 
-            //Find plane in question by searching through vector
-            planePositionInArray = findPlanePosition(tempPlaneID);
-
             //Check to make sure plane exists in vector
-            if(planePositionInArray == -1){
+            if(tempPlaneID == -1){
                 cerr << "Error! Plane not found in plane registry" << endl;
             }
             else{
                 //Check if plane is ready to receive a new assignment
-                if(All_planes[planePositionInArray]->getIsReadyForAssignment()==true){
+                if(All_planes[tempPlaneID]->getIsReadyForAssignment()==true){
                     //Get our relevant information from flight
                     tempDestID = All_flights[i]->getDestAirptID();
                     tempArrivalTime = All_flights[i]->getArrivalTime();
@@ -118,7 +94,7 @@ void Airline::scheduleFlights(){
                     tempDistance = All_flights[i]->getDistance();
 
                     //Assign receieved values to plane, and set ready to assign as false
-                    All_planes[planePositionInArray]->assignFlight(tempDestID, tempArrivalTime, tempDepartTime, tempDistance);
+                    All_planes[tempPlaneID]->assignFlight(tempDestID, tempArrivalTime, tempDepartTime, tempDistance);
 
                     //Set this flight in vector to scheduled
                     All_flights[i]->setScheduledTrue();
@@ -129,23 +105,20 @@ void Airline::scheduleFlights(){
             flightLog << "Flight scheduled! Leaves from Arpt: " << All_flights[i]->getOriginAirptID() << " @" << tempDepartTime
             << " to Arpt: " << All_flights[i]->getDestAirptID() << " @" << tempArrivalTime << " PlaneID used: " << All_flights[i]->getPlaneID()
             << endl;
-
-
         }
 
         //Increment i
         i++;
     }
 }
-
 //Cycle through planes and return matching ID, or if failure -1
-int Airline::findPlanePosition(int ID){
+int Airline::findPlaneID(string plane_name){
 
     //Iterator
     int i = 0;
     //Iterate through all planes, return position when found
     while (i < All_planes.size()){
-        if(All_planes[i]->getPlaneID() == ID){
+        if(All_planes[i]->getPlaneName() == plane_name){
             return i;
         }
         else
@@ -155,26 +128,47 @@ int Airline::findPlanePosition(int ID){
     //If ID doesn't exist
     return -1;
 }
-void Airline::addFlightToVector(){
-    // Want to read flight details from Timetable then add to vector (will be
-    // harcoded at first)
+int Airline::findAirportID(string airport_name){
+    //Iterator
+    int i = 0;
+    //Iterate through all planes, return position when found
+    while (i < All_airports.size()){
+        if(All_airports[i]->getAirportName() == airport_name){
+            return i;
+        }
+        else
+            i++;
+    }
 
-    //TWO FLIGHTS TOTAL ----- HARDCODED
-    //Leaves at 5:00 AM from Airport ATL to Airport CTL at 7:00 AM
-    Flight* flight = new Flight(0,100, "Test", "CTL","ATL",5,0,0,7,0,0,2000);
+    //If ID doesn't exist
+    return -1;
+}
+void Airline::loadFlights(){
 
-    flight->setPlaneID(0);
+    //Variable holders
+    string temp_name = "";
+    int tempID = -1;
 
-    //Add to vector
-    All_flights.push_back(flight);
+    //Get flight vector from input object
+    All_flights = Input_object.get_flight_vector();
 
-    //Leaves at 12:00 PM from Airport SYR to Airport CTL at 3:00 PM
-    flight = new Flight(0,100, "Test", "JFK","SYR",12,0,0,3,0,0,3000);
+    //Calculate remaining information based on airport and plane data
+    for(int i=0; i<All_flights.size(); i++){
+        //Discover and set ID of origin airport
+        temp_name = All_flights[i]->getOriginAirptName();
+        tempID = findAirportID(temp_name);
+        All_flights[i]->setOriginAirptID(tempID);
 
-    flight->setPlaneID(1);
+        //Discover and set ID of dest airport
+        temp_name = All_flights[i]->getDestAirptName();
+        tempID = findAirportID(temp_name);
+        All_flights[i]->setDestAirptID(tempID);
 
-    //Add to vector
-    All_flights.push_back(flight);
+        //Discover and set ID of plane
+        temp_name = All_flights[i]->getPlaneName();
+        tempID = findPlaneID(temp_name);
+        All_flights[i]->setPlaneID(tempID);
+    }
     
 }
 
