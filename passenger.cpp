@@ -7,7 +7,7 @@ Passenger object implementation file
 #include "passenger.h"
 #include <iostream>
 
-Passenger::Passenger(int Passenger_group_ID) :  Objects_clock(0, 0, 0) {
+Passenger::Passenger(int Passenger_group_ID) :  Objects_clock(0, 0, 0), delay(0,0,0) {
     this->Passenger_group_ID = Passenger_group_ID;
 
 }

@@ -32,6 +32,12 @@ transporting passenger groups.
 
 using namespace std;
 
+/*
+    GATE
+    Constructor - just establishes variables
+*/
+
+
 //struct to hold info regarding passenger movement between gates
 struct passengerMovement
 {
