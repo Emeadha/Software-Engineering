@@ -45,20 +45,21 @@ public:
     string Airport_name; // Airport name
     TimeManager* time_manager;
     bool Airport_open; // Whether or not airport is open
+    bool atGate; //Whether or not the passenger group is at their gate
 
     //Vector for all passenger and gate objects
     vector<Passenger*> All_passenger_groups;
+    vector<int> passengersAtGate;
     vector<Gate*> All_gates;
-    vector<Gate> gates;
 
     //Constructor
     Airport(string airport_name);
 
     // Register a passenger_group (to vector) and as an observer
-    void registerPassengerGroup(Passenger* passenger_group);
+    void registerPassengerGroup(Passenger* passengerGroupID);
 
     // Register a gate (to vector) and as an observer
-    void registerGate(Gate* gate);
+    void registerGate(Gate* gateID);
 
     // Implement the TimeObserver interface
     virtual void onTimeUpdate(Clock& new_time) override;
@@ -76,11 +77,8 @@ public:
     // Multi-action
     int findGate(int GateID); // Finds gate based on Gate_ID, returns the position in vector
 
-    //will decrement delay object
-    void movePassengers();
-
     //will "move" passenger grous to assigned gate
-    void moveToGate();
+    void passengerMovement();
 
 };
 

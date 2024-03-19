@@ -34,6 +34,7 @@ public:
     Clock Objects_clock; //Instance of the clock object for the passenger, used to keep simulation synchronization
     Clock delay; // How long to transit between gates, set by airport, i.e. gate 10 to 30 = 15 min delay
     bool atGate; // Are they at a gate?
+    int targetGateID = 3; //Assigned target gate for passenger groups
     Passenger(int Passenger_group_ID); //Constructor
 
     //10 minute delay added when passenger groups are created

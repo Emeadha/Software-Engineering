@@ -79,7 +79,7 @@ void Gate::setPlane_ID(int planeID)
     Plane_ID = planeID;
 }
 
-//Adds passenger groups to vector passengerGroups
+/*Adds passenger groups to vector passengerGroups
 void Gate::createPassengers(int groupID)
 {
     for(int i = 0; i < 5; i++)
@@ -132,7 +132,7 @@ void Gate::assignGates(vector<Passenger>& passengers)
         passengerMovements.push_back(movement);
     }
 
-}
+}/*
     
 
 /*
