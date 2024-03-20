@@ -31,8 +31,8 @@ Airport::Airport(string airport_name): Objects_clock(0, 0, 0), Passenger_clock(0
         registerPassengerGroup(passengerGroupID);
 
         //Creating and registering gates
-        Gate* gateID = new Gate(i);
-        registerGate(gateID);
+        //Gate* gateID = new Gate(i);
+        //registerGate(gateID);
         
     }
 }

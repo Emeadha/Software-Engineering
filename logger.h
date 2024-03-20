@@ -8,6 +8,7 @@
 #include <fstream>
 #include <iomanip> 
 #include <fstream>
+#include <sstring>
 
 
 using namespace std;

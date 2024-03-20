@@ -189,6 +189,7 @@ void Input::read_flights()
     int departure_h, departure_m, departure_s;
     int arrival_h, arrival_m, arrival_s;
     double ticket_price;
+	string plane_name;
 
     if(infile.is_open())
     {
@@ -238,11 +239,13 @@ void Input::read_flights()
 			getline(iss, dest, ',');
 			//cout << dest << endl;
 
-			iss >> departure_h >> comma >> departure_m >> comma >>departure_s >> comma >>arrival_h >> comma >>arrival_m >> comma >> arrival_s >> comma >>distance;
+			iss >> departure_h >> comma >> departure_m >> comma >>departure_s >> comma >>arrival_h >> comma >>arrival_m >> comma >> arrival_s >> comma >> distance >> comma;
 
-			//cout << ticket_price << ", " << origin << ", " << dest << ", " << flight_type_name << ", " << origin << ", " <<  dest << ", " <<  departure_h << ", " << departure_m << ", " << departure_s << ", " << arrival_h << ", " << arrival_m << ", " << arrival_s << ", " << distance << endl;
+			getline(iss, plane_name);
+
+			//cout << ticket_price << ", " << origin << ", " << dest << ", " << flight_type_name << ", " << origin << ", " <<  dest << ", " <<  departure_h << ", " << departure_m << ", " << departure_s << ", " << arrival_h << ", " << arrival_m << ", " << arrival_s << ", " << distance << ", " << plane_name << endl;
 	
-		    Flight* flight = new Flight(i, ticket_price, flight_type_name, dest, origin, departure_h, departure_m, departure_s, arrival_h, arrival_m, arrival_s, distance);
+		    Flight* flight = new Flight(i, ticket_price, flight_type_name, plane_name, dest, origin, departure_h, departure_m, departure_s, arrival_h, arrival_m, arrival_s, distance);
 		    register_flight(flight);
 	
 		}
