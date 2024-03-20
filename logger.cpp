@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iomanip> 
 #include <string> 
+#include <sstream> // Included for using the clock/time
 
 using namespace std;
 namespace logger 
@@ -12,6 +13,7 @@ namespace logger
 // Log a plane update with status, delay time, and arrival time
 void Logger::logPlaneUpdate(const string& pid, int p_status, const Clock& delay_time, const Clock& arrival_time) 
 {
+    stringstream ss; // Initialize stringstream
     switch (p_status) 
     {
         case 1:
@@ -78,8 +80,8 @@ void Logger::logFlightUpdate(const string& fid, int f_status)
             break;
         case 6:
             // Log that the flight is delayed
-            flight_log += "Flight " + fid + " is delayed”;
-            break;
+            flight_log += "Flight " + fid + " is delayed";
+            break; // corrected typo here
         default:
             // Log when no updates are available
             flight_log += "Flight " + fid + " has no updates at the moment";
