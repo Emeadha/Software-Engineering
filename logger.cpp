@@ -1,10 +1,4 @@
 #include "logger.h" 
-#include "clock.h"  
-#include <iostream>
-#include <fstream>
-#include <iomanip> 
-#include <string> 
-#include <sstream> // Included for using the clock/time
 
 using namespace std;
 
@@ -148,17 +142,17 @@ void Logger::exportLogsToFile(int switchCase)
 
             case 1:
                 // export plane log
-                planeLogFile << "Plane Status: " << plane_log << endl;
+                planeLogFile << "PLANE STATUS: " << plane_log << endl;
                 break;
 
             case 2:
                 // export flight log 
-                flightLogFile << "Flight Status: " << flight_log << endl;
+                flightLogFile << "FLIGHT STATUS: " << flight_log << endl;
                 break;
 
             case 3:
                 // export airport log
-                airportLogFile << "Airport Status: " << airport_log << endl;
+                airportLogFile << "AIRPORT STATUS: " << airport_log << endl;
                 break;
 
             default:
