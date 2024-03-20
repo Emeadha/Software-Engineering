@@ -21,14 +21,16 @@ public:
     ~Logger();
 
     // Methods to receive updates from planes, flights, and airports
-	void logPlaneUpdate(const std::string& pid, int p_status, const Clock& first_time, const Clock& second_time);
-	void logFlightUpdate(const std::string& fid, int f_status, const Clock& first_time, const Clock& second_time);
-	void logAirportUpdate(const std::string& aid, int a_status, const Clock& first_time, const Clock& second_time);
-	void exportLogsToFile(int switchCase);
+	void logPlaneUpdate(const std::string& pid, 
+        int p_status, const Clock& first_time, const Clock& second_time);//Creates plane log string, then sends to exportLogs to print to file
+	void logFlightUpdate(const std::string& fid, 
+        int f_status, const Clock& first_time, const Clock& second_time);//Creates flight log string, then sends to exportLogs to print to file
+	void logAirportUpdate(const std::string& aid, int a_status,
+        const Clock& first_time, const Clock& second_time);//Creates airport log string, then sends to exportLogs to print to file
 
+    
+	void exportLogsToFile(int switchCase);//Based on switch case, prints string to appropriate file
 
-    // Method for manual logging updates for testing purposes
-    void manualLogUpdates();
 
 private:
 
