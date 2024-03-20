@@ -1,9 +1,7 @@
 #When calling make all
-all:	airport.o clock.o main.o passenger.o plane.o timeManager.o airline.o gate.o flight.o input.o
-	g++ -std=c++11 -o airline_simulation airport.o clock.o main.o passenger.o plane.o timeManager.o airline.o gate.o flight.o input.o
-	echo Compilation is all green to green!
+all:	airport.o clock.o main.o passenger.o plane.o timeManager.o airline.o gate.o flight.o logger.o input.o
+	g++ -std=c++11 -o airline_simulation airport.o clock.o main.o passenger.o plane.o timeManager.o airline.o gate.o flight.o logger.o input.o
+	@echo ///////////Compilation is all green to green!//////////////
 
 clean:
-	rm *.o airline_simulation
-	rm flightLog.txt
-	echo All files cleaned
+	rm *.o airline_simulation *.txt && echo All files cleaned
