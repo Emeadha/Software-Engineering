@@ -46,7 +46,7 @@ public:
     string Airport_name; // Airport name
     TimeManager* time_manager;
     bool Airport_open; // Whether or not airport is open
-    bool atGate; //Whether or not the passenger group is at their gate
+    bool atGate = false; //Whether or not the passenger group is at their gate
 
     //Vector for all passenger and gate objects
     vector<Passenger*> All_passenger_groups;
