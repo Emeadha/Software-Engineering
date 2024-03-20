@@ -1,5 +1,5 @@
 #include "logger.h" 
-#include <sstring>
+#include <sstream>
 using namespace std;
 
 Logger::Logger(){
