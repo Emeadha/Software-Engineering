@@ -37,9 +37,6 @@ public:
     int targetGateID = 3; //Assigned target gate for passenger groups
     Passenger(int Passenger_group_ID); //Constructor
 
-    //10 minute delay added when passenger groups are created
-    void clockDelay();
-
     /*//Will assign the start gate to passenger group - used in airport
     void setStartGate(Gate* startGate);
 

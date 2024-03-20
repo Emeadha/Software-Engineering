@@ -7,11 +7,13 @@ airport.cpp
 #include "airport.h"
 #include <iostream>
 #include <string>
+#include <chrono>
+#include <algorithm>
 
 using namespace std;
 
 // Constructor
-Airport::Airport(string airport_name): Objects_clock(0, 0, 0) 
+Airport::Airport(string airport_name): Objects_clock(0, 0, 0), Passenger_clock(0,0,0)
 {
     this->Airport_name = airport_name;
 
@@ -130,24 +132,36 @@ int Airport::findGate(int GateID)
     return -1;
 }
 
-//Will decrement a clock so that once clock is at 0 it will signify a passenger's arrival at target gate
+//Will move passenger groups to the target gate ID 
 void Airport::passengerMovement()
 {
+    int totalMinutes = Passenger_clock.hours * 60 + Passenger_clock.minutes;
+
     for(int i = 0; i < All_passenger_groups.size(); i++)
     {
-        if(atGate != true)
+        //if passengers are not at gate, clock will decremement by 10 minutes
+        //once clock == 0, the passenger group atGate bool will be flipped to true and copied to temp vector 
+        if(!All_passenger_groups[i]->atGate)
         {
-            //decrement delay clock by 10 min 
+            totalMinutes -= 10;
+            if(totalMinutes <= 0)
+            {
+                All_passenger_groups[i]->atGate = true;
+                atGateGroups.push_back(All_passenger_groups[i]);
+            }
         }
+        //if passengers are already at gate they are moved to temp vector
         else
-        {
-            for(int x = 0; x < sizeof(All_gates); x++)
-                for(int j = 0; j < sizeof(All_passenger_groups); j++)
-                {
-                    
-                }
-
-        }
+            atGateGroups.push_back(All_passenger_groups[i]);
 
     }
+    
+    //passenger groups are removed for the all passenger group vector
+    //then are moved from temp vector to final vector passengersAtGate
+    auto removeIter = std::remove_if(All_passenger_groups.begin(),All_passenger_groups.end(), [](Passenger* passenger)
+    { return passenger->atGate; });
+
+    All_passenger_groups.erase(removeIter, All_passenger_groups.end());
+
+    passengersAtGate.insert(passengersAtGate.end(), atGateGroups.begin(), atGateGroups.end());
 }

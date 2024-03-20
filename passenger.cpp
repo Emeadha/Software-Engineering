@@ -13,13 +13,6 @@ Passenger::Passenger(int Passenger_group_ID) :  Objects_clock(0, 0, 0), delay(0,
 }
 
 
-//10 minute delay that will be added when passengers are created
-void Passenger::clockDelay()
-{
-    
-}
-
-
 //TEST CHANGE - To avoid conflicts, passenger no longer time observer
 /*
 void Passenger::onTimeUpdate(Clock& new_time) {

@@ -32,7 +32,7 @@ What’s its goal? To hold passenger groups and gates
 #include <iostream>
 #include <iomanip>
 #include <vector>
-#include <map>
+#include <chrono>
 
 
 using namespace std;   
@@ -42,6 +42,7 @@ public:
     //Variables
     int Airport_ID; // Primary key for airport
     Clock Objects_clock; // Instance of the clock object for the airport, used to keep simulation synchronization
+    Clock Passenger_clock;
     string Airport_name; // Airport name
     TimeManager* time_manager;
     bool Airport_open; // Whether or not airport is open
@@ -49,8 +50,10 @@ public:
 
     //Vector for all passenger and gate objects
     vector<Passenger*> All_passenger_groups;
-    vector<int> passengersAtGate;
+    vector<Passenger*> passengersAtGate; //vector of copied passenger groups that have atGate == true
+    vector<Passenger*> atGateGroups; //temp vector
     vector<Gate*> All_gates;
+
 
     //Constructor
     Airport(string airport_name);
