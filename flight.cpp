@@ -24,9 +24,9 @@ Flight::Flight(int Flight_ID, int Ticket_cost, string Flight_type, string Plane_
         this->Distance = Distance;
 
         if(debugging){
-            cout << "DEBUGGING: New flight object made, values of: ID:" << this->Flight_ID << " Ticket:" << this->Ticket_cost
-                << " FlightType:" << this->Flight_type << " Planename:" << this->Plane_name << " Dest:" << this->Dest_airport_name
-                << " Origin:" << this->Origin_airport_name << " Dist:" << this->Distance << endl;
+            cerr << "DEBUGGING: New flight object made, values of: ID:" << Flight_ID << " Ticket:" << Ticket_cost
+                << " FlightType:" << Flight_type << " Planename:" << Plane_name << " Dest:" << Dest_airport_name
+                << " Origin:" << Origin_airport_name << " Dist:" << Distance << endl;
         }
     
 }
