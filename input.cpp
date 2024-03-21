@@ -277,6 +277,17 @@ void Input::read_flights()
 			iss >> departure_h >> comma >> departure_m >> comma >>departure_s >> comma >>arrival_h >> comma >>arrival_m >> comma >> arrival_s >> comma >> distance >> comma;
 
 			getline(iss, plane_name);
+
+			//Trim the last variable on each line to remove white space
+			size_t end = plane_name.length();
+			while(end > 0 && isspace(plane_name[end-1]))
+			{
+				end--;
+			}
+			//Reassign airport_name once it has been trimmed
+			plane_name = plane_name.substr(0, end);
+
+
 			if(debugging){
 				cout << "Flight data: " << ticket_price << ", " << origin << ", " << dest << ", " << flight_type_name << ", " << origin << ", " <<  dest << ", " <<  departure_h << ", " << departure_m << ", " << departure_s << ", " << arrival_h << ", " << arrival_m << ", " << arrival_s << ", " << distance << ", " << plane_name << endl;
 			}
