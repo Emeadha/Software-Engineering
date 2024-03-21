@@ -36,6 +36,8 @@ private:
     vector<Flight*> All_flights; //Create a vector to handle all flights
     vector<Plane*> All_planes; //Create a vector to handle all planes
     vector<Airport*> All_airports; //Createa a vector to handle all airports
+
+    bool debugging = false; //debugging bool in order to output debug information if set to true
 public:
     TimeManager* time_manager; //TimeManager object to add observers per new object
     Clock Objects_clock; //Clock object

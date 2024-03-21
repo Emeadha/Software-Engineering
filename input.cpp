@@ -68,12 +68,15 @@ void Input::read_airports()
 
 		for(int i = 0; i < line_count; i++)
 		{
-	    	//cout << i << endl;
+			if(debugging){
+				cout << "Index: " << i << endl;
+			}
 			//getline for airport_name since it's the only variable on the line
 			getline(infile, airport_name);
 
-			//cout << airport_name << endl;
-
+			if(debugging){
+			cout << "Airport name: " << airport_name << endl;
+			}
 			
 	    	Airport* airport = new Airport(airport_name);
 		   	register_airport(airport);
@@ -85,6 +88,9 @@ void Input::read_airports()
 }
 void Input::register_airport(Airport* airport)
 {
+	if(debugging){
+		cout << "Registering Airport"  << endl;
+	}
     //Add the parameter airport as an observer then push it onto the vector	 
     All_airports.push_back(airport);
 }
@@ -133,15 +139,15 @@ void Input::read_planes()
 
 		infile >> line_count;
 
-		//cout << line_count << endl;
 		//getline to skip the line_count line
 		getline(infile, line);
 
 
 		for(int i = 0; i < line_count; i++)
 		{
-			//cout << i << endl;
-	    	
+			if(debugging){
+				cout << "Index: " << i << endl;
+			}
 			//get the whole line as a string
 			getline(infile, line);
 
@@ -154,8 +160,10 @@ void Input::read_planes()
 			getline(iss, plane_model, ',');
 			//read in other variables, skipping commas
 			iss >> max_passengers >> comma >> max_fuel >> comma >> burn_rate >> comma >> max_speed;
-			//cout << plane_name << ", " << plane_model << ", " << max_passengers << ", " << max_fuel << ", " << burn_rate << ", " << max_speed << endl;
-
+			
+			if(debugging){
+			cout << "Plane data: " << plane_name << ", " << plane_model << ", " << max_passengers << ", " << max_fuel << ", " << burn_rate << ", " << max_speed << endl;
+			}
 
 	    	Plane* plane = new Plane(i, plane_name, plane_model, max_fuel, burn_rate, max_speed, max_passengers);
 
@@ -169,6 +177,9 @@ void Input::read_planes()
 }
 void Input::register_plane(Plane* plane)
 {
+	if(debugging){
+		cout << "Registering Plane" << endl;
+	}
     //Same process but for planes
     All_planes.push_back(plane);
 }
@@ -214,7 +225,6 @@ void Input::read_flights()
 		cout << "Input file '" << user_input_file << "' found. Processing input." << endl; 
 	}
 		infile >> line_count;
-		//cout << line_count << endl;
 
 		//getline grabs the line_count line
 		getline(infile, line);
@@ -222,8 +232,10 @@ void Input::read_flights()
 
 		for(int i = 0; i < line_count; i++)
 		{
-			//cout << i << endl;	
-		
+			if(debugging){
+			cout << "Index: " << i << endl;	
+			}
+
 			getline(infile, line);
 
 			istringstream iss(line);
@@ -231,20 +243,17 @@ void Input::read_flights()
 			char comma;
 
 			iss >> ticket_price >> comma;
-			//cout << ticket_price << endl;
 			getline(iss, flight_type_name, ',');
-			//cout << flight_type_name << endl;
 			getline(iss, origin, ',');
-			//cout << origin << endl;
 			getline(iss, dest, ',');
-			//cout << dest << endl;
 
 			iss >> departure_h >> comma >> departure_m >> comma >>departure_s >> comma >>arrival_h >> comma >>arrival_m >> comma >> arrival_s >> comma >> distance >> comma;
 
 			getline(iss, plane_name);
 
-			//cout << ticket_price << ", " << origin << ", " << dest << ", " << flight_type_name << ", " << origin << ", " <<  dest << ", " <<  departure_h << ", " << departure_m << ", " << departure_s << ", " << arrival_h << ", " << arrival_m << ", " << arrival_s << ", " << distance << ", " << plane_name << endl;
-	
+			if(debugging){
+				cout << "Flight data: " << ticket_price << ", " << origin << ", " << dest << ", " << flight_type_name << ", " << origin << ", " <<  dest << ", " <<  departure_h << ", " << departure_m << ", " << departure_s << ", " << arrival_h << ", " << arrival_m << ", " << arrival_s << ", " << distance << ", " << plane_name << endl;
+			}
 		    Flight* flight = new Flight(i, ticket_price, flight_type_name, plane_name, dest, origin, departure_h, departure_m, departure_s, arrival_h, arrival_m, arrival_s, distance);
 		    register_flight(flight);
 	
@@ -253,6 +262,9 @@ void Input::read_flights()
 }
 void Input::register_flight(Flight* flight)
 {
+	if(debugging){
+		cout << "Registering Flight" << endl;
+	}
     //Don't create as an observer since this is something to be scheduled.
     All_flights.push_back(flight);
 }
