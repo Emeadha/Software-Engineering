@@ -144,6 +144,8 @@ void Airport::passengerMovement()
     //cout << "total Minutes " << totalMinutes << endl;
     int delay;
 
+    //for(int w = 0; w < All_passenger_groups.size(); w++)
+        //All_passenger_groups[w]->gateID = 0;
     
     for(int i = 0; i < All_passenger_groups.size(); i++)
     {
