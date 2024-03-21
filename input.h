@@ -25,6 +25,7 @@
 #include <fstream>
 #include <sstream>
 #include <mutex>
+#include <unistd.h>
 
 using namespace std;
 

@@ -14,7 +14,7 @@ the tick-rate (currently every 10 min is 1 second for sim).
 #include "passenger.h"
 #include "airline.h"
 #include "input.h"
-#include <thread>
+#include <unistd.h>
 
 using namespace std;
 
@@ -27,7 +27,7 @@ int main() {
     TimeManager time_manager;
     Input input;
 
-    this_thread::sleep_for(chrono::seconds(1));
+    sleep(1);
 
 
     //At first, we only create our Airline

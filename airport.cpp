@@ -139,7 +139,7 @@ int Airport::findGate(int GateID)
 //Will move passenger groups to the target gate ID 
 void Airport::passengerMovement()
 {   
-    cout << "Passenger Clock: " << Passenger_clock.hours <<":" << Passenger_clock.minutes << endl;
+    //cout << "Passenger Clock: " << Passenger_clock.hours <<":" << Passenger_clock.minutes << endl;
     //int totalMinutes = Passenger_clock.hours * 60 + Passenger_clock.minutes;
     //cout << "total Minutes " << totalMinutes << endl;
     int delay;
@@ -150,15 +150,15 @@ void Airport::passengerMovement()
     for(int i = 0; i < All_passenger_groups.size(); i++)
     {
       delay = Objects_clock.minutes - Passenger_clock.minutes;
-      cout << "delayed by " << delay << endl; 
-      cout << Passenger_clock.hours << ":" << Passenger_clock.hours << endl;
+      //cout << "delayed by " << delay << endl; 
+      //cout << Passenger_clock.hours << ":" << Passenger_clock.hours << endl;
     
         //if passengers are not at gate, clock will decremement by 10 minutes
         //once clock == 0, the passenger group atGate bool will be flipped to true and copied to temp vector 
         if(!All_passenger_groups[i]->atGate)
         {
             delay -= 10;
-            cout << "Debugging: " << delay << "minutes" << endl;
+            //cout << "Debugging: " << delay << "minutes" << endl;
             //delay = Objects_clock.minutes - Passenger_clock.minutes;
             
 
