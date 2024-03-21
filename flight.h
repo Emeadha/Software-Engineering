@@ -22,6 +22,11 @@ two airports, and the information such as ticket cost associated with it.
 
 #include "clock.h"
 #include <string>
+#include <mutex>
+
+
+    //Mutex
+    //extern mutex Flight_Con_Mutex;
 
 class Flight {
 private:
@@ -50,6 +55,10 @@ private:
 
     // Has this already been scheduled?
     bool Scheduled = false;
+
+    //Debugging
+    bool debugging = true;
+
 
 public:
 

@@ -154,6 +154,11 @@ void Airline::loadFlights(){
 
     //Calculate remaining information based on airport and plane data
     for(int i=0; i<All_flights.size(); i++){
+        //Debugging statement
+        if(debugging){
+            cout << "DEBUGGING: " << All_flights[i]->getPlaneName() << " To: " << 
+            All_flights[i]->getDestAirptName() << " From: " << All_flights[i]->getOriginAirptID() << endl;
+        }
         //Discover and set ID of origin airport
         temp_name = All_flights[i]->getOriginAirptName();
         tempID = findAirportID(temp_name);

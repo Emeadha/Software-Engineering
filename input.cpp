@@ -12,15 +12,23 @@
 #include "input.h"
 #include <fstream>
 
+std::mutex Input::input_lock;
+
+
 Input::Input()
 {
+	//Mutex lock
+	//lock_guard<mutex> lock(input_lock);
+
     read_airports(); // Calls to read in input for airports, planes, and flights
     read_planes();
     read_flights();
 }
 void Input::read_airports()
 {
-    
+    //Mutex lock
+	lock_guard<mutex> lock(input_lock);
+
     string default_file = "airportinput.csv"; //Create a default file name to look for before prompting the user for a file.
     string user_input_file; //Used in case of not finding the default file.
     int line_count;
@@ -96,6 +104,9 @@ void Input::register_airport(Airport* airport)
 }
 void Input::read_planes()
 {
+	//Mutex lock
+	lock_guard<mutex> lock(input_lock);
+
     //Same process, just with plane variables and input file instead.
     string default_file = "planeinput.csv";
     string user_input_file;
@@ -185,6 +196,9 @@ void Input::register_plane(Plane* plane)
 }
 void Input::read_flights()
 {
+	//Mutex lock
+	lock_guard<mutex> lock(input_lock);
+
     //Same process of reading in input except with flights. Not sure if this is the way to go since I was unfamiliar with the scheduleFlights function while writing this
     string default_file = "flightinput.csv";
     string user_input_file;
@@ -271,13 +285,19 @@ void Input::register_flight(Flight* flight)
 //Return vectors to airline (probably) so they can be registered as time observers
 vector<Airport*>& Input::get_airport_vector()
 {
+	//Mutex lock
+	lock_guard<mutex> lock(input_lock);
 	return All_airports;
 }
 vector<Plane*>& Input::get_plane_vector()
 {
+	//Mutex lock
+	lock_guard<mutex> lock(input_lock);
 	return All_planes;
 }
 vector<Flight*>& Input::get_flight_vector()
 {
+	//Mutex lock
+	lock_guard<mutex> lock(input_lock);
 	return All_flights;
 }

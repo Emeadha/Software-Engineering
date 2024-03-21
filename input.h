@@ -24,6 +24,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <mutex>
 
 using namespace std;
 
@@ -38,6 +39,8 @@ private:
     vector<Airport*> All_airports; //Createa a vector to handle all airports
 
     bool debugging = false; //debugging bool in order to output debug information if set to true
+    static mutex input_lock;
+
 public:
     TimeManager* time_manager; //TimeManager object to add observers per new object
     Clock Objects_clock; //Clock object

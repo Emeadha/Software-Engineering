@@ -7,6 +7,8 @@ using namespace std;
 //constructor
 Logger::Logger() : planeFileName("planeLog.txt"), flightFileName("flightLog.txt"), airportFileName("airportLog.txt"), plane_exported(false), flight_exported(false), airport_exported(false) 
 {
+
+
     // Open respective files
     planeLogFile.open(planeFileName);
     airportLogFile.open(airportFileName);

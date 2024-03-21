@@ -13,12 +13,21 @@ Flight::Flight(int Flight_ID, int Ticket_cost, string Flight_type, string Plane_
         string Origin_airport_name, int D_hour, int D_min, int D_sec, int A_hour, int A_min, int A_sec, double distance) 
         : Departure_time(D_hour,D_hour,D_sec), Arrival_time(A_hour,A_min,A_sec) {
 
-        this->Plane_name = Plane_name;
+        //lock_guard<mutex> lock(Flight_Con_Mutex);
+
         this->Flight_ID = Flight_ID;
         this->Ticket_cost = Ticket_cost;
         this->Flight_type = Flight_type; 
+        this->Plane_name = Plane_name;
         this->Dest_airport_name = Dest_airport_name;
         this->Origin_airport_name = Origin_airport_name;
+        this->Distance = Distance;
+
+        if(debugging){
+            cout << "DEBUGGING: New flight object made, values of: ID:" << this->Flight_ID << " Ticket:" << this->Ticket_cost
+                << " FlightType:" << this->Flight_type << " Planename:" << this->Plane_name << " Dest:" << this->Dest_airport_name
+                << " Origin:" << this->Origin_airport_name << " Dist:" << this->Distance << endl;
+        }
     
 }
 
