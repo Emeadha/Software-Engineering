@@ -85,6 +85,16 @@ void Input::read_airports()
 			//getline for airport_name since it's the only variable on the line
 			getline(infile, airport_name);
 
+
+			//Trim the last variable on each line to remove white space
+			size_t end = airport_name.length();
+			while(end > 0 && isspace(airport_name[end-1]))
+			{
+				end--;
+			}
+			//Reassign airport_name once it has been trimmed
+			airport_name = airport_name.substr(0, end);
+
 			if(debugging){
 			cout << "Airport name: " << airport_name << endl;
 			}
@@ -263,7 +273,7 @@ void Input::read_flights()
 			getline(iss, flight_type_name, ',');
 			getline(iss, origin, ',');
 			getline(iss, dest, ',');
-
+			
 			iss >> departure_h >> comma >> departure_m >> comma >>departure_s >> comma >>arrival_h >> comma >>arrival_m >> comma >> arrival_s >> comma >> distance >> comma;
 
 			getline(iss, plane_name);

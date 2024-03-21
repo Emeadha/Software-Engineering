@@ -54,7 +54,7 @@ private:
 
     bool scheduleNeeded = false;
 
-    bool debugging = true;
+    bool debugging = false;
 
 
 public:

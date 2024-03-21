@@ -116,9 +116,28 @@ int Airline::findPlaneID(string plane_name){
 
     //Iterator
     int i = 0;
+
+    if(debugging)
+    {
+        cout << "DEBUGGING: findPlaneID, plane_name = " << plane_name << endl;
+    }
+
     //Iterate through all planes, return position when found
     while (i < All_planes.size()){
+
+        if(debugging)
+        {
+            cout << "DEBUGGING: getPlaneName() call returns: " << All_planes[i]->getPlaneName() << ", Index: " << i << endl;
+        }
+
+
         if(All_planes[i]->getPlaneName() == plane_name){
+
+            if(debugging)
+            {
+                cout << "DEBUGGING: Found! Plane name: " << All_planes[i]->getPlaneName() << ", Index: " << i << endl;
+            }
+
             return i;
         }
         else
@@ -131,14 +150,35 @@ int Airline::findPlaneID(string plane_name){
 int Airline::findAirportID(string airport_name){
     //Iterator
     int i = 0;
+
+    if(debugging)
+    {
+        cout << "DEBUGGING: findAirportID, airport_name = " << airport_name << endl;
+    }
+
     //Iterate through all planes, return position when found
     while (i < All_airports.size()){
+
+        if(debugging)
+        {
+            cout << "DEBUGGING: getAirportName() call returns: " << All_airports[i]->getAirportName() << ", Index: " << i << endl;
+        }
+
+
         if(All_airports[i]->getAirportName() == airport_name){
+            
+            if(debugging)
+            {
+                cout << "DEBUGGING: Found! Airport name: " << All_airports[i]->getAirportName() << ", Index: " << i << endl;
+            }
+            
             return i;
+            
         }
         else
             i++;
     }
+
 
     //If ID doesn't exist
     return -1;
@@ -164,10 +204,18 @@ void Airline::loadFlights(){
         tempID = findAirportID(temp_name);
         All_flights[i]->setOriginAirptID(tempID);
 
+        if(debugging){
+            cout << "DEBUGGING: Origin airport name: " << temp_name << ", Origin Airport ID" << tempID << endl;
+        }
+
         //Discover and set ID of dest airport
         temp_name = All_flights[i]->getDestAirptName();
         tempID = findAirportID(temp_name);
         All_flights[i]->setDestAirptID(tempID);
+
+        if(debugging){
+            cout << "DEBUGGING: Dest airport name: " << temp_name << ", Dest Airport ID" << tempID << endl;
+        }
 
         //Discover and set ID of plane
         temp_name = All_flights[i]->getPlaneName();
