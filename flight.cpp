@@ -9,7 +9,7 @@ Flight implementation
 #include "flight.h"
 
 //Big ugly constructor
-Flight::Flight(int Flight_ID, int Ticket_cost, string Flight_type, string Plane_name, string Dest_airport_name,
+Flight::Flight(int Flight_ID, double Ticket_cost, string Flight_type, string plane_name, string Dest_airport_name,
         string Origin_airport_name, int D_hour, int D_min, int D_sec, int A_hour, int A_min, int A_sec, double distance) 
         : Departure_time(D_hour,D_hour,D_sec), Arrival_time(A_hour,A_min,A_sec) {
 
@@ -18,15 +18,15 @@ Flight::Flight(int Flight_ID, int Ticket_cost, string Flight_type, string Plane_
         this->Flight_ID = Flight_ID;
         this->Ticket_cost = Ticket_cost;
         this->Flight_type = Flight_type; 
-        this->Plane_name = Plane_name;
+        this->Plane_name = plane_name;
         this->Dest_airport_name = Dest_airport_name;
         this->Origin_airport_name = Origin_airport_name;
-        this->Distance = Distance;
+        this->Distance = distance;
 
         if(debugging){
             cerr << "DEBUGGING: New flight object made, values of: ID:" << Flight_ID << " Ticket:" << Ticket_cost
                 << " FlightType:" << Flight_type << " Planename:" << Plane_name << " Dest:" << Dest_airport_name
-                << " Origin:" << Origin_airport_name << " Dist:" << Distance << endl;
+                << " Origin:" << Origin_airport_name << " Dist:" << distance << endl;
         }
     
 }

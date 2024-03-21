@@ -21,8 +21,11 @@ Input::Input()
 	//lock_guard<mutex> lock(input_lock);
 
     read_airports(); // Calls to read in input for airports, planes, and flights
+	sleep(1);
     read_planes();
+	sleep(1);
     read_flights();
+	sleep(1);
 }
 void Input::read_airports()
 {
@@ -86,7 +89,7 @@ void Input::read_airports()
 			cout << "Airport name: " << airport_name << endl;
 			}
 			
-	    	Airport* airport = new Airport(airport_name);
+	    	Airport* airport = new Airport(i, airport_name);
 		   	register_airport(airport);
 		   
 		}
@@ -267,8 +270,8 @@ void Input::read_flights()
 			if(debugging){
 				cout << "Flight data: " << ticket_price << ", " << origin << ", " << dest << ", " << flight_type_name << ", " << origin << ", " <<  dest << ", " <<  departure_h << ", " << departure_m << ", " << departure_s << ", " << arrival_h << ", " << arrival_m << ", " << arrival_s << ", " << distance << ", " << plane_name << endl;
 			}
-			cerr << "----------" << endl;
-			cerr << ticket_price << ", " << flight_type_name << ", " << plane_name << ", " << dest << ", " <<  origin << ", " <<  departure_h << ", " << departure_m << ", " << departure_s << ", " << arrival_h << ", " << arrival_m << ", " << arrival_s << ", " << distance << endl;
+			//cerr << "----------" << endl;
+			//cerr << ticket_price << ", " << flight_type_name << ", " << plane_name << ", " << dest << ", " <<  origin << ", " <<  departure_h << ", " << departure_m << ", " << departure_s << ", " << arrival_h << ", " << arrival_m << ", " << arrival_s << ", " << distance << endl;
 	
 		    Flight* flight = new Flight(i, ticket_price, flight_type_name, plane_name, dest, origin, departure_h, departure_m, departure_s, arrival_h, arrival_m, arrival_s, distance);
 		    register_flight(flight);

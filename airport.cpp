@@ -13,7 +13,7 @@ airport.cpp
 using namespace std;
 
 // Constructor
-Airport::Airport(string airport_name): Objects_clock(0, 0, 0), Passenger_clock(0,10,0)
+Airport::Airport(int airport_ID, string airport_name): Objects_clock(0, 0, 0), Passenger_clock(0,10,0)
 {
     //Mutex lock for saftey
     //lock_guard<mutex> lock(Airport_Con_Mutex);
@@ -22,7 +22,7 @@ Airport::Airport(string airport_name): Objects_clock(0, 0, 0), Passenger_clock(0
     this->Airport_name = airport_name;
 
     // Initialize Airport_ID to a default value 
-    Airport_ID = 0;
+    Airport_ID = airport_ID;
 
     // Set the initial value of Airport_open 
     Airport_open = true;

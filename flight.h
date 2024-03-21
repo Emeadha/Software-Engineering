@@ -42,7 +42,7 @@ private:
     Clock Departure_time; //Scheduled departure time
     Clock Arrival_time; //Estimated arrival time at origin airport/gate
 
-    double Distance;
+    double Distance = 0;
 
     //Calculated during scheduling
     int Dest_airport_ID = 0; //The ID number of the airport for the plane to land at
@@ -63,7 +63,7 @@ private:
 public:
 
     // Constructor
-    Flight(int Ticket_cost, int Flight_ID, string Flight_type, string Plane_name, string Dest_airport_name, string Origin_airport_name, int D_hour, int D_min, int D_sec, int A_hour, int A_min, int A_sec, double distance);
+    Flight(int Flight_ID, double Ticket_cost, string Flight_type, string plane_name, string Dest_airport_name, string Origin_airport_name, int D_hour, int D_min, int D_sec, int A_hour, int A_min, int A_sec, double distance);
     
     //Getters
     //ADD MORE GETTERS HERE

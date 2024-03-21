@@ -43,7 +43,7 @@ using namespace std;
 class Airport : public TimeObserver {
 private:
     //Variables
-    int Airport_ID; // Primary key for airport
+    int Airport_ID = -1; // Primary key for airport
     Clock Objects_clock; // Instance of the clock object for the airport, used to keep simulation synchronization
     Clock Passenger_clock;
     string Airport_name; // Airport name
@@ -62,7 +62,7 @@ private:
 public:
 
     //Constructor
-    Airport(string airport_name);
+    Airport(int airport_ID, string airport_name);
 
     // Register a passenger_group (to vector) and as an observer
     void registerPassengerGroup(Passenger* passengerGroupID);
