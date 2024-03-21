@@ -35,6 +35,7 @@ public:
     Clock delay; // How long to transit between gates, set by airport, i.e. gate 10 to 30 = 15 min delay
     bool atGate; // Are they at a gate?
     int targetGateID = 3; //Assigned target gate for passenger groups
+    int assignedGate; 
     Passenger(int Passenger_group_ID); //Constructor
 
     /*//Will assign the start gate to passenger group - used in airport

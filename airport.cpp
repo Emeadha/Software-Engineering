@@ -144,8 +144,8 @@ void Airport::passengerMovement()
     //cout << "total Minutes " << totalMinutes << endl;
     int delay;
 
-    //for(int w = 0; w < All_passenger_groups.size(); w++)
-        //All_passenger_groups[w]->gateID = 0;
+    for(int w = 0; w < All_passenger_groups.size(); w++)
+        All_passenger_groups[w]->assignedGate = 0;
     
     for(int i = 0; i < All_passenger_groups.size(); i++)
     {
@@ -183,11 +183,11 @@ void Airport::passengerMovement()
     
     //passenger groups are removed for the all passenger group vector
     //then are moved from temp vector to final vector passengersAtGate
-    auto removeIter = std::remove_if(All_passenger_groups.begin(),All_passenger_groups.end(), [](Passenger* passenger) { 
+    /*auto removeIter = std::remove_if(All_passenger_groups.begin(),All_passenger_groups.end(), [](Passenger* passenger) { 
         return passenger->atGate; 
      });
 
     All_passenger_groups.erase(removeIter, All_passenger_groups.end());
 
-    passengersAtGate.insert(passengersAtGate.end(), atGateGroups.begin(), atGateGroups.end());
+    passengersAtGate.insert(passengersAtGate.end(), atGateGroups.begin(), atGateGroups.end());*/
 }
