@@ -33,12 +33,15 @@ What’s its goal? To hold passenger groups and gates
 #include <iomanip>
 #include <vector>
 #include <chrono>
+#include <mutex>
 
+    //Mutex
+    //extern mutex Airport_Con_Mutex;
 
 using namespace std;   
 
 class Airport : public TimeObserver {
-public:
+private:
     //Variables
     int Airport_ID; // Primary key for airport
     Clock Objects_clock; // Instance of the clock object for the airport, used to keep simulation synchronization
@@ -54,6 +57,9 @@ public:
     vector<Passenger*> atGateGroups; //temp vector
     vector<Gate*> All_gates;
 
+
+
+public:
 
     //Constructor
     Airport(string airport_name);

@@ -27,6 +27,8 @@ int main() {
     TimeManager time_manager;
     Input input;
 
+    this_thread::sleep_for(chrono::seconds(1));
+
 
     //At first, we only create our Airline
     // Airline -> Airports + Planes

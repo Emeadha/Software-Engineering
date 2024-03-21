@@ -24,6 +24,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <mutex>
 
 using namespace std;
 
@@ -36,6 +37,9 @@ private:
     vector<Flight*> All_flights; //Create a vector to handle all flights
     vector<Plane*> All_planes; //Create a vector to handle all planes
     vector<Airport*> All_airports; //Createa a vector to handle all airports
+
+    static mutex input_lock;
+
 public:
     TimeManager* time_manager; //TimeManager object to add observers per new object
     Clock Objects_clock; //Clock object
