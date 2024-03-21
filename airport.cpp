@@ -13,7 +13,7 @@ airport.cpp
 using namespace std;
 
 // Constructor
-Airport::Airport(int airport_ID, string airport_name): Objects_clock(0, 0, 0), Passenger_clock(0,10,0)
+Airport::Airport(int airport_ID, string airport_name): Objects_clock(0, 0, 0)
 {
     //Mutex lock for saftey
     //lock_guard<mutex> lock(Airport_Con_Mutex);
@@ -39,6 +39,7 @@ Airport::Airport(int airport_ID, string airport_name): Objects_clock(0, 0, 0), P
         registerGate(gateID);
         
     }
+
 }
 
 //Add reference to TimeManager object, then complete object creation
@@ -55,6 +56,8 @@ void Airport::registerPassengerGroup(Passenger* passengerGroupID)
     //Note: Passenger no longer time Observer
     //Only add to vector
     All_passenger_groups.push_back(passengerGroupID);
+
+
 }
 
 //Register a gate (to vector) and as an observer
@@ -143,25 +146,35 @@ void Airport::passengerMovement()
     //int totalMinutes = Passenger_clock.hours * 60 + Passenger_clock.minutes;
     //cout << "total Minutes " << totalMinutes << endl;
     int delay;
+    int gateNumber = 0;
+    int targetGate = 3; 
 
     for(int w = 0; w < All_passenger_groups.size(); w++)
-        All_passenger_groups[w]->assignedGate = 0;
+    {
+        All_passenger_groups[w]->assignedGate = gateNumber;
+        gateNumber++;
+    }
     
     for(int i = 0; i < All_passenger_groups.size(); i++)
     {
-      delay = Objects_clock.minutes - Passenger_clock.minutes;
+      //delay = Objects_clock.minutes - Passenger_clock.minutes;
       //cout << "delayed by " << delay << endl; 
       //cout << Passenger_clock.hours << ":" << Passenger_clock.hours << endl;
     
+        if(All_passenger_groups[i]->assignedGate == targetGate)
+        {
+            atGate = false;
+            cout << "in if statement" << endl;
+        }
         //if passengers are not at gate, clock will decremement by 10 minutes
         //once clock == 0, the passenger group atGate bool will be flipped to true and copied to temp vector 
-        if(!All_passenger_groups[i]->atGate)
+        if(All_passenger_groups[i]->atGate == false)
         {
-            delay -= 10;
+            //Passenger->decrementPassengerDelay(durationOfUpdate);
             //cout << "Debugging: " << delay << "minutes" << endl;
             //delay = Objects_clock.minutes - Passenger_clock.minutes;
             
-
+            cout << "in next if statement" << endl;
             if(delay >= 0)
             {
                 All_passenger_groups[i]->atGate = true;
