@@ -57,7 +57,7 @@ private:
     vector<Passenger*> atGateGroups; //temp vector
     vector<Gate*> All_gates;
 
-    bool debuggin = false;
+    bool debugging = false;
 
 public:
 

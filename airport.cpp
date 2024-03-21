@@ -154,13 +154,17 @@ void Airport::passengerMovement()
     {
         All_passenger_groups[w]->assignedGate = gateNumber;
         gateNumber++;
-        cout << All_passenger_groups[w] << "is assigned to gate " << gateNumber << endl;    
+        if(debugging){
+            cout << All_passenger_groups[w] << "is assigned to gate " << gateNumber << endl;
+        }
 
     }
     for( int x=0; x < All_passenger_groups.size(); x++){
                 All_passenger_groups[x]->assignedTargetGate = targetGateNumber;
                 targetGateNumber++;
+                if(debugging){
                 cout << All_passenger_groups[x] << "is assigned to target gate " << targetGateNumber << endl;
+                }
             }
     
     for(int i = 0; i < All_passenger_groups.size(); i++)
@@ -182,11 +186,13 @@ void Airport::passengerMovement()
             //cout << "Debugging: " << delay << "minutes" << endl;
             //delay = Objects_clock.minutes - Passenger_clock.minutes;
             
-            cout << "-----------------------in next if statement-------------------" << endl;
+            //cout << "-----------------------in next if statement-------------------" << endl;
             if(delay >= 0)
             {
                 All_passenger_groups[i]->atGate = true;
-                cout << All_passenger_groups[i] << "is at gate" << endl;
+                if(debugging){
+                    cout << All_passenger_groups[i] << "is at gate" << endl;
+                }
                 atGateGroups.push_back(All_passenger_groups[i]);
             }
         }
@@ -195,7 +201,9 @@ void Airport::passengerMovement()
         else{
     
             atGateGroups.push_back(All_passenger_groups[i]);
-            cout << "passenger group " << " already at gate -> moved to temp vector" << endl;
+            if(debugging){
+                cout << "passenger group " << " already at gate -> moved to temp vector" << endl;
+            }
         }
 
             
