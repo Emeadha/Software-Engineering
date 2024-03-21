@@ -265,11 +265,19 @@ void Input::read_flights()
 
 			getline(iss, plane_name);
 
+<<<<<<< Updated upstream
 			if(debugging){
 				cout << "Flight data: " << ticket_price << ", " << origin << ", " << dest << ", " << flight_type_name << ", " << origin << ", " <<  dest << ", " <<  departure_h << ", " << departure_m << ", " << departure_s << ", " << arrival_h << ", " << arrival_m << ", " << arrival_s << ", " << distance << ", " << plane_name << endl;
 			}
+=======
+			cerr << "----------" << endl;
+			cerr << ticket_price << ", " << flight_type_name << ", " << plane_name << ", " << dest << ", " <<  origin << ", " <<  departure_h << ", " << departure_m << ", " << departure_s << ", " << arrival_h << ", " << arrival_m << ", " << arrival_s << ", " << distance << endl;
+	
+>>>>>>> Stashed changes
 		    Flight* flight = new Flight(i, ticket_price, flight_type_name, plane_name, dest, origin, departure_h, departure_m, departure_s, arrival_h, arrival_m, arrival_s, distance);
 		    register_flight(flight);
+
+			sleep(1);
 	
 		}
 	cout << "Flight processing complete." << endl;
