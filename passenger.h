@@ -40,6 +40,7 @@ public:
     bool atGate = false; // Are they at a gate?
     Passenger(int Passenger_group_ID); //Constructor
     void decrementPassengeDelay(Clock durationOfUpdate); //Called by airport to decrement time
+    int assignedTargetGate; // Target gate number
 
 
 

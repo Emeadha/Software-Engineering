@@ -147,25 +147,33 @@ void Airport::passengerMovement()
     //cout << "total Minutes " << totalMinutes << endl;
     int delay;
     int gateNumber = 0;
-    int targetGate = 3; 
+    int targetGateNumber=1; 
+    
 
     for(int w = 0; w < All_passenger_groups.size(); w++)
     {
         All_passenger_groups[w]->assignedGate = gateNumber;
         gateNumber++;
+        cout << All_passenger_groups[w] << "is assigned to gate " << gateNumber << endl;    
+
     }
+    for( int x=0; x < All_passenger_groups.size(); x++){
+                All_passenger_groups[x]->assignedTargetGate = targetGateNumber;
+                targetGateNumber++;
+                cout << All_passenger_groups[x] << "is assigned to target gate " << targetGateNumber << endl;
+            }
     
     for(int i = 0; i < All_passenger_groups.size(); i++)
     {
       //delay = Objects_clock.minutes - Passenger_clock.minutes;
       //cout << "delayed by " << delay << endl; 
       //cout << Passenger_clock.hours << ":" << Passenger_clock.hours << endl;
-    
-        if(All_passenger_groups[i]->assignedGate == targetGate)
-        {
-            atGate = false;
-            cout << "in if statement" << endl;
-        }
+        
+        //if(All_passenger_groups[i]->assignedGate == targetGateNumber)
+        //{
+          //  atGate = false;
+          //  cout << "in if statement" << endl;
+       // }
         //if passengers are not at gate, clock will decremement by 10 minutes
         //once clock == 0, the passenger group atGate bool will be flipped to true and copied to temp vector 
         if(All_passenger_groups[i]->atGate == false)
@@ -174,7 +182,7 @@ void Airport::passengerMovement()
             //cout << "Debugging: " << delay << "minutes" << endl;
             //delay = Objects_clock.minutes - Passenger_clock.minutes;
             
-            cout << "in next if statement" << endl;
+            cout << "-----------------------in next if statement-------------------" << endl;
             if(delay >= 0)
             {
                 All_passenger_groups[i]->atGate = true;
