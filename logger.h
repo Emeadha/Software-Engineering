@@ -41,4 +41,7 @@ private:
 
     // Method to export logs to file based on switchCase
     void exportLogsToFile(int switchCase);
+
+    // Pointer to Logger object used for communication
+    Logger* log_object;
 };
