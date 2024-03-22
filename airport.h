@@ -27,6 +27,7 @@ What’s its goal? To hold passenger groups and gates
 #include "timeManager.h"
 #include "gate.h"
 #include "passenger.h"
+#include "logger.h"
 
 #include <string>
 #include <iostream>
