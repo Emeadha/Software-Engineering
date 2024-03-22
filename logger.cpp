@@ -30,6 +30,11 @@ Logger::~Logger()
     flightLogFile.close();
 }
 
+void Logger::setAirportInfo(int airport_ID, const std::string& airport_name) {
+    // Store airport information in the log
+    airport_log += "Airport ID: " + to_string(airport_ID) + ", Airport Name: " + airport_name + "\n";
+}
+
 // File that reads methods sent by plane.cpp to determine status of the plane and export it into a text file as a log 
 void Logger::logPlaneUpdate(const string& pid, int p_status, const Clock& first_time, const Clock& second_time) {
     //initialize stringstream ss so we can utilize the clocktype
@@ -93,50 +98,44 @@ void Logger::logPlaneUpdate(const string& pid, int p_status, const Clock& first_
     }
 }
 
-// File that reads methods sent by flight.cpp to determine status of the flight and export it into a text file as a log 
 void Logger::logFlightUpdate(const string& fid, int f_status, const Clock& first_time, const Clock& second_time) {
-    switch (f_status) 
-    {
+    string status;
+    switch (f_status) {
         case 1:
-            //on time
-            flight_log += "Flight " + fid + " is currently on time";
+            status = "Flight is currently on time";
             break;
         case 2:
-            //cancelled
-            flight_log += "Flight " + fid + " has been cancelled";
+            status = "Flight has been cancelled";
             break;
         case 3:
-            //flying
-            flight_log += "Flight " + fid + " is in the air";
+            status = "Flight is in the air";
             break;
         case 4:
-            //about to take off
-            flight_log += "Flight " + fid + " is getting ready to take off";
+            status = "Flight is getting ready to take off";
             break;
         case 5:
-            //has landed
-            flight_log += "Flight " + fid + " has landed";
+            status = "Flight has landed";
             break;
         case 6:
-            //delayed
-            flight_log += "Flight " + fid + " is delayed";
+            status = "Flight is delayed";
             break;
         default:
-            //no updates
-            flight_log += "Flight " + fid + " has no updates at the moment";
+            status = "Flight has no updates at the moment";
             break;
     }
 
+    // Append flight status information to flight_log
+    flight_log = "FLIGHT STATUS: Flight ID: " + fid + "\n";
+    flight_log += "Flight # " + fid + " " + status + "\n";
+
     // Export logs to file if not exported before
-    if (!flight_exported) 
-    {
+    if (!flight_exported) {
         exportLogsToFile(2);
         flight_exported = true;
     }
 
     // Print success statement if all logs have been exported
-    if (plane_exported && flight_exported && airport_exported)
-    {
+    if (plane_exported && flight_exported && airport_exported) {
         cout << "Files have been successfully exported to airportLog.txt, flightLog.txt, and planeLog.txt" << endl;
     }
 }
@@ -195,3 +194,9 @@ void Logger::exportLogsToFile(int switchCase)
         cerr << "ERROR: FILE NOT OPENED CORRECTLY" << endl;
     }
 }
+
+void Logger::setTimeManager(TimeManager *time_manager) {
+    // Assign the time manager object
+    this->time_manager = time_manager;
+}
+
