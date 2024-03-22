@@ -18,6 +18,8 @@ What’s its goal? To hold passenger groups and gates
 */
 
 // airport.h
+// Forward declaration of Logger class
+class Logger;
 #ifndef AIRPORT_H
 #define AIRPORT_H
 
@@ -27,8 +29,6 @@ What’s its goal? To hold passenger groups and gates
 #include "timeManager.h"
 #include "gate.h"
 #include "passenger.h"
-#include "logger.h"
-
 #include <string>
 #include <iostream>
 #include <iomanip>
@@ -58,12 +58,15 @@ private:
     vector<Passenger*> atGateGroups; //temp vector
     vector<Gate*> All_gates;
 
+    Logger* logger; // Pointer to Logger object
+
     bool debugging = false;
 
 public:
 
     //Constructor
     Airport(int airport_ID, string airport_name);
+    ~Airport();
 
     // Register a passenger_group (to vector) and as an observer
     void registerPassengerGroup(Passenger* passengerGroupID);
@@ -73,6 +76,10 @@ public:
 
     // Implement the TimeObserver interface
     virtual void onTimeUpdate(Clock& new_time) override;
+
+    // Method to log airport updates
+    void logAirportUpdate(int a_status, const Clock& first_time, const Clock& second_time);
+
 
     // Getters
     int getAirportID(); // Return Airport ID
@@ -90,7 +97,11 @@ public:
     //will "move" passenger grous to assigned gate
     void passengerMovement();
 
+    // Method to set Logger object pointer
+    void setLogger(Logger *logger);
+
 };
 
 
 #endif // AIRPORT_H
+
