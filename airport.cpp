@@ -3,7 +3,6 @@ airport.cpp
 
 */
 // Airport.cpp
-#include "logger.h"
 
 #include "airport.h"
 #include <iostream>
@@ -14,7 +13,7 @@ airport.cpp
 using namespace std;
 
 // Constructor
-Airport::Airport(int airport_ID, string airport_name): Objects_clock(0, 0, 0), logger(nullptr)
+Airport::Airport(int airport_ID, string airport_name): Objects_clock(0, 0, 0)
 {
     //Mutex lock for saftey
     //lock_guard<mutex> lock(Airport_Con_Mutex);
@@ -40,48 +39,15 @@ Airport::Airport(int airport_ID, string airport_name): Objects_clock(0, 0, 0), l
         registerGate(gateID);
         
     }
- 
-    // Create and set the Logger object
-    logger = new Logger();
-    // Pass airport information to Logger
-    logger->setAirportInfo(Airport_ID, Airport_name);
-}
 
-// Destructor
-Airport::~Airport() 
-{
-    delete logger; // Deallocate memory for Logger object
 }
-
-// Method to log airport updates
-void Airport::logAirportUpdate(int a_status, const Clock& first_time, const Clock& second_time)
-{
-    if (logger) 
-    {
-        logger->logAirportUpdate(Airport_name, a_status, first_time, second_time);
-    } 
-    else 
-    {
-        cerr << "Logger is not set for the airport." << endl;
-    }
-}
-
 
 //Add reference to TimeManager object, then complete object creation
 void Airport::setTimeManager(TimeManager *time_manager){
 
     //Assign our time_manager
     this->time_manager = time_manager;
-    // Pass TimeManager object pointer to Logger
-    logger->setTimeManager(time_manager);
-}
 
-// Method to set Logger object pointer
-void Airport::setLogger(Logger *logger) 
-{
-    this->logger = logger;
-    // Pass airport information to Logger
-    logger->setAirportInfo(Airport_ID, Airport_name);
 }
 
 //Register a passenger_group (to vector) and as an observer
@@ -90,11 +56,8 @@ void Airport::registerPassengerGroup(Passenger* passengerGroupID)
     //Note: Passenger no longer time Observer
     //Only add to vector
     All_passenger_groups.push_back(passengerGroupID);
-    // Log the registration of the passenger group
-    if (logger) 
-    {
-        logger->logAirportUpdate(Airport_name, 1, Objects_clock, Objects_clock); // Assuming status 1 indicates registration
-    }
+
+
 }
 
 //Register a gate (to vector) and as an observer
@@ -102,11 +65,6 @@ void Airport::registerGate(Gate* gateID)
 {
     //time_manager->addObserver(gateID);
     All_gates.push_back(gateID);
-    // Log the registration of the gate
-    if (logger) 
-    {
-        logger->logAirportUpdate(Airport_name, 2, Objects_clock, Objects_clock); // Assuming status 2 indicates gate registration
-    }
 }
 
 //When time gets updated
@@ -183,14 +141,14 @@ int Airport::findGate(int GateID)
 
 //Will move passenger groups to the target gate ID 
 void Airport::passengerMovement()
-{
+{   
     //cout << "Passenger Clock: " << Passenger_clock.hours <<":" << Passenger_clock.minutes << endl;
     //int totalMinutes = Passenger_clock.hours * 60 + Passenger_clock.minutes;
     //cout << "total Minutes " << totalMinutes << endl;
     int delay;
     int gateNumber = 0;
-    int targetGateNumber=1;
-
+    int targetGateNumber=1; 
+    
 
     for(int w = 0; w < All_passenger_groups.size(); w++)
     {
@@ -208,65 +166,57 @@ void Airport::passengerMovement()
                 cout << All_passenger_groups[x] << "is assigned to target gate " << targetGateNumber << endl;
                 }
             }
-
-    // Check if the logger object exists before attempting to log airport updates
-    if (logger) {
-        for(int i = 0; i < All_passenger_groups.size(); i++)
+    
+    for(int i = 0; i < All_passenger_groups.size(); i++)
+    {
+      //delay = Objects_clock.minutes - Passenger_clock.minutes;
+      //cout << "delayed by " << delay << endl; 
+      //cout << Passenger_clock.hours << ":" << Passenger_clock.hours << endl;
+        
+        //if(All_passenger_groups[i]->assignedGate == targetGateNumber)
+        //{
+          //  atGate = false;
+          //  cout << "in if statement" << endl;
+       // }
+        //if passengers are not at gate, clock will decremement by 10 minutes
+        //once clock == 0, the passenger group atGate bool will be flipped to true and copied to temp vector 
+        if(All_passenger_groups[i]->atGate == false)
         {
-          //delay = Objects_clock.minutes - Passenger_clock.minutes;
-          //cout << "delayed by " << delay << endl;
-          //cout << Passenger_clock.hours << ":" << Passenger_clock.hours << endl;
-
-            //if(All_passenger_groups[i]->assignedGate == targetGateNumber)
-            //{
-              //  atGate = false;
-              //  cout << "in if statement" << endl;
-           // }
-            //if passengers are not at gate, clock will decremement by 10 minutes
-            //once clock == 0, the passenger group atGate bool will be flipped to true and copied to temp vector
-            if(All_passenger_groups[i]->atGate == false)
+            //Passenger->decrementPassengerDelay(durationOfUpdate);
+            //cout << "Debugging: " << delay << "minutes" << endl;
+            //delay = Objects_clock.minutes - Passenger_clock.minutes;
+            
+            //cout << "-----------------------in next if statement-------------------" << endl;
+            if(delay >= 0)
             {
-                //Passenger->decrementPassengerDelay(durationOfUpdate);
-                //cout << "Debugging: " << delay << "minutes" << endl;
-                //delay = Objects_clock.minutes - Passenger_clock.minutes;
-
-                //cout << "-----------------------in next if statement-------------------" << endl;
-                if(delay >= 0)
-                {
-                    All_passenger_groups[i]->atGate = true;
-                    if(debugging){
-                        cout << All_passenger_groups[i] << "is at gate" << endl;
-                    }
-                    atGateGroups.push_back(All_passenger_groups[i]);
-                }
-            }
-
-            //if passengers are already at gate they are moved to temp vector
-            else{
-
-                atGateGroups.push_back(All_passenger_groups[i]);
+                All_passenger_groups[i]->atGate = true;
                 if(debugging){
-                    cout << "passenger group " << " already at gate -> moved to temp vector" << endl;
+                    cout << All_passenger_groups[i] << "is at gate" << endl;
                 }
+                atGateGroups.push_back(All_passenger_groups[i]);
             }
-
-
-
+        }
+        
+        //if passengers are already at gate they are moved to temp vector
+        else{
+    
+            atGateGroups.push_back(All_passenger_groups[i]);
+            if(debugging){
+                cout << "passenger group " << " already at gate -> moved to temp vector" << endl;
+            }
         }
 
-        //passenger groups are removed for the all passenger group vector
-        //then are moved from temp vector to final vector passengersAtGate
-        /*auto removeIter = std::remove_if(All_passenger_groups.begin(),All_passenger_groups.end(), [](Passenger* passenger) {
-            return passenger->atGate;
-         });
+            
 
-        All_passenger_groups.erase(removeIter, All_passenger_groups.end());
-
-        passengersAtGate.insert(passengersAtGate.end(), atGateGroups.begin(), atGateGroups.end());*/
-        
-        // Log airport updates
-        logger->logAirportUpdate(Airport_name, 3, Objects_clock, Objects_clock); // Assuming status 3 indicates passenger movement
     }
+    
+    //passenger groups are removed for the all passenger group vector
+    //then are moved from temp vector to final vector passengersAtGate
+    /*auto removeIter = std::remove_if(All_passenger_groups.begin(),All_passenger_groups.end(), [](Passenger* passenger) { 
+        return passenger->atGate; 
+     });
 
+    All_passenger_groups.erase(removeIter, All_passenger_groups.end());
+
+    passengersAtGate.insert(passengersAtGate.end(), atGateGroups.begin(), atGateGroups.end());*/
 }
-
