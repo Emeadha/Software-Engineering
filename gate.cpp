@@ -65,7 +65,7 @@ int Gate::getPassengersAtGate()
 // Setters
 void Gate::setInUse(bool inUse)
 {
-    In_use = inUse;
+    this->In_use = inUse;
 }
 
 

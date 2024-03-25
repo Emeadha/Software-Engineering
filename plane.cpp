@@ -27,7 +27,6 @@ Plane::Plane(int Plane_ID, string Plane_name, string Plane_model, float Max_fuel
 
     //Defualt values
     this->Current_velocity = 0;
-    this->Onboard = 0;
     this->Odometer = 0;
     this->Trip_odometer = 0;
     this->Until_maint = 999999999;
@@ -114,8 +113,7 @@ void Plane::planeStatus(){
         }
         else if(isBoarding){
             //Board passengers
-            //Wow! Full flight
-            boardPassengers(Max_passengers);
+            boardPassengers();
              
         }
         else if(isUnboarding){
@@ -191,11 +189,14 @@ void Plane::goLanding(){
     
     cout << "Plane " << Plane_ID << " landed @" << this->Objects_clock << endl;
 }
-void Plane::boardPassengers(int passengers){
+void Plane::boardPassengers(){
     //TEMP ACTION WILL EVENTUALLY BE MORE COMPLEX
     //Hey look at that a full flight!
-    Onboard = passengers;
-    cout << "Plane " << Plane_ID << " boarded " << Onboard << "passengers @"<< this->Objects_clock << endl;
+
+    //INSTEAD - Call the airline transferToPlane method here
+    //Onboard = passengers;
+
+    cout << "Plane " << Plane_ID << " boarded " << Onboard.size() << "passengers @"<< this->Objects_clock << endl;
 
     //Disable boolean
     isBoarding = false;
@@ -203,9 +204,12 @@ void Plane::boardPassengers(int passengers){
     //For now, will immediatley take off
     goTakeOff();
 }
-int Plane::disembarkPassengers(){
+void Plane::disembarkPassengers(){
     //TEMP ACTION WILL EVENTUALLY BE MORE COMPLEX
-    Onboard = 0;
+    
+    //INSTEAD CALL AIRLINE OBJECT HERE
+    // Ex.
+    // Airline_obj->transferToGate()
     cout << "Plane " << Plane_ID << " disembarked passengers @" << this->Objects_clock << endl;
 
     Trip_odometer = 0; //Resetting the trip odometer back to 0
@@ -215,7 +219,9 @@ int Plane::disembarkPassengers(){
     Is_ready_for_assignment = true;
     isUnboarding = false;
 
-    return Onboard;
+    //Important step! We let airport know this gate is now availible
+    // EVENTUALLY Airline_obj->freeGate(PlaneID)
+
 }
 void Plane::inWaitingTime(){
     //This is a temp fix, but for right now plane is going to wait until 10 min before

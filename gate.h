@@ -52,12 +52,11 @@ class Gate : public TimeObserver{
 private:
 
     int Gate_ID; // Primary key/identifier for gate
-    bool In_use; // Is the gate currently in the process of boarding or onboarding?
-    bool Plane_docked; // Is a plane currently docked at the gate?
+    bool In_use = false; // Is the gate currently in the process of boarding or onboarding?
+    bool Plane_docked = false; // Is a plane currently docked at the gate?
 
     Clock Objects_clock; // Instance of the clock object for the gate, used to keep simulation synchronization
 
-    vector<Passenger> Passengers_at_gate; // The number of passengers currently at the gate. Number sent from the airport.
     int Plane_ID; // Which plane is docked at/using the gate?
     
     mt19937 randomEngine; //random number generator
@@ -77,11 +76,13 @@ public:
     int getPassengersAtGate(); // Return size of vector
 
     // Setters
+    void setGateID(bool GateID); // Set in use variable
     void setInUse(bool inUse); // Set in use variable
     void setPlaneDocked(bool planeDocked); // Set if the plane is docked
     void setPlane_ID(int planeID); // Set plane ID
 
     //vectors for gates and passenger groups
+    vector<Passenger> Passengers_at_gate; // The number of passengers currently at the gate. Number sent from the airport.
     vector<Gate> gates;
     vector<int> passengerGroups;
     vector<passengerMovement> passengerMovements;

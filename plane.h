@@ -24,6 +24,7 @@ Plane object header file
 #ifndef PLANE_H
 #define PLANE_H
 #include "timeObserver.h"
+#include "passenger.h"
 #include <string>
 #include <fstream>
 
@@ -78,7 +79,7 @@ private:
 
     //Passenger variables
     int Max_passengers;//How many passengers the plane can carry
-    int Onboard; //Count of passengers //TODO: Make this *actually* a passenger vector, not just an int
+    //int Onboard; //Count of passengers //TODO: Make this *actually* a passenger vector, not just an int
     int Count_of_passengers = 0; // Number of passengers onboard
 
     //Costs
@@ -95,6 +96,9 @@ private:
 
 
 public:
+
+    //Temp - just gonna make this public for now
+    vector<Passenger> Onboard;
 
     /* BEGIN GETTERS */
     int getPlaneID(); //Returns PlaneID
@@ -123,8 +127,8 @@ public:
 
     void setTargetGate(int gateID); //Sets the value of Target_gate
     void setTargetAirport(int airportID); //Sets the value of Target_airport
-    void boardPassengers(int passengers); //Add all passengers waiting to board to Onboard. This should be called by the airport. //TODO: Currently set as an int for prototyping purposes, needs to be changed to vector of passenger objects at some point
-    int disembarkPassengers(); //Remove all passengers from Onboard. Called by the airport //TODO: Currently set as an int for prototyping purposes, needs to be changed to a vector of passenger objects at some point..
+    void boardPassengers(); //Add all passengers waiting to board to Onboard. This should be called by the airport. //TODO: Currently set as an int for prototyping purposes, needs to be changed to vector of passenger objects at some point
+    void disembarkPassengers(); //Remove all passengers from Onboard. Called by the airport //TODO: Currently set as an int for prototyping purposes, needs to be changed to a vector of passenger objects at some point..
     /* END SETTERS */
 
     /*BEGIN OPERATION FUNCTIONS*/

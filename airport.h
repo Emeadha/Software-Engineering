@@ -56,16 +56,15 @@ private:
     bool Airport_open; // Whether or not airport is open
     bool atGate = true; //Whether or not the passenger group is at their gate
 
+    bool debugging = false;
+
+public:
+
     //Vector for all passenger and gate objects
     vector<Passenger*> All_passenger_groups;
     vector<Passenger*> passengersAtGate; //vector of copied passenger groups that have atGate == true
     vector<Passenger*> atGateGroups; //temp vector
     vector<Gate*> All_gates;
-
-    bool debugging = false;
-
-public:
-
     //Constructor
     Airport(int airport_ID, string airport_name);
 

@@ -8,7 +8,7 @@ airline.cpp
 // Constructor
 //We assign the time manager here, so we can use it to register new observers
 Airline::Airline(TimeManager *time_manager, string airline_name, Input Input_object, Logger *Log_object)
-        : time_manager(time_manager),  Objects_clock(0, 0, 0), flightLog("flightLog.txt"), Input_object(Input_object)
+        : time_manager(time_manager),  Objects_clock(0, 0, 0), flightLog("tempFlightLog.txt"), Input_object(Input_object)
         , Log_object(Log_object) {
     this->Airline_name = airline_name;
 
@@ -103,6 +103,9 @@ void Airline::scheduleFlights(){
                     //Assign receieved values to plane, and set ready to assign as false
                     All_planes[tempPlaneID]->assignFlight(tempDestID, tempArrivalTime, tempDepartTime, tempDistance);
 
+                    //Negotiate a destination gate
+                    negotiateGate(tempDestID, tempPlaneID);
+
                     //Set this flight in vector to scheduled
                     All_flights[i]->setScheduledTrue();
                 }
@@ -190,6 +193,74 @@ int Airline::findAirportID(string airport_name){
     //If ID doesn't exist
     return -1;
 }
+
+void Airline::transferToGate(int airport_ID, int plane_ID){
+    int tempGateID;
+
+    //Get our gate in question
+    tempGateID = All_planes[plane_ID]->getTargetGate();
+
+    //Set the gate to the value of onboard (vector)
+    All_airports[airport_ID]->All_gates[tempGateID]->Passengers_at_gate.assign(All_planes[plane_ID]->Onboard.begin(), All_planes[plane_ID]->Onboard.end());
+
+    //Clear plane vector
+    All_planes[plane_ID]->Onboard.clear();
+}
+
+void Airline::transferToPlane(int airport_ID, int plane_ID){
+    int tempGateID;
+
+    //Get our gate in question
+    tempGateID = All_planes[plane_ID]->getTargetGate();
+
+    //Set the value of Onboard to the vector of passengers at the gate
+    All_planes[plane_ID]->Onboard.assign(All_airports[airport_ID]->All_gates[tempGateID]->Passengers_at_gate.begin(), All_airports[airport_ID]->All_gates[tempGateID]->Passengers_at_gate.end());
+
+    //Clear gate vector
+    All_airports[airport_ID]->All_gates[tempGateID]->Passengers_at_gate.clear();
+
+}
+
+void Airline::negotiateGate(int airport_ID, int plane_ID){
+
+    int tempGateID;
+    int i = 0;
+
+    //Iterate through all gates of a given airport
+    while (i < All_airports[airport_ID]->All_gates.size()){
+
+        //Get the gate ID
+        tempGateID = All_airports[airport_ID]->All_gates[i]->getGateID();
+
+        //Make sure gateID matches i
+        if(tempGateID != i){
+            cerr << "ERROR: [GATE.CPP] gateID != i" << endl;
+        }
+        
+        //See if gate is open
+        if(All_airports[airport_ID]->All_gates[i]->getInUse()){
+            //TEMP - For now we just want to grab the first availible gate
+            All_planes[plane_ID]->setTargetGate(i);
+
+            //Change gate to in use
+            All_airports[airport_ID]->All_gates[i]->setInUse(true);
+
+            //EVENTUALLY - Add a call here to plane log 
+        }
+        i++;
+    }
+}
+
+void Airline::freeGate(int airport_ID, int plane_ID){
+    int tempGateID;
+
+    //Find the gate ID
+    tempGateID = All_planes[plane_ID]->getTargetGate();
+
+    //Set that gate to not in use
+    All_airports[airport_ID]->All_gates[tempGateID]->setInUse(false);
+}
+
 void Airline::loadFlights(){
 
     //Variable holders
