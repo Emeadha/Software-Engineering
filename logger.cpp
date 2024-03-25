@@ -182,12 +182,8 @@ void Logger::exportLogsToFile(int switchCase)
     airportLogFile.open(airportFileName);
     flightLogFile.open(flightFileName);
 
-    // Check if files opened successfully
-    if (!planeLogFile.is_open() || !airportLogFile.is_open() || !flightLogFile.is_open()) 
-    {
-        cerr << "ERROR: Unable to open log files for writing." << endl;
-    }
-
+   
+    //Check if open, then write
     if (planeLogFile.is_open() && airportLogFile.is_open() && flightLogFile.is_open()) 
     {
         switch (switchCase) 

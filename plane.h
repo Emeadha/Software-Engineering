@@ -87,10 +87,10 @@ private:
  
     //Location, origin, destination
     double Range; //KILOMETERS of travel possible remaining
-    int Origin_airport_ID; //The airport the plane is starting from on a flight.
-    int Target_airport_ID; //The airport the plane is scheduled to land at next.
-    double Target_airport_location_distance; // Km to reach airport
-    int Target_gate; //The gate of the targeted airport at which the plane is scheduled to land. 
+    int Origin_airport_ID = -1; //The airport the plane is starting from on a flight.
+    int Target_airport_ID = -1; //The airport the plane is scheduled to land at next.
+    double Target_airport_location_distance = -1; // Km to reach airport
+    int Target_gate_ID = -1; //The gate of the targeted airport at which the plane is scheduled to land. 
     /* END VARIABLES */
 
 

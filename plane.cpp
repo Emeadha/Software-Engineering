@@ -40,10 +40,7 @@ Plane::Plane(int Plane_ID, string Plane_name, string Plane_model, float Max_fuel
     this->Range = 99999999999;
 
     //To be set by scheduler
-    this->Origin_airport_ID = -1;
-    this->Target_airport_ID = -1;
     this->Target_airport_location_distance = 0;
-    this->Target_gate = 0;
 
     //Start plane off by waiting on the tarmac
     this->isFlying = false;
@@ -362,7 +359,7 @@ double Plane::getDailyCost()
 int Plane::getTargetGate()
 {
 
-    return this->Target_gate;
+    return this->Target_gate_ID;
 }
 
 int Plane::getTargetAirport()
@@ -410,7 +407,7 @@ void Plane::setIsReadyForAssignment(bool isReady){
     this->Is_ready_for_assignment = isReady;
 }
 void Plane::setTargetGate(int gate){
-    this->Target_gate = gate;
+    this->Target_gate_ID = gate;
 }   
 
 void Plane::setTargetAirport(int airportID){

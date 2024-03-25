@@ -114,6 +114,12 @@ public:
     int findPlaneID(string plane_name);
     int findAirportID(string airport_name);
 
+      // ---------------
+    // "Passenger transfer" methods
+    // ---------------
+    void transferToGate(int airport_ID, int plane_ID);
+    void transferToPlane(int airport_ID, int plane_ID);
+    void negotiateGate(int airport_ID, int plane_ID);
 
 
 

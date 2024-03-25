@@ -1,1 +1,0 @@
-AIRPORT STATUS: Airport 0 pulse check @[0:0:0]
