@@ -1,3 +1,14 @@
+/*
+logger.h
+
+Logger header file
+
+Logger - This is object which each "logging" object will have a reference to. Eventually, it will
+hold outputs for flightLog, planeLog, airportLog, financeLog, and errorLog. Objects using this 
+will need to be passed a pointer to one singular logger file, to avoid conflicts.
+
+*/
+
 #ifndef LOGGER_H
 #define LOGGER_H
 
