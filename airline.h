@@ -28,6 +28,7 @@ testing testing
 #include "plane.h"
 #include "airport.h"
 #include "input.h"
+#include "logger.h"
 
 #include <string>
 #include <fstream>
@@ -63,6 +64,9 @@ public:
     //Time manager object
     TimeManager* time_manager;
 
+    //Logger object
+    Logger* Log_object;
+
     //Input object
     Input Input_object;
 
@@ -74,7 +78,7 @@ public:
     // Constructor/Destructor
     // --------------
 
-    Airline(TimeManager *time_manager, string airport_name, Input Input_object);
+    Airline(TimeManager *time_manager, string airport_name, Input Input_object, Logger *Log_object);
 
     //Destructor
     ~Airline();

@@ -7,8 +7,9 @@ airline.cpp
 
 // Constructor
 //We assign the time manager here, so we can use it to register new observers
-Airline::Airline(TimeManager *time_manager, string airline_name, Input Input_object)
-        : time_manager(time_manager),  Objects_clock(0, 0, 0), flightLog("flightLog.txt"), Input_object(Input_object) {
+Airline::Airline(TimeManager *time_manager, string airline_name, Input Input_object, Logger *Log_object)
+        : time_manager(time_manager),  Objects_clock(0, 0, 0), flightLog("flightLog.txt"), Input_object(Input_object)
+        , Log_object(Log_object) {
     this->Airline_name = airline_name;
 
     // ---------------------
@@ -44,12 +45,18 @@ Airline::~Airline(){
 
 //Register a plane as an observer
 void Airline::registerPlane(Plane* plane) {
+    //Add this object as an observer
     time_manager->addObserver(plane);
 }
 
 //Register an airport likewise
 void Airline::registerAirport(Airport* airport) {
+    //Add this object as an observer
     time_manager->addObserver(airport);
+
+    cerr << "LOGGER - Filling logger slot" << endl;
+    //Fill its logger slot
+    airport->setLogObject(Log_object);
 }
 
 

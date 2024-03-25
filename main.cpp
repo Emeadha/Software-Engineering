@@ -14,6 +14,7 @@ the tick-rate (currently every 10 min is 1 second for sim).
 #include "passenger.h"
 #include "airline.h"
 #include "input.h"
+#include "logger.h"
 #include <unistd.h>
 
 using namespace std;
@@ -26,6 +27,7 @@ int main() {
     //This is our time manager, which will be passed to all objects	
     TimeManager time_manager;
     Input input;
+    Logger log;
 
     sleep(1);
 
@@ -33,7 +35,7 @@ int main() {
     //At first, we only create our Airline
     // Airline -> Airports + Planes
     // Airports -> Gates + Passengers
-    Airline airline(&time_manager, "Comfort Airlines", input);
+    Airline airline(&time_manager, "Comfort Airlines", input, &log);
 
     // -------------------------
     // Start 'er up!

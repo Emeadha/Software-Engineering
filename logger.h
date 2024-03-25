@@ -1,3 +1,6 @@
+#ifndef LOGGER_H
+#define LOGGER_H
+
 #include <iostream>
 #include <fstream>
 #include "clock.h"
@@ -16,7 +19,7 @@ public:
     // Methods to receive updates from planes, flights, and airports
     void logPlaneUpdate(const std::string& pid, int p_status, const Clock& first_time, const Clock& second_time);
     void logFlightUpdate(const std::string& fid, int f_status, const Clock& first_time, const Clock& second_time);
-    void logAirportUpdate(const std::string& aid, int a_status, const Clock& first_time, const Clock& second_time);
+    void logAirportUpdate(int aid, int a_status, Clock first_time );
 
 private:
     // Strings to hold log updates for each entity
@@ -42,3 +45,5 @@ private:
     // Method to export logs to file based on switchCase
     void exportLogsToFile(int switchCase);
 };
+
+#endif //LOGGER_H

@@ -49,7 +49,12 @@ void Airport::setTimeManager(TimeManager *time_manager){
     this->time_manager = time_manager;
 
 }
+void Airport::setLogObject(Logger *log_pointer){
 
+    //Assign our logger object
+    this->Log_object = log_pointer;
+    
+}
 //Register a passenger_group (to vector) and as an observer
 void Airport::registerPassengerGroup(Passenger* passengerGroupID)
 {
@@ -73,6 +78,8 @@ void Airport::onTimeUpdate(Clock& new_time)
 
     //Start by setting done to false
     TimeObserver::setIsNotDone();
+
+    Log_object->logAirportUpdate(this->Airport_ID, 2, this->Objects_clock);
 
     //Report time update to cout
     Objects_clock = new_time;

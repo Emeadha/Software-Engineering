@@ -27,6 +27,7 @@ What’s its goal? To hold passenger groups and gates
 #include "timeManager.h"
 #include "gate.h"
 #include "passenger.h"
+#include "logger.h"
 
 #include <string>
 #include <iostream>
@@ -47,7 +48,11 @@ private:
     Clock Objects_clock; // Instance of the clock object for the airport, used to keep simulation synchronization
     //Clock Passenger_clock;
     string Airport_name; // Airport name
+
+    //Pointers to nessesary objects
     TimeManager* time_manager;
+    Logger* Log_object; 
+
     bool Airport_open; // Whether or not airport is open
     bool atGate = true; //Whether or not the passenger group is at their gate
 
@@ -80,6 +85,7 @@ public:
 
     // Setters
     void setTimeManager(TimeManager *time_manager); //CRITICAL STEP - passes a a refernce to time manager
+    void setLogObject(Logger *log_pointer); //CRITICAL STEP - passes a reference to logger object
     void setAirportID(int id); // Set Airport ID
     void setAirportName(string name); // Set Airport name
 

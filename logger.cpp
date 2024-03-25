@@ -8,17 +8,13 @@ using namespace std;
 Logger::Logger() : planeFileName("planeLog.txt"), flightFileName("flightLog.txt"), airportFileName("airportLog.txt"), plane_exported(false), flight_exported(false), airport_exported(false) 
 {
 
-
-    // Open respective files
-    planeLogFile.open(planeFileName);
-    airportLogFile.open(airportFileName);
-    flightLogFile.open(flightFileName);
-
+/*
     // Check if files opened successfully
     if (!planeLogFile.is_open() || !airportLogFile.is_open() || !flightLogFile.is_open()) 
     {
         cerr << "ERROR: Unable to open log files for writing." << endl;
     }
+    */
 }
 
 //destructor
@@ -142,16 +138,24 @@ void Logger::logFlightUpdate(const string& fid, int f_status, const Clock& first
 }
 
 // File that reads methods sent by airport.cpp to determine status of the airport and export it into a text file as a log 
-void Logger::logAirportUpdate(const string& aid, int a_status, const Clock& first_time, const Clock& second_time)
+void Logger::logAirportUpdate(int aid, int a_status, Clock first_time = Clock())
 {
+    stringstream ss;
     switch (a_status) 
     {
         case 1:
             //gate change
-            airport_log += "Airport " + aid + " has experienced a gate change";
+            ss << "Airport " << aid << " has experienced a gate change";
+            airport_log += ss.str();
+            break;
+        case 2:
+            //gate change
+            ss << "Airport " << aid << " pulse check @" << first_time ;
+            airport_log += ss.str();
             break;
         default:
-            airport_log += "Airport " + aid + " has no updates at the moment";
+            ss << "Airport " << aid << " has no updates at the moment";
+            airport_log += ss.str();
             break;
     }
 
@@ -172,6 +176,18 @@ void Logger::logAirportUpdate(const string& aid, int a_status, const Clock& firs
 //exports logs/information read in to the corresponding txt file
 void Logger::exportLogsToFile(int switchCase) 
 {
+
+    // Open respective files
+    planeLogFile.open(planeFileName);
+    airportLogFile.open(airportFileName);
+    flightLogFile.open(flightFileName);
+
+    // Check if files opened successfully
+    if (!planeLogFile.is_open() || !airportLogFile.is_open() || !flightLogFile.is_open()) 
+    {
+        cerr << "ERROR: Unable to open log files for writing." << endl;
+    }
+
     if (planeLogFile.is_open() && airportLogFile.is_open() && flightLogFile.is_open()) 
     {
         switch (switchCase) 
@@ -194,4 +210,8 @@ void Logger::exportLogsToFile(int switchCase)
     {
         cerr << "ERROR: FILE NOT OPENED CORRECTLY" << endl;
     }
+     // Close respective files
+    planeLogFile.close();
+    airportLogFile.close();
+    flightLogFile.close();
 }
