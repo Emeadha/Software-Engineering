@@ -86,18 +86,6 @@ public:
     vector<int> passengerGroups;
     vector<passengerMovement> passengerMovements;
 
-    vector<passengerMovement>& getPassengerMovements();
-
-    void removePassengerMovement(int groupID);
-
-    //Creates passenger groups inside vector
-    void createPassengers(int groupID);
-
-    //Creating multiple gates for gate vector
-    void createGates(int gateID);
-
-    //Assigning gates to passenger groups
-    void assignGates(vector<Passenger>& passengers);
 };
 
 #endif // GATE_H
