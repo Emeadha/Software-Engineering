@@ -37,16 +37,6 @@ using namespace std;
     Constructor - just establishes variables
 */
 
-
-//struct to hold info regarding passenger movement between gates
-struct passengerMovement
-{
-    int groupID;
-    int startGateID;
-    int targetGateID;
-    int remainingTime; 
-};
-
 class Gate : public TimeObserver{
 
 private:
@@ -59,7 +49,6 @@ private:
 
     int Plane_ID; // Which plane is docked at/using the gate?
     
-    mt19937 randomEngine; //random number generator
 public:
 
     // Constructor
@@ -80,25 +69,6 @@ public:
     void setInUse(bool inUse); // Set in use variable
     void setPlaneDocked(bool planeDocked); // Set if the plane is docked
     void setPlane_ID(int planeID); // Set plane ID
-
-    //vectors for gates and passenger groups
-    vector<Passenger> Passengers_at_gate; // The number of passengers currently at the gate. Number sent from the airport.
-    vector<Gate> gates;
-    vector<int> passengerGroups;
-    vector<passengerMovement> passengerMovements;
-
-    vector<passengerMovement>& getPassengerMovements();
-
-    void removePassengerMovement(int groupID);
-
-    //Creates passenger groups inside vector
-    void createPassengers(int groupID);
-
-    //Creating multiple gates for gate vector
-    void createGates(int gateID);
-
-    //Assigning gates to passenger groups
-    void assignGates(vector<Passenger>& passengers);
 
     // Multi-action methods
     //void board(vector<Passenger>& passengers); // Call plane board option and send the passenger vector

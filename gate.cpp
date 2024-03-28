@@ -79,61 +79,6 @@ void Gate::setPlane_ID(int planeID)
     Plane_ID = planeID;
 }
 
-/*Adds passenger groups to vector passengerGroups
-void Gate::createPassengers(int groupID)
-{
-    for(int i = 0; i < 5; i++)
-    {
-        passengerGroups.push_back(groupID);
-    }
-    //clockDelay();
-}
-
-vector<passengerMovement>& Gate::getPassengerMovements()
-{
-    return passengerMovements;
-}
-
-void Gate::removePassengerMovement(int groupID)
-{
-    passengerMovements.erase(remove_if(passengerMovements.begin(), passengerMovements.end(), [&]
-    (const passengerMovement& movement) { return movement.groupID == groupID; }), passengerMovements.end());
-}
-//Will create 6 gates to the gate vector
-void Gate::createGates(int gateID)
-{
-    for(int i = 1; i <= 6; i++)
-        gates.emplace_back(gateID);
-}
-
-//Will assign each of the passenger groups to 2 gates
-void Gate::assignGates(vector<Passenger>& passengers)
-{
-    shuffle(gates.begin(), gates.end(), randomEngine);
-    int gateCount = gates.size();
-    int groupCount = passengers.size();
-
-    for(int x = 0; x < groupCount; x++) 
-    {
-        int startGate = randomEngine() % gateCount;
-        int targetGate = (startGate + 1 + (randomEngine() % (gateCount - 1)));
-
-        for(int j = 0; j < 2; j++)
-        {
-            int gateID = (j == 0) ? startGate : targetGate;
-            gates[gateID].createPassengers(passengers[x].Passenger_group_ID);
-        }
-         //initializing using parameters from struct
-        passengerMovement movement;
-        movement.groupID = passengers[x].Passenger_group_ID;
-        movement.startGateID = startGate;
-        movement.targetGateID = targetGate;
-        //movement.remainingTime = trav el time
-        passengerMovements.push_back(movement);
-    }
-
-}/*
-    
 
 /*
 //Multi-action
