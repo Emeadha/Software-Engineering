@@ -31,6 +31,7 @@ public:
     void logPlaneUpdate(const std::string& pid, int p_status, const Clock& first_time, const Clock& second_time);
     void logFlightUpdate(const std::string& fid, int f_status, const Clock& first_time, const Clock& second_time);
     void logAirportUpdate(int aid, int a_status, Clock first_time );
+    void errorLog(int severity, string message); //Logs an error- 3 severity levels, 0, 1, and 2. 5 level 2 errors abort the program, 1 level 2 error immediately aborts. (Level 0 errors do not count towards aborting program)
 
 private:
     // Strings to hold log updates for each entity
@@ -53,6 +54,8 @@ private:
     bool flight_exported;
     bool airport_exported;
 
+    // Tracks how many level 1 errors have been encounters- 5 calls for the program to abort()
+    int error1Count = 0;
     // Method to export logs to file based on switchCase
     void exportLogsToFile(int switchCase);
 };

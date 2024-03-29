@@ -173,6 +173,20 @@ void Logger::logAirportUpdate(int aid, int a_status, Clock first_time = Clock())
     }
 }
 
+void Logger::errorLog(int severity, string message) //TODO: Integrate with general logger functionality- add errorLog file and export functionality. Make abort() function actually do something.
+{
+   /*errorLogFile*/cout << "ERROR: " << message << ", severity " << severity; //TODO: Add to error log once that exists rather than just printing to cout
+   if (severity == 2);
+   {
+      error1Count++;
+   }
+
+   if (error1Count >= 5 || severity == 2)
+   {
+      abort();
+   }
+}
+
 //exports logs/information read in to the corresponding txt file
 void Logger::exportLogsToFile(int switchCase) 
 {
