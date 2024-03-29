@@ -32,6 +32,9 @@ Flight::Flight(int Flight_ID, double Ticket_cost, string Flight_type, string pla
 }
 
 //Getters 
+int Flight::getFlightID(){
+    return Flight_ID;
+}
 bool Flight::getScheduled(){
     return Scheduled;
 }

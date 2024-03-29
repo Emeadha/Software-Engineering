@@ -8,7 +8,7 @@ airline.cpp
 // Constructor
 //We assign the time manager here, so we can use it to register new observers
 Airline::Airline(TimeManager *time_manager, string airline_name, Input Input_object, Logger *Log_object)
-        : time_manager(time_manager),  Objects_clock(0, 0, 0), flightLog("tempFlightLog.txt"), Input_object(Input_object)
+        : time_manager(time_manager),  Objects_clock(0, 0, 0), Input_object(Input_object)
         , Log_object(Log_object) {
     this->Airline_name = airline_name;
 
@@ -47,6 +47,9 @@ Airline::~Airline(){
 void Airline::registerPlane(Plane* plane) {
     //Add this object as an observer
     time_manager->addObserver(plane);
+
+    //Fill its logger slot
+    plane->setLogObject(Log_object);
 }
 
 //Register an airport likewise
@@ -54,7 +57,6 @@ void Airline::registerAirport(Airport* airport) {
     //Add this object as an observer
     time_manager->addObserver(airport);
 
-    cerr << "LOGGER - Filling logger slot" << endl;
     //Fill its logger slot
     airport->setLogObject(Log_object);
 }
@@ -108,13 +110,14 @@ void Airline::scheduleFlights(){
 
                     //Set this flight in vector to scheduled
                     All_flights[i]->setScheduledTrue();
+
                 }
             }
             
-            //Print creation to flight log
-            flightLog << "Flight scheduled! Leaves from Arpt: " << All_flights[i]->getOriginAirptID() << " @" << tempDepartTime
-            << " to Arpt: " << All_flights[i]->getDestAirptID() << " @" << tempArrivalTime << " PlaneID used: " << All_flights[i]->getPlaneID()
-            << endl;
+            //Send scheduled notice to Logger
+            //Big nasty call, but gives flight info
+            Log_object->logFlightUpdate(All_flights[i]->getFlightID(), 4, All_flights[i]->getOriginAirptName(),  All_flights[i]->getDestAirptName(), tempDepartTime, tempArrivalTime);
+           
         }
 
         //Increment i

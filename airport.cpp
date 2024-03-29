@@ -79,7 +79,15 @@ void Airport::onTimeUpdate(Clock& new_time)
     //Start by setting done to false
     TimeObserver::setIsNotDone();
 
-    Log_object->logAirportUpdate(this->Airport_ID, 2, this->Objects_clock);
+    if(Log_object != nullptr){
+
+        if(this->Airport_ID != 0){
+            Log_object->logAirportUpdate(this->Airport_ID, 2, this->Objects_clock);
+        }
+    }
+    else{
+        cerr << "ERROR: No pointer for log object" << endl;
+    }
 
     //Report time update to cout
     Objects_clock = new_time;

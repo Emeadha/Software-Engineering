@@ -87,6 +87,13 @@ void Plane::onTimeUpdate(Clock& new_time) {
     //Say we are done
     TimeObserver::setIsDone();
 }
+void Plane::setLogObject(Logger *log_pointer){
+
+    //Assign our logger object
+    this->Log_object = log_pointer;
+    
+}
+
 double Plane::findDuration(Clock& new_time){
     //Getting the difference in hours, minutes, and seconds 
     int diff_hours = new_time.hours - Objects_clock.hours;
@@ -164,8 +171,8 @@ void Plane::fly(){
 }
 void Plane::goTakeOff(){
     
-    this->isFlying = false;
-    cout << "Plane " << Plane_ID<< " took off at " << this->Objects_clock << " and is flying." << endl;
+    //Send log of departure
+    Log_object->logPlaneUpdate(this->Plane_ID, 4, this->Objects_clock);
 
     //Set is flying to ture for NEXT update 
     this->isFlying = true;
@@ -177,9 +184,10 @@ void Plane::goTakeOff(){
 }
 void Plane::goLanding(){
     
-    //int total_minutes = Objects_clock.hours * 60 + Objects_clock.minutes + duration + 10;
-    //Objects_clock.hours = total_minutes / 60; // Updating the hours
-    //Objects_clock.minutes = total_minutes % 60; // Updating the minutes
+    //Begin landing
+
+    //Send log message
+    Log_object->logPlaneUpdate(this->Plane_ID,5,this->Objects_clock);
 
     this->isFlying = false;
     this->Current_velocity = 0;
@@ -187,16 +195,13 @@ void Plane::goLanding(){
     //Set unboarding for NEXT update
     this->isUnboarding = true;
     
-    cout << "Plane " << Plane_ID << " landed @" << this->Objects_clock << endl;
 }
 void Plane::boardPassengers(){
-    //TEMP ACTION WILL EVENTUALLY BE MORE COMPLEX
-    //Hey look at that a full flight!
+
+    //Send boarding message to logger
+    Log_object->logPlaneUpdate(this->Plane_ID,2,this->Objects_clock);
 
     //INSTEAD - Call the airline transferToPlane method here
-    //Onboard = passengers;
-
-    cout << "Plane " << Plane_ID << " boarded " << Onboard.size() << "passengers @"<< this->Objects_clock << endl;
 
     //Disable boolean
     isBoarding = false;
@@ -205,12 +210,13 @@ void Plane::boardPassengers(){
     goTakeOff();
 }
 void Plane::disembarkPassengers(){
-    //TEMP ACTION WILL EVENTUALLY BE MORE COMPLEX
+
+    //Send unboarding message to logger
+    Log_object->logPlaneUpdate(this->Plane_ID,3,this->Objects_clock);
     
     //INSTEAD CALL AIRLINE OBJECT HERE
     // Ex.
     // Airline_obj->transferToGate()
-    cout << "Plane " << Plane_ID << " disembarked passengers @" << this->Objects_clock << endl;
 
     Trip_odometer = 0; //Resetting the trip odometer back to 0
 
@@ -258,8 +264,6 @@ void Plane::assignFlight(int targetAirportID, Clock arrivalTime, Clock departTim
 
     //Flip assigned to false
     this->Is_ready_for_assignment = false;
-    cout << "Plane " << Plane_ID << " has been assigned a flight to: Airport " << 
-        this->Target_airport_ID << ", departing @" << this->Departure_time << endl;
 }
 
 

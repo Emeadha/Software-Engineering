@@ -50,8 +50,8 @@ private:
     string Airport_name; // Airport name
 
     //Pointers to nessesary objects
-    TimeManager* time_manager;
-    Logger* Log_object; 
+    TimeManager* time_manager = nullptr;
+    Logger* Log_object = nullptr; 
 
     bool Airport_open; // Whether or not airport is open
     bool atGate = true; //Whether or not the passenger group is at their gate

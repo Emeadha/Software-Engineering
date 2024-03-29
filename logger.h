@@ -12,9 +12,13 @@ will need to be passed a pointer to one singular logger file, to avoid conflicts
 #ifndef LOGGER_H
 #define LOGGER_H
 
+#include "clock.h"
+
 #include <iostream>
 #include <fstream>
-#include "clock.h"
+#include <mutex>
+#include <string>
+#include <vector>
 
 using namespace std;
 
@@ -28,12 +32,17 @@ public:
     ~Logger();
 
     // Methods to receive updates from planes, flights, and airports
-    void logPlaneUpdate(const std::string& pid, int p_status, const Clock& first_time, const Clock& second_time);
-    void logFlightUpdate(const std::string& fid, int f_status, const Clock& first_time, const Clock& second_time);
+    void logPlaneUpdate(int pid, int p_status, const Clock& first_time);
+    void logFlightUpdate(int fid, int f_status, string a_name_1, string a_name_2, const Clock& first_time, const Clock& second_time);
     void logAirportUpdate(int aid, int a_status, Clock first_time );
     void errorLog(int severity, string message); //Logs an error- 3 severity levels, 0, 1, and 2. 5 level 2 errors abort the program, 1 level 2 error immediately aborts. (Level 0 errors do not count towards aborting program)
 
 private:
+
+    
+    //Mutex lock
+    mutex log_mutex;
+
     // Strings to hold log updates for each entity
     string plane_log;
     string flight_log;

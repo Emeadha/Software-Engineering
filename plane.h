@@ -25,6 +25,8 @@ Plane object header file
 #define PLANE_H
 #include "timeObserver.h"
 #include "passenger.h"
+#include "logger.h"
+
 #include <string>
 #include <fstream>
 
@@ -35,8 +37,6 @@ private:
 
     /* BEGIN VARIABLES */
 
-    //Output file name
-     ofstream flightLog;
 
     //Basic plane attributes
     int Plane_ID; //The ID number of the plane (Primary Key)
@@ -45,6 +45,9 @@ private:
     Clock Objects_clock; //Instance of the clock object for the plane, used to keep simulation synchronization
     Clock Arrival_time;
     Clock Departure_time;
+
+    //Logger object reference
+    Logger* Log_object = nullptr;
 
     //Variables for particular time update
     double duration;
@@ -117,6 +120,7 @@ public:
     int getPassengerCount(); //Returns the number of passengers in Onboard
 
     /* BEGIN SETTERS */
+    void setLogObject(Logger *log_pointer); //CRITICAL STEP - passes a reference to logger object
     void resetTripOdometer(); //Sets Trip_odometer to 0
     void setIsReadyForAssignment(bool isReady); //Set ready/not ready for next assignment
     void setFuelTank(float fuel); //Sets Fuel_Tank to a specific value.

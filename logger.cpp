@@ -8,14 +8,30 @@ using namespace std;
 Logger::Logger() : planeFileName("planeLog.txt"), flightFileName("flightLog.txt"), airportFileName("airportLog.txt"), plane_exported(false), flight_exported(false), airport_exported(false) 
 {
 
-/*
+    // Open respective files
+    planeLogFile.open(planeFileName);
+    airportLogFile.open(airportFileName);
+    flightLogFile.open(flightFileName);
+
+
     // Check if files opened successfully
     if (!planeLogFile.is_open() || !airportLogFile.is_open() || !flightLogFile.is_open()) 
     {
         cerr << "ERROR: Unable to open log files for writing." << endl;
     }
-    */
+
+    //Write opener for all files
+    planeLogFile << "PLANELOG                                 LOCKSNEED MARTIAN CORP" << endl;
+    planeLogFile << "--------------------------------------------------------------" << endl;
+
+    airportLogFile << "AIRPORTLOG                              LOCKSNEED MARTIAN CORP" << endl;
+    airportLogFile << "--------------------------------------------------------------" << endl;
+
+    flightLogFile << "FLIGHTLOG                              LOCKSNEED MARTIAN CORP" << endl;
+    flightLogFile << "------------------------------------------------------------" << endl;
+
 }
+
 
 //destructor
 Logger::~Logger() 
@@ -26,151 +42,129 @@ Logger::~Logger()
     flightLogFile.close();
 }
 
+
 // File that reads methods sent by plane.cpp to determine status of the plane and export it into a text file as a log 
-void Logger::logPlaneUpdate(const string& pid, int p_status, const Clock& first_time, const Clock& second_time) {
-    //initialize stringstream ss so we can utilize the clocktype
-    stringstream ss; 
+void Logger::logPlaneUpdate(int pid, int p_status, const Clock& first_time) {
+    
+    //This allows only one print out statement for the progrm at a time, it slowws things down a bit,
+    // but ensures saftey in our printouts
+    lock_guard<mutex> lock(log_mutex);
+
+    
     switch (p_status)
         {
         case 1:
             //plane is delayed as well as how long it is delayed for
-            ss << pid << " is delayed by [" << first_time << "]";
-            plane_log += ss.str();
+            planeLogFile << "PLANE STATUS: PLaneID" << pid << " is delayed by " << first_time << endl;
             break;
         case 2:
             //boarding
-            ss << pid << " is boarding passengers @[" << first_time << "]";
-            plane_log += ss.str();
+            planeLogFile << "PLANE STATUS: PLaneID" << pid << " is boarding passengers @" << first_time << endl;
             break;
         case 3:
-            //departed time and expected arrival
-            ss << pid << " has departed @[" << first_time << "], planned arrival @[" << second_time << "]";
+            //unboarding
+            planeLogFile << "PLANE STATUS: PLaneID" << pid << " is unboarding passengers @" << first_time << endl;
             break;
         case 4:
-            //has arrived and time of arrival
-            ss << pid << " has arrived at its destination @[" << first_time << "]";
-            plane_log += ss.str();
+            //departed time and expected arrival
+            planeLogFile << "PLANE STATUS: PLaneID" << pid << " has departed, planned arrival @" << first_time << endl;
             break;
         case 5:
-            //undergoing maintenance
-            ss << pid << " is undergoing maintenance @[" << first_time << "]";
-            plane_log += ss.str();
+            //has arrived and time of arrival
+            planeLogFile << "PLANE STATUS: PLaneID" << pid << " has arrived at its destination @" << first_time << endl;
             break;
         case 6:
-            //refueling
-            ss << pid << " is refueling @[" << first_time << "]";
-            plane_log += ss.str();
+            //undergoing maintenance
+            planeLogFile << "PLANE STATUS: PLaneID" << pid << " is undergoing maintenance @" << first_time << endl;
             break;
         case 7:
-            //cancelled
-            plane_log += pid + " has been cancelled";
+            //refueling
+            planeLogFile << "PLANE STATUS: PLaneID" << pid << " is refueling @" << first_time << endl;
             break;
         case 8:
+            //cancelled
+            planeLogFile << "PLANE STATUS: PLaneID" << pid << " has been cancelled" << endl;
+            break;
+        case 9:
             //on time
-            plane_log += pid + " is currently on time";
+            planeLogFile << "PLANE STATUS: PLaneID" << pid << " is currently on time" << endl;
             break;
         default:
             //no updates
-            plane_log += pid + " has no updates at the moment";
+            planeLogFile << "PLANE STATUS: PLaneID" << pid << " has no updates at the moment" << endl;
             break;
     }
 
-    // Export logs to file if not exported before
-    if (!plane_exported) 
-    {
-        exportLogsToFile(1);
-        plane_exported = true;
-    }
-
-    // Print success statement if all logs have been exported
-    if (plane_exported && flight_exported && airport_exported) 
-    {
-        cout << "Files have been successfully exported to airportLog.txt, flightLog.txt, and planeLog.txt" << endl;
-    }
+   
 }
 
 // File that reads methods sent by flight.cpp to determine status of the flight and export it into a text file as a log 
-void Logger::logFlightUpdate(const string& fid, int f_status, const Clock& first_time, const Clock& second_time) {
+void Logger::logFlightUpdate(int fid, int f_status, string a_name_1, string a_name_2, const Clock& first_time, const Clock& second_time) {
+
+     //This allows only one print out statement for the progrm at a time, it slowws things down a bit,
+    // but ensures saftey in our printouts
+    lock_guard<mutex> lock(log_mutex);
+
     switch (f_status) 
     {
         case 1:
             //on time
-            flight_log += "Flight " + fid + " is currently on time";
+            flightLogFile << "FLIGHT STATUS: " << "Flight " << fid << " is currently on time";
             break;
         case 2:
             //cancelled
-            flight_log += "Flight " + fid + " has been cancelled";
+            flightLogFile << "FLIGHT STATUS: " << "Flight " << fid << " has been cancelled";
             break;
         case 3:
             //flying
-            flight_log += "Flight " + fid + " is in the air";
+            flightLogFile << "FLIGHT STATUS: " << "Flight " << fid << " is in the air";
             break;
         case 4:
-            //about to take off
-            flight_log += "Flight " + fid + " is getting ready to take off";
+            //Scheduled
+            flightLogFile << "FLIGHT STATUS: " << "Flight " << fid << " Created! Scheduled to depart from " << a_name_1 << " @" << first_time << " and arrives at " << a_name_2 << " @" << second_time << endl;
             break;
         case 5:
             //has landed
-            flight_log += "Flight " + fid + " has landed";
+            flightLogFile << "FLIGHT STATUS: " << "Flight " << fid << " has landed";
             break;
         case 6:
             //delayed
-            flight_log += "Flight " + fid + " is delayed";
+            flightLogFile << "FLIGHT STATUS: " << "Flight " << fid << " is delayed";
             break;
         default:
             //no updates
-            flight_log += "Flight " + fid + " has no updates at the moment";
+            flightLogFile << "FLIGHT STATUS: " << "Flight " << fid << " has no updates at the moment";
             break;
     }
 
-    // Export logs to file if not exported before
-    if (!flight_exported) 
-    {
-        exportLogsToFile(2);
-        flight_exported = true;
-    }
-
-    // Print success statement if all logs have been exported
-    if (plane_exported && flight_exported && airport_exported)
-    {
-        cout << "Files have been successfully exported to airportLog.txt, flightLog.txt, and planeLog.txt" << endl;
-    }
+   
 }
 
 // File that reads methods sent by airport.cpp to determine status of the airport and export it into a text file as a log 
 void Logger::logAirportUpdate(int aid, int a_status, Clock first_time = Clock())
 {
-    stringstream ss;
+
+    //This allows only one print out statement for the progrm at a time, it slowws things down a bit,
+    // but ensures saftey in our printouts
+    lock_guard<mutex> lock(log_mutex);
+
+
     switch (a_status) 
     {
         case 1:
             //gate change
-            ss << "Airport " << aid << " has experienced a gate change";
-            airport_log += ss.str();
+            airportLogFile << "AIRPORT STATUS: " << "Airport " << aid << " has experienced a gate change" << endl;
             break;
         case 2:
             //gate change
-            ss << "Airport " << aid << " pulse check @" << first_time ;
-            airport_log += ss.str();
+            airportLogFile << "AIRPORT STATUS: " << "Airport " << aid << " pulse check @" << first_time << endl;
             break;
         default:
-            ss << "Airport " << aid << " has no updates at the moment";
-            airport_log += ss.str();
+            //No updates
+            airportLogFile << "AIRPORT STATUS: " << "Airport " << aid << " has no updates at the moment" << endl;
             break;
     }
-
-    // Export logs to file if not exported before
-    if (!airport_exported)
-    {
-        exportLogsToFile(3);
-        airport_exported = true;
-    }
-
-    // Print success statement if all logs have been exported
-    if (plane_exported && flight_exported && airport_exported) 
-    {
-        cout << "Files have been successfully exported to airportLog.txt, flightLog.txt, and planeLog.txt" << endl;
-    }
+    
 }
 
 void Logger::errorLog(int severity, string message) //TODO: Integrate with general logger functionality- add errorLog file and export functionality. Make abort() function actually do something.
@@ -190,6 +184,7 @@ void Logger::errorLog(int severity, string message) //TODO: Integrate with gener
 //exports logs/information read in to the corresponding txt file
 void Logger::exportLogsToFile(int switchCase) 
 {
+    cerr << "LOGGER: EXPORTLOGS UPDATE CALLED" << endl;
 
     // Open respective files
     planeLogFile.open(planeFileName);
