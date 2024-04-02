@@ -94,6 +94,14 @@ public:
     //will "move" passenger grous to assigned gate
     void passengerMovement();
 
+    //-----------------
+    // Airport-gate-plane interaction methods
+    //------------------
+
+    void transferToGate(int gate_ID, vector<Passenger> passenger_vector); 
+    vector<Passenger> transferToPlane(int gate_ID);
+    void freeGate(int gate_ID);
+
 };
 
 

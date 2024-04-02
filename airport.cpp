@@ -235,3 +235,31 @@ void Airport::passengerMovement()
 
     passengersAtGate.insert(passengersAtGate.end(), atGateGroups.begin(), atGateGroups.end());*/
 }
+
+
+void Airport::transferToGate(int gate_ID, vector<Passenger> passenger_vector){
+
+    //Assign passed vector as the vaector at gate
+    All_gates[gate_ID]->Passengers_at_gate = passenger_vector;
+}
+
+vector<Passenger> Airport::transferToPlane(int gate_ID){
+
+    //Placeholder vector
+    vector<Passenger> temp;
+
+    //Assign vector to placeholder
+    temp = All_gates[gate_ID]->Passengers_at_gate;
+
+    //Clear vector at gate
+    All_gates[gate_ID]->Passengers_at_gate.clear();
+
+    //Return the original vector at gate
+    return temp;
+
+
+}
+void Airport::freeGate(int gate_ID){
+    //Set given gate to free
+    All_gates[gate_ID]->setInUse(false);
+}

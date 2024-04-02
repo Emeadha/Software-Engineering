@@ -70,11 +70,11 @@ void Plane::onTimeUpdate(Clock& new_time) {
     //Start by setting done to false
     TimeObserver::setIsNotDone();
 
+     //Find duration of update
+    this->duration=findDuration(new_time);
+
     //Update the plane's time
     Objects_clock = new_time;
-
-    //Find duration of update
-    this->duration=findDuration(new_time);
 
     //Debugging statement
     cout << "Plane " << Plane_ID << " updated its time to "
@@ -156,13 +156,21 @@ void Plane::fly(){
     this->Odometer += distanceTraveled;
     this->Trip_odometer += distanceTraveled;
 
+
     //Change our distance to target
-    this->distanceToTarget;
+    this->Target_airport_location_distance = this->Target_airport_location_distance - distanceTraveled;
 
     cout << "Plane " << Plane_ID <<" is flying "<< Objects_clock.hours <<":"<< Objects_clock.minutes << endl;
 
+
+    if(debugging){
+        cout << "PLANE " << Plane_ID << " Current velocity: " << Current_velocity << endl;
+        cout << "PLANE " << Plane_ID << " distance TRAVELED: " << distanceTraveled << endl;
+        cout << "PLANE " << Plane_ID << " distance to target: " << Target_airport_location_distance << endl;
+    }
+
     // Check if the distance has hit zero
-    if (this->distanceToTarget <= 0) {
+    if (this->Target_airport_location_distance <= 0) {
         //Land and prepare to unboard
         goLanding();
     }
@@ -252,7 +260,7 @@ void Plane::inWaitingTime(){
     }
     */
 }
-void Plane::assignFlight(int targetAirportID, Clock arrivalTime, Clock departTime, double distance){
+void Plane::assignFlight(int targetAirportID, Clock arrivalTime, Clock departTime, double distance, Airport* airport_pointer){
     //Assign our old flight target ID to be our new origin
     this->Origin_airport_ID = this->Target_airport_ID;
 
@@ -261,6 +269,9 @@ void Plane::assignFlight(int targetAirportID, Clock arrivalTime, Clock departTim
     this->Arrival_time = arrivalTime;
     this->Departure_time = departTime;
     this->Target_airport_location_distance = distance;
+
+    //Set our airport pointer
+    this->Airport_object = airport_pointer;
 
     //Flip assigned to false
     this->Is_ready_for_assignment = false;

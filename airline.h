@@ -114,13 +114,10 @@ public:
     int findPlaneID(string plane_name);
     int findAirportID(string airport_name);
 
-      // ---------------
-    // "Passenger transfer" methods
     // ---------------
-    void transferToGate(int airport_ID, int plane_ID); //Takes vector from plane and puts to arrival vector in gate
-    void transferToPlane(int airport_ID, int plane_ID); //Takes departure vector from gate and puts in plane
+    // "Gate negotiation" methods
+    // ---------------
     void negotiateGate(int airport_ID, int plane_ID); //Assigns plane a new availible target gate
-    void freeGate(int airport_ID, int plane_ID); //Free up gate after passengers unboarded
 
 
 

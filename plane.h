@@ -25,6 +25,7 @@ Plane object header file
 #define PLANE_H
 #include "timeObserver.h"
 #include "passenger.h"
+#include "airport.h"
 #include "logger.h"
 
 #include <string>
@@ -37,7 +38,8 @@ private:
 
     /* BEGIN VARIABLES */
 
-
+    bool debugging = false;
+    
     //Basic plane attributes
     int Plane_ID; //The ID number of the plane (Primary Key)
     string Plane_name; //Tail number
@@ -48,6 +50,9 @@ private:
 
     //Logger object reference
     Logger* Log_object = nullptr;
+
+    //Target airport pointer
+    Airport* Airport_object = nullptr;
 
     //Variables for particular time update
     double duration;
@@ -77,7 +82,7 @@ private:
     //Travel distance trackers
     double Odometer; //How many miles the plane has flown, in total.
     double Trip_odometer; //How many miles the plane has flown in its current flight.
-    double distanceToTarget; //How far until plane reaches target destination
+    double Target_airport_location_distance = -1; // Km to reach airport
     double Until_maint; //How long until the plane needs maintenance. Starts at 200 (hours of flight time).
 
     //Passenger variables
@@ -93,7 +98,6 @@ private:
     double Range; //KILOMETERS of travel possible remaining
     int Origin_airport_ID = -1; //The airport the plane is starting from on a flight.
     int Target_airport_ID = -1; //The airport the plane is scheduled to land at next.
-    double Target_airport_location_distance = -1; // Km to reach airport
     int Target_gate_ID = -1; //The gate of the targeted airport at which the plane is scheduled to land. 
     /* END VARIABLES */
 
@@ -147,7 +151,7 @@ public:
 
     /* BEGIN MISCELLANEOUS FUNCTIONS */
     double calcCost(); //Calculates the value of Daily Cost, takes in information from fuel cost, loan etc. 
-    void assignFlight(int targetAirportID, Clock arrivalTime, Clock departTime, double distance); //Called by scheduler, gives needed values to assign a new flight.
+    void assignFlight(int targetAirportID, Clock arrivalTime, Clock departTime, double distance, Airport* airport_pointer); //Called by scheduler, gives needed values to assign a new flight.
     virtual void onTimeUpdate(Clock& new_time) override; //Implements time update ability, inherited from observer
     void planeStatus(); // The method used for checking the plane status and making right decison
     void checkFuelLevel(); // The Checkfuel level method. It will check the fuel level and update the fuel level.

@@ -67,7 +67,7 @@ void Logger::logPlaneUpdate(int pid, int p_status, const Clock& first_time) {
             break;
         case 4:
             //departed time and expected arrival
-            planeLogFile << "PLANE STATUS: PLaneID" << pid << " has departed, planned arrival @" << first_time << endl;
+            planeLogFile << "PLANE STATUS: PLaneID" << pid << " has departed @" << first_time << endl;
             break;
         case 5:
             //has arrived and time of arrival
