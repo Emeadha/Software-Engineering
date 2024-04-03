@@ -190,42 +190,6 @@ void Logger::errorLog(int severity, string message) //TODO: Integrate with gener
    }
 }
 
-//exports logs/information read in to the corresponding txt file
-void Logger::exportLogsToFile(int switchCase) 
-{
-    cerr << "LOGGER: EXPORTLOGS UPDATE CALLED" << endl;
-
-    // Open respective files
-    planeLogFile.open(planeFileName);
-    airportLogFile.open(airportFileName);
-    flightLogFile.open(flightFileName);
-
-   
-    //Check if open, then write
-    if (planeLogFile.is_open() && airportLogFile.is_open() && flightLogFile.is_open()) 
-    {
-        switch (switchCase) 
-        {
-            case 1:
-                planeLogFile << "PLANE STATUS: " << plane_log << endl;
-                break;
-            case 2:
-                flightLogFile << "FLIGHT STATUS: " << flight_log << endl;
-                break;
-            case 3:
-                airportLogFile << "AIRPORT STATUS: " << airport_log << endl;
-                break;
-            default:
-                cerr << "ERROR: Bad value passed to exportLogFile" << endl;
-                break;
-        }
-    } 
-    else 
-    {
-        cerr << "ERROR: FILE NOT OPENED CORRECTLY" << endl;
-    }
-     // Close respective files
-    planeLogFile.close();
-    airportLogFile.close();
-    flightLogFile.close();
+void Logger::updateFlightVector(vector<Flight*> New_vector){
+    this->All_flights = New_vector;
 }

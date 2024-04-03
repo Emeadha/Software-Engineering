@@ -13,6 +13,7 @@ will need to be passed a pointer to one singular logger file, to avoid conflicts
 #define LOGGER_H
 
 #include "clock.h"
+#include "flight.h"
 
 #include <iostream>
 #include <fstream>
@@ -36,6 +37,7 @@ public:
     void logFlightUpdate(int fid, int f_status, string a_name_1, string a_name_2, const Clock& first_time, const Clock& second_time);
     void logAirportUpdate(int aid, int a_status, Clock first_time );
     void errorLog(int severity, string message); //Logs an error- 3 severity levels, 0, 1, and 2. 5 level 2 errors abort the program, 1 level 2 error immediately aborts. (Level 0 errors do not count towards aborting program)
+    void updateFlightVector(vector<Flight*> New_vector); //Called by scheduler when theres been a flight change
 
 private:
 
@@ -63,8 +65,10 @@ private:
 
     // Tracks how many level 1 errors have been encounters- 5 calls for the program to abort()
     int error1Count = 0;
-    // Method to export logs to file based on switchCase
-    void exportLogsToFile(int switchCase);
+
+    //Information for flight reporting
+    vector<Flight*> All_flights;
+    
 };
 
 #endif //LOGGER_H

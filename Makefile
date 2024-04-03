@@ -1,6 +1,6 @@
 #When calling make all
-all:	airport.o clock.o main.o passenger.o plane.o timeManager.o airline.o gate.o flight.o logger.o input.o
-	g++ -std=c++11 -o airline_simulation airport.o clock.o main.o passenger.o plane.o timeManager.o airline.o gate.o flight.o logger.o input.o
+all:	airport.o clock.o main.o passenger.o plane.o timeManager.o airline.o gate.o flight.o logger.o input.o complication.o
+	g++ -std=c++11 -o airline_simulation airport.o clock.o main.o passenger.o plane.o timeManager.o airline.o gate.o flight.o logger.o input.o complication.o
 	@echo ///////////Compilation is all green to green!//////////////
 
 clean:

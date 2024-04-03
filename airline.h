@@ -29,6 +29,7 @@ testing testing
 #include "airport.h"
 #include "input.h"
 #include "logger.h"
+#include "complication.h"
 
 #include <string>
 #include <fstream>
@@ -52,6 +53,9 @@ private:
     vector<Flight*> All_flights;
     vector<Plane*> All_planes;
     vector<Airport*> All_airports;
+
+    //Vector for compliactions
+    vector<Complication*> All_complications;
 
     bool scheduleNeeded = false;
 
@@ -105,7 +109,14 @@ public:
 
     void loadFlights();//Loads flights from vector (passed by input object), then fill out rest of missing info
 
-    // Eventually want cancel flight method
+    // --------------
+    // "Complication" methods
+    // --------------
+    //TODO: Add way to track which day to flight
+    void setComplications(); //Adds the vector of complications from input and their given day, to trigger
+    void scheduleDailyComplication(); //Called every 24 hours when time == 0:0:0, establishes complication for that day
+    void findEffectedFlights(); //Finds all flights effected by this change, then calls reschedule flight
+    void rescheduleFlight(); //Edits single entry in flight 
 
     // ---------------
     // "Searching" methods

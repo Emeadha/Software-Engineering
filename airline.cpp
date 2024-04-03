@@ -272,7 +272,37 @@ void Airline::loadFlights(){
         tempID = findPlaneID(temp_name);
         All_flights[i]->setPlaneID(tempID);
     }
+
+    //Give logger information about flights
+    Log_object->updateFlightVector(All_flights);
     
+}
+
+void Airline::setComplications(){
+    //TODO - Input object should be used to read these in
+
+    Complication* newComp;
+
+    //Temp
+    for(int i=0; i<12; i++){
+        newComp = new Complication(i,"Test descr", i, 0);
+        All_complications.push_back(newComp);
+    }
+}
+
+void Airline::scheduleDailyComplication(){
+
+}
+
+void Airline::findEffectedFlights(){
+
+}
+
+void Airline::rescheduleFlight(){
+
+
+    //Going to need to call the logger flight update method...
+
 }
 
 void Airline::onTimeUpdate(Clock& new_time) {
@@ -282,7 +312,7 @@ void Airline::onTimeUpdate(Clock& new_time) {
 
     //Report time update to cout
     Objects_clock = new_time;
-    cout << "Airport " << Airline_name << " updated its time to "
+    cout << "Airline " << Airline_name << " updated its time to "
               << new_time.hours << ":" << new_time.minutes << ":" << new_time.seconds << endl;
 
     //Say that we are do3ne
