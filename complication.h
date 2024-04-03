@@ -21,12 +21,11 @@ class Complication{
 
         //Variables to keep track of complication info
         int complication_ID = -1;
-        string comp_desc = "";
-        int day_effected = -1;
+        //int day_effected = -1;
         int comp_type = -1;
 
         //Constructor
-        Complication(int Complication_ID, string Comp_desc, int Day_effected, int Comp_type);
+        Complication(int Complication_ID, int Comp_type);
 
 };
 

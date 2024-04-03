@@ -91,8 +91,9 @@ void Airport::onTimeUpdate(Clock& new_time)
 
     //Report time update to cout
     Objects_clock = new_time;
-    cout << "Airport " << Airport_name << " updated its time to "
-              << new_time.hours << ":" << new_time.minutes << ":" << new_time.seconds << endl;
+
+    //cout << "Airport " << Airport_name << " updated its time to "
+    //          << new_time.hours << ":" << new_time.minutes << ":" << new_time.seconds << endl;
 
     //Call passengerMovements to see who is at gate
     passengerMovement();     

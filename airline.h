@@ -29,7 +29,6 @@ testing testing
 #include "airport.h"
 #include "input.h"
 #include "logger.h"
-#include "complication.h"
 
 #include <string>
 #include <fstream>
@@ -54,13 +53,11 @@ private:
     vector<Plane*> All_planes;
     vector<Airport*> All_airports;
 
-    //Vector for compliactions
-    vector<Complication*> All_complications;
-
     bool scheduleNeeded = false;
-
     bool debugging = false;
 
+    //How many complications loaded (used by set complication)
+    int comp_count = 0;
 
 public:
 
@@ -113,7 +110,7 @@ public:
     // "Complication" methods
     // --------------
     //TODO: Add way to track which day to flight
-    void setComplications(); //Adds the vector of complications from input and their given day, to trigger
+    void setComplication(int selection); //Adds the vector of complications from input and their given day, to trigger
     void scheduleDailyComplication(); //Called every 24 hours when time == 0:0:0, establishes complication for that day
     void findEffectedFlights(); //Finds all flights effected by this change, then calls reschedule flight
     void rescheduleFlight(); //Edits single entry in flight 

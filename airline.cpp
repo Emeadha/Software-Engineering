@@ -293,15 +293,25 @@ void Airline::loadFlights(){
     
 }
 
-void Airline::setComplications(){
-    //TODO - Input object should be used to read these in
+void Airline::setComplication(int selection){
+    if(selection == 0){
+        //This is NO COMPLICATION
+        return;
+    }
+    else if(selection == 1){
+        //Bad weather
 
-    Complication* newComp;
+    }
+    else if(selection == 2){
+        //Icing
 
-    //Temp
-    for(int i=0; i<12; i++){
-        newComp = new Complication(i,"Test descr", i, 0);
-        All_complications.push_back(newComp);
+    }
+    else if(selection == 3){
+        //Jet stream
+
+    }
+    else{
+        Log_object->errorLog(1, "Error! Complication input invalid [AIRLINE.CPP]{LINE 304}");
     }
 }
 
