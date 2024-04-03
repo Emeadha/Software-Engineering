@@ -5,13 +5,14 @@
 using namespace std;
 
 //constructor
-Logger::Logger() : planeFileName("planeLog.txt"), flightFileName("flightLog.txt"), airportFileName("airportLog.txt"), plane_exported(false), flight_exported(false), airport_exported(false) 
+Logger::Logger() : planeFileName("planeLog.txt"), flightFileName("flightLog.txt"), airportFileName("airportLog.txt"), errorFileName("errorLog.txt") 
 {
 
     // Open respective files
     planeLogFile.open(planeFileName);
     airportLogFile.open(airportFileName);
     flightLogFile.open(flightFileName);
+    errorLogFile.open(errorFileName);
 
 
     // Check if files opened successfully
@@ -30,6 +31,9 @@ Logger::Logger() : planeFileName("planeLog.txt"), flightFileName("flightLog.txt"
     flightLogFile << "FLIGHTLOG                              LOCKSNEED MARTIAN CORP" << endl;
     flightLogFile << "------------------------------------------------------------" << endl;
 
+    errorLogFile << "ERRORLOG                              LOCKSNEED MARTIAN CORP" << endl;
+    errorLogFile << "------------------------------------------------------------" << endl;
+
 }
 
 
@@ -40,6 +44,7 @@ Logger::~Logger()
     planeLogFile.close();
     airportLogFile.close();
     flightLogFile.close();
+    errorLogFile.close();
 }
 
 
@@ -169,7 +174,11 @@ void Logger::logAirportUpdate(int aid, int a_status, Clock first_time = Clock())
 
 void Logger::errorLog(int severity, string message) //TODO: Integrate with general logger functionality- add errorLog file and export functionality. Make abort() function actually do something.
 {
-   /*errorLogFile*/cout << "ERROR: " << message << ", severity " << severity; //TODO: Add to error log once that exists rather than just printing to cout
+    //This allows only one print out statement for the progrm at a time, it slowws things down a bit,
+    // but ensures saftey in our printouts
+    lock_guard<mutex> lock(log_mutex);
+
+   errorLogFile << "ERROR: " << message << ", severity " << severity << endl;
    if (severity == 2);
    {
       error1Count++;

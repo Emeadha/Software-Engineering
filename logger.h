@@ -52,16 +52,14 @@ private:
     ofstream planeLogFile;
     ofstream flightLogFile;
     ofstream airportLogFile;
+    ofstream errorLogFile;
 
     // Names of files to be printed to
     const string planeFileName;
     const string flightFileName;
     const string airportFileName;
+    const string errorFileName;
 
-    // Variables to track whether each type of log has been exported
-    bool plane_exported;
-    bool flight_exported;
-    bool airport_exported;
 
     // Tracks how many level 1 errors have been encounters- 5 calls for the program to abort()
     int error1Count = 0;
