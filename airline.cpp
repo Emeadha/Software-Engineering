@@ -18,13 +18,22 @@ Airline::Airline(TimeManager *time_manager, string airline_name, Input Input_obj
 
     //Get plane vector from input object
     All_planes = Input_object.get_plane_vector();
+    if(All_planes.empty()){
+        //HARRIS
+        //2, "Critical Error! Plane vector is empty![AIRLINE.CPP][LINE 20]"
+    }
     for(int j=0; j<All_planes.size(); j++){
         //Register with time manager
         registerPlane(All_planes[j]);
     }
 
+
     //Get airport vector from input object
     All_airports = Input_object.get_airport_vector();
+    if(All_airports.empty()){
+        //HARRIS
+        //2, "Critical Error! Plane vector is empty![AIRLINE.CPP][LINE 20]"
+    }
     for(int j=0; j<All_airports.size(); j++){
         //register with time manager
         registerAirport(All_airports[j]);
@@ -39,8 +48,7 @@ Airline::Airline(TimeManager *time_manager, string airline_name, Input Input_obj
 
 //Destructor
 Airline::~Airline(){
-    //Close output file
-    flightLog.close();
+    
 }
 
 //Register a plane as an observer
@@ -242,6 +250,13 @@ void Airline::loadFlights(){
     //Get flight vector from input object
     All_flights = Input_object.get_flight_vector();
 
+    if(All_flights.empty()){
+         //HARRIS
+    /* 
+        2, "Critical Error! Flight vector is empty![AIRLINE.CPP][LINE 245]"
+    */
+    }
+   
     //Calculate remaining information based on airport and plane data
     for(int i=0; i<All_flights.size(); i++){
         //Debugging statement
