@@ -293,21 +293,85 @@ void Airline::loadFlights(){
     
 }
 
-void Airline::setComplications(){
-    //TODO - Input object should be used to read these in
+void Airline::setComplication(int selection){
+    if(selection == 0){
+        //This is NO COMPLICATION
+        return;
+    }
+    else if(selection == 1){
+        //Bad weather
+        //25% of flights encounter a delay while in the air
+        //To handle this, we will increase the distance traveled to up to 15% of distance
+        int num_of_flights_effected;
+        double new_distance, percent_inc;
 
-    Complication* newComp;
+        //TODO - make this check what day they are registered
+        num_of_flights_effected = All_flights.size() / 4;
 
-    //Temp
-    for(int i=0; i<12; i++){
-        newComp = new Complication(i,"Test descr", i, 0);
-        All_complications.push_back(newComp);
+        for(int i; i<num_of_flights_effected; i++){
+            //Get original distance
+            new_distance = All_flights[i]->getDistance();
+
+            srand(time(nullptr));
+
+            //Increase between 1 and 15
+            percent_inc = (rand() % 15 + 1)/ 100;
+            //Add increase
+            new_distance = new_distance + (new_distance * percent_inc);
+
+            //Call setter value
+            All_flights[i]->setDistance(new_distance);
+
+        }
+
+    }
+    else if(selection == 2){
+        //Icing
+
+    }
+    else if(selection == 3){
+        //Jet stream
+
+    }
+    else{
+        Log_object->errorLog(1, "Error! Complication input invalid [AIRLINE.CPP]{LINE 304}");
     }
 }
 
-void Airline::scheduleDailyComplication(){
+void Airline::updateDay(int Day){
+    //Set new day
+    this->day = Day;
+
+    //Reset selection
+    int selection = -1;
+
+    //Take use input
+    while((selection > 8) || (selection < 0)){
+
+            if(selection == 9){
+                cout << "-----------------------------------" << endl;
+                cout << "(0) No complication" << endl;
+                cout << "(1) Bad weather" << endl;
+                cout << "(2) Icing" << endl;
+                cout << "(3) Jet stream" << endl;
+            }
+            cout << "------------------------------------" << endl;
+            cout << "//   Locksneed Martian    //////////" << endl;
+            cout << "//   Current Day in simulation : " << day << endl;
+            cout << "------------------------------------" << endl;
+            cout << "Enter complication selection...     " << endl;
+            cout << "------------------------------------" << endl;
+            cout << "Enter (9) for option listing" << endl;
+
+            cin >> selection;
+
+        }
+
+        //Send choice to setComplication
+        setComplication(selection);
 
 }
+
 
 void Airline::findEffectedFlights(){
 
