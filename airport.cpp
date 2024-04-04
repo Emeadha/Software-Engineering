@@ -15,8 +15,6 @@ using namespace std;
 // Constructor
 Airport::Airport(int airport_ID, string airport_name): Objects_clock(0, 0, 0)
 {
-    //Mutex lock for saftey
-    //lock_guard<mutex> lock(Airport_Con_Mutex);
 
 
     this->Airport_name = airport_name;

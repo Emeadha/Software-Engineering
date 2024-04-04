@@ -31,7 +31,7 @@ public:
 
     virtual void onTimeUpdate(Clock& new_time) = 0;
 
-    void updateDay(int Day){
+    virtual void updateDay(int Day){
         this->day = Day;
     }
 

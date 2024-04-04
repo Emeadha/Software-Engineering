@@ -34,9 +34,12 @@ testing testing
 #include <fstream>
 #include <iostream>
 #include <mutex>
+#include <cstdlib>
+#include <ctime>
 
 
 using namespace std;   
+
 
 class Airline : public TimeObserver {
 
@@ -95,8 +98,13 @@ public:
     void registerAirport(Airport* airport);
 
 
+     // --------------
+    // "TimeObserver" methods
+    // --------------
     // Implement the TimeObserver interface
     virtual void onTimeUpdate(Clock& new_time) override;
+    //Implement the ovveride of updateDay to allow for user input
+    void updateDay(int Day) override;
 
     // --------------
     // "Scheduler" methods

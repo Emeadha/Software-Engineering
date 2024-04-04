@@ -18,6 +18,7 @@ What’s its goal? Hold a vector of all observers, and send out updates of the n
 #define TIME_MANAGER_H
 #include "timeObserver.h"
 #include "clock.h"
+
 #include <vector>
 #include <iostream>
 #include <thread>
@@ -28,6 +29,7 @@ class TimeManager {
 private:
     Clock simulation_time; // Holds current world time
     vector<TimeObserver*> observers;
+
 
 public:
     // Constructor

@@ -10,7 +10,6 @@ TimeManager::TimeManager() : simulation_time(0, 0, 0) {}
 
 void TimeManager::startSimulation(){
     
-    int selection = -1;
     int day = 0;
     //THIS IS THE MAIN SIMULATION LOOP FOR TIME
 
@@ -18,40 +17,16 @@ void TimeManager::startSimulation(){
     for(int j = 0; j < 14; j++){
 
         day++;
-        selection = -1;
-
 
         //Update the observers days
+        //THIS ALSO CALLS THE USER PROMPT BY WAY OF AIRLINE OVVERIDING
         for (auto observer : observers) {
 
             //Update time
             observer->updateDay(day);
         }
 
-        while((selection > 8) || (selection < 0)){
 
-            if(selection == 9){
-                cout << "-----------------------------------" << endl;
-                cout << "(0) No complication" << endl;
-                cout << "(1) Bad weather" << endl;
-                cout << "(2) Icing" << endl;
-                cout << "(3) Jet stream" << endl;
-            }
-            cout << "------------------------------------" << endl;
-            cout << "//   Locksneed Martian    //////////" << endl;
-            cout << "//   Current Day in simulation : " << day << endl;
-            cout << "------------------------------------" << endl;
-            cout << "Enter complication selection...     " << endl;
-            cout << "------------------------------------" << endl;
-            cout << "Enter (9) for option listing" << endl;
-
-            cin >> selection;
-
-        }
-
-
-
-    
         //Loop for one day
         //Each iteration is 10 minutes
         int hours = 0;
