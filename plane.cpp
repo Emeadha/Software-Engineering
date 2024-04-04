@@ -218,6 +218,8 @@ void Plane::boardPassengers(){
     
     this->Onboard = Airport_object->transferToPlane(this->gate_ID);
 
+    cerr << "Boarding: " << Onboard.size() << endl;
+
     //Disable boolean
     isBoarding = false;
     
