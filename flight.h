@@ -67,17 +67,18 @@ public:
     
     //Getters
     //ADD MORE GETTERS HERE
-    int getFlightID();
+    int getFlightID(); //Return flight ID
     bool getScheduled(); //Returns whether the flight has been given a time to begin
     int getPlaneID(); //Return plane ID
     string getPlaneName(); //Returns 'tail number' of plane
     int getDestAirptID(); //Return target airport ID
     int getOriginAirptID(); //Return origin airport ID
-    double getDistance();
-    string getDestAirptName();
-    string getOriginAirptName();
+    double getDistance(); //Returns distance to be flown
+    string getDestAirptName(); //Return destination airport name
+    string getOriginAirptName(); //Return origin airport name
     Clock getArrivalTime(); //Return estimated arrival time at target airport
     Clock getDepartureTime(); //Returns scheduled departure time from origin 
+    double getTicketCost(); //Returns the cost for a ticket for the flight
 
     //find way to set clock times with an override function
 

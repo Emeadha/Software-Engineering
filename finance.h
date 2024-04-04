@@ -49,6 +49,7 @@ class Finance {
     public:
         Finance();
 
+        double calculateRevenue(Flight flight, Plane plane);
         void reportPlaneCost(int planeID, double value);
         void reportPlaneRevenue(int planeID, double value);
         void reportDay(int day);

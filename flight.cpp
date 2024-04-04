@@ -65,6 +65,9 @@ Clock Flight::getArrivalTime(){
 Clock Flight::getDepartureTime(){
     return Departure_time;
 }
+double Flight::getTicketCost(){
+    return Ticket_cost;
+}
 
 //Setters
 void Flight::setPlaneID(int Plane_ID){
