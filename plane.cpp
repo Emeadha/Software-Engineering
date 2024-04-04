@@ -216,6 +216,10 @@ void Plane::boardPassengers(){
     Log_object->logPlaneUpdate(this->Plane_ID,2,this->Objects_clock);
 
     //INSTEAD - Call the airline transferToPlane method here
+    
+    this->Onboard = Airport_object->transferToPlane(this->gate_ID);
+
+    cerr << "Boarding: " << Onboard.size() << endl;
 
     //Disable boolean
     isBoarding = false;
