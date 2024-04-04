@@ -130,7 +130,7 @@ void Airline::scheduleFlights(){
 
             //Check to make sure plane exists in vector
             if(tempPlaneID == -1){
-                cerr << "Error! Plane not found in plane registry" << endl;
+                Log_object->errorLog(1, "Error! Plane not found in plane registry[airline.cpp][Line 133]");
             }
             else{
                 //Check if plane is ready to receive a new assignment
@@ -263,7 +263,7 @@ void Airline::negotiateGate(int airport_ID, int plane_ID){
         //Make sure gateID matches I
         //airline.cpp
         if(tempGateID != i){
-            cerr << "ERROR: [GATE.CPP] gateID != i" << endl;
+            Log_object->errorLog(1, "Error! Gate ID does not match [airline.cpp][Line ]"
         }
         
         //See if gate is open
@@ -291,7 +291,7 @@ void Airline::loadFlights(){
 
     if(All_flights.empty()){
        //HARRIS
-       Log_object->errorLog(2, "Critical Error! Flight vector is empty![airline.cpp][LINE 293]");
+       Log_object->errorLog(2, "Critical Error! Flight vector is empty![airline.cpp][LINE 294]");
     }
    
     //Calculate remaining information based on airport and plane data
