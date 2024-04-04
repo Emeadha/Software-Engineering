@@ -1,0 +1,14 @@
+PLANELOG                                 LOCKSNEED MARTIAN CORP
+--------------------------------------------------------------
+PLANE STATUS: PLaneID0 is boarding passengers @[5:10:0]
+PLANE STATUS: PLaneID0 has departed @[5:10:0]
+PLANE STATUS: PLaneID3 is boarding passengers @[6:10:0]
+PLANE STATUS: PLaneID3 has departed @[6:10:0]
+PLANE STATUS: PLaneID0 has arrived at its destination @[6:30:0]
+PLANE STATUS: PLaneID0 is unboarding passengers @[6:40:0]
+PLANE STATUS: PLaneID3 has arrived at its destination @[10:10:0]
+PLANE STATUS: PLaneID3 is unboarding passengers @[10:20:0]
+PLANE STATUS: PLaneID1 is boarding passengers @[11:10:0]
+PLANE STATUS: PLaneID1 has departed @[11:10:0]
+PLANE STATUS: PLaneID1 has arrived at its destination @[12:0:0]
+PLANE STATUS: PLaneID1 is unboarding passengers @[12:10:0]
