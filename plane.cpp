@@ -94,6 +94,11 @@ void Plane::setLogObject(Logger *log_pointer){
     
 }
 
+void Plane::setAirportObject(Airport *airport_pointer)
+{
+    this->Airport_object = airport_pointer;
+}
+
 double Plane::findDuration(Clock& new_time){
     //Getting the difference in hours, minutes, and seconds 
     int diff_hours = new_time.hours - Objects_clock.hours;
@@ -224,7 +229,7 @@ void Plane::disembarkPassengers(){
     
     //INSTEAD CALL AIRLINE OBJECT HERE
     // Ex.
-    // Airline_obj->transferToGate()
+    Airport_object->transferToGate(this->gate_ID, passenger_vector);
 
     Trip_odometer = 0; //Resetting the trip odometer back to 0
 
@@ -234,7 +239,7 @@ void Plane::disembarkPassengers(){
     isUnboarding = false;
 
     //Important step! We let airport know this gate is now availible
-    // EVENTUALLY Airline_obj->freeGate(PlaneID)
+    Airport_object->freeGate(this->gate_ID);
 
 }
 void Plane::inWaitingTime(){

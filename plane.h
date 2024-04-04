@@ -42,12 +42,14 @@ private:
     
     //Basic plane attributes
     int Plane_ID; //The ID number of the plane (Primary Key)
+    int gate_ID;
     string Plane_name; //Tail number
     string Plane_model; //The make of the plane, e.g. “Boeing 757”
     Clock Objects_clock; //Instance of the clock object for the plane, used to keep simulation synchronization
     Clock Arrival_time;
     Clock Departure_time;
 
+    vector<Passenger> passenger_vector; 
     //Logger object reference
     Logger* Log_object = nullptr;
 
@@ -128,6 +130,7 @@ public:
     void resetTripOdometer(); //Sets Trip_odometer to 0
     void setIsReadyForAssignment(bool isReady); //Set ready/not ready for next assignment
     void setFuelTank(float fuel); //Sets Fuel_Tank to a specific value.
+    void setAirportObject(Airport *airport_pointer);
     void refuelToFull(); //Sets Fuel_tank to be equal to Max_fuel
     void setMaintStatus(bool isInMaint); //Sets whether the plane is in maintenance or not
     void setArrivalTime(Clock newTime); //Set clock object for arrival time
