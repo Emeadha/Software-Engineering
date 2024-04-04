@@ -9,9 +9,16 @@
 #include "finance.h"
 #include <sstream>
 
+
 Finance::Finance() : financeFileName("financeLog.txt")
 {
     financeObj.open(financeFileName);
+}
+
+//Calculates the revenue for a given flight
+double Finance::calculateRevenue(Flight flight, Plane plane)
+{
+   return (flight.Flight::getTicketCost()*plane.Plane::getPassengerCount());
 }
 
 //Report a cost of a plane to the finance object
