@@ -81,8 +81,7 @@ public:
     //void disembark(); // Call disembark option on the plane and fill the passenger vector
 
 //vectors for gates and passenger groups
-    vector<Passenger> Departing_passengers; // The number of passengers currently at the gate. Number sent from the airport.
-    vector<Passenger> Arriving_passengers; //People being unloaded from plane
+    vector<Passenger> Passengers_at_gate; // The number of passengers currently at the gate. Number sent from the airport.
     vector<Gate> gates;
     vector<int> passengerGroups;
     vector<passengerMovement> passengerMovements;

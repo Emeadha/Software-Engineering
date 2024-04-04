@@ -59,7 +59,7 @@ int Gate::getPlane_ID()
 
 int Gate::getPassengersAtGate()
 {
-    return Arriving_passengers.size();
+    return Passengers_at_gate.size();
 }
 
 // Setters

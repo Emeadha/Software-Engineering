@@ -239,7 +239,7 @@ void Airport::passengerMovement()
 void Airport::transferToGate(int gate_ID, vector<Passenger> passenger_vector){
 
     //Assign passed vector as the vaector at gate
-    All_gates[gate_ID]->Arriving_passengers = passenger_vector;
+    All_gates[gate_ID]->Passengers_at_gate = passenger_vector;
 }
 
 vector<Passenger> Airport::transferToPlane(int gate_ID){
@@ -248,10 +248,10 @@ vector<Passenger> Airport::transferToPlane(int gate_ID){
     vector<Passenger> temp;
 
     //Assign vector to placeholder
-    temp = All_gates[gate_ID]->Departing_passengers;
+    temp = All_gates[gate_ID]->Passengers_at_gate;
 
     //Clear vector at gate
-    All_gates[gate_ID]->Departing_passengers.clear();
+    All_gates[gate_ID]->Passengers_at_gate.clear();
 
     //Return the original vector at gate
     return temp;
