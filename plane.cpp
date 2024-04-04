@@ -77,8 +77,8 @@ void Plane::onTimeUpdate(Clock& new_time) {
     Objects_clock = new_time;
 
     //Debugging statement
-    cout << "Plane " << Plane_ID << " updated its time to "
-              << new_time.hours << ":" << new_time.minutes << ":" << new_time.seconds << endl;
+    //cout << "Plane " << Plane_ID << " updated its time to "
+    //          << new_time.hours << ":" << new_time.minutes << ":" << new_time.seconds << endl;
     //cout << "Variables: " << Plane_model << " " << Max_fuel << " " << Burn_rate << " " << Max_passengers << " " << Current_velocity << " " << Odometer << endl;
 
     //Check status and make decison
@@ -246,7 +246,7 @@ void Plane::inWaitingTime(){
     //This is a temp fix, but for right now plane is going to wait until 10 min before
     // takeoff then board, then fly
     //The reason for this is waiting is its base state
-    cout << "Plane " <<  Plane_ID << " is in waiting state." << endl;
+    //cout << "Plane " <<  Plane_ID << " is in waiting state." << endl;
 
     //Will transition to flying if..
     // 1. It has been assigned a upcoming flight (ready for assignment = false)
