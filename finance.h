@@ -17,12 +17,12 @@
 #ifndef FINANCE_H
 #define FINANCE_H
 
-//#include "timeManager.h"
-//#include "plane.h"
-//#include "airport.h"
-//#include "passenger.h"
-//#include "airline.h"
-//#include "input.h"
+#include "timeManager.h"
+#include "plane.h"
+#include "airport.h"
+#include "passenger.h"
+#include "airline.h"
+#include "input.h"
 #include "logger.h"
 #include <iostream>
 #include <fstream>
@@ -49,7 +49,7 @@ class Finance {
     public:
         Finance();
 
-//        double calculateRevenue(Flight flight, Plane plane);
+        double calculateRevenue(Flight flight, Plane plane);
         void reportPlaneCost(int planeID, double value);
         void reportPlaneRevenue(int planeID, double value);
         void reportDay(int day);

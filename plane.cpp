@@ -5,7 +5,6 @@ Plane object implementation file
 */
 // Plane.cpp
 #include "Plane.h"
-#include "finance.h"
 #include <iostream>
 using namespace std;
 
@@ -441,16 +440,12 @@ void Plane::setTargetAirport(int airportID){
     this->Target_airport_ID = airportID;
 }
 
-void Plane::setFinanceObject(Finance *New_finance_obj){
-   this->Finance_obj = New_finance_obj;
-}
-
     /* END SETTERS*/
 
     /* BEGIN MISCELLANEOUS FUNCTIONS */
-/*double*/ void Plane::calcCost() //TODO: As-is, this doesn't actually calculate anything, just reports to Finance object
+double Plane::calcCost()
 {
-   this->Finance_obj->reportPlaneCost(this->Plane_ID, 10); //TODO: Pass an actual value to ReportPlaneCost, 10 is just a placeholder
+   return 0; //TODO: This is just here to supress compiler warning
 }
 
 void Plane::doMaintenance()
