@@ -370,7 +370,7 @@ void Airline::setComplication(int selection){
 
     }
     else{
-        Log_object->errorLog(1, "Error! Complication input invalid [AIRLINE.CPP]{LINE 304}");
+        Log_object->errorLog(1, "Error! Complication input invalid [AIRLINE.CPP]{LINE 373}");
     }
 }
 
