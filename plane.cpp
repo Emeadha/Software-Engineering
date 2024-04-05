@@ -14,6 +14,12 @@ using namespace std;
 Plane::Plane(int Plane_ID, string Plane_name, string Plane_model, float Max_fuel, float Burn_rate, 
     float Max_velocity, int Max_passengers) : Objects_clock(0, 0, 0){
 
+    // Check for invalid initialization parameters
+    if (Max_fuel <= 0 || Burn_rate <= 0 || Max_velocity <= 0 || Max_passengers <= 0 || Plane_ID < 0) 
+    {
+        Log_object->errorLog(1, "Error! Invalid initialization parameters for Plane object [plane.cpp][Line 20]");
+    }
+
     //Set the plane's main attributess
     this->Plane_ID = Plane_ID;
     this->Plane_name = Plane_name;
@@ -101,10 +107,17 @@ void Plane::setAirportObject(Airport *airport_pointer)
 }
 
 double Plane::findDuration(Clock& new_time){
+
+    if (new_time.hours < 0 || new_time.minutes < 0 || new_time.seconds < 0) 
+    {
+        Log_object->errorLog(1, "Error! Invalid time parameter provided for duration calculation [plane.cpp][Line 119]");
+    }
+
     //Getting the difference in hours, minutes, and seconds 
     int diff_hours = new_time.hours - Objects_clock.hours;
     int diff_minutes = new_time.minutes - Objects_clock.minutes;
     int diff_seconds = new_time.seconds - Objects_clock.seconds; 
+
     //converting and storing the time difference to be referenced. 
     double duration = diff_hours * 60.0 + diff_minutes + diff_seconds/ 60.0;
 
@@ -139,11 +152,11 @@ void Plane::planeStatus(){
             doMaintenance();
         }
         else{
-            cerr << "Error invalid plane state! [PLANE.CPP-LINE148] (grounded tree)" << endl;
+            Log_object->errorLog(1, "Error! Invalid plane state (Grounded tree) [plane.cpp][Line 155]");
         }
     }
     else{
-        cerr << "Error! Invalid plane state! [PLANE.CPP-LINE152]" << endl;
+        Log_object->errorLog(1, "Error! Invalid plane state [plane.cpp][Line 159]");
     }
 
     
