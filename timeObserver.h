@@ -26,9 +26,6 @@ using namespace std;
 class TimeObserver {
 public:
 
-    //Hold what day it is
-    int day = 0;
-
     virtual void onTimeUpdate(Clock& new_time) = 0;
 
     virtual void updateDay(int Day) = 0;

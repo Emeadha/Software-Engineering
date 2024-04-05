@@ -37,8 +37,11 @@ Airline::Airline(TimeManager *time_manager, string airline_name, Input Input_obj
         registerAirport(All_airports[j]);
     }
 
+    //Add this object to be a timeObsever
+    time_manager->addObserver(this);
+
     //Load flights and fill in missing info based off airport and plane data
-   loadFlights();
+    loadFlights();
 
     //Go ahead and schedule flights now
     scheduleFlights();
@@ -53,6 +56,7 @@ Airline::~Airline(){
 void Airline::registerPlane(Plane* plane) {
     //Add this object as an observer
     time_manager->addObserver(plane);
+   
 
     //Fill its logger slot
     plane->setLogObject(Log_object);
@@ -292,6 +296,12 @@ void Airline::loadFlights(){
 }
 
 void Airline::setComplication(int selection){
+
+    if(debugging){
+        cerr << " DEBUGGING Entering set complication" << endl;
+    }
+
+
     if(selection == 0){
         //This is NO COMPLICATION
         return;
@@ -306,7 +316,16 @@ void Airline::setComplication(int selection){
         //TODO - make this check what day they are registered
         num_of_flights_effected = All_flights.size() / 4;
 
-        for(int i; i<num_of_flights_effected; i++){
+        for(int i=0; i<num_of_flights_effected; i++){
+
+            if(debugging){
+                cerr << "DEBUGGING In flight iterations" << endl;
+            }
+
+            if(All_flights.empty()){
+                cerr << "ERROR! All flights empty" << endl;
+                exit(1);
+            }
             //Get original distance
             new_distance = All_flights[i]->getDistance();
 
@@ -319,6 +338,10 @@ void Airline::setComplication(int selection){
 
             //Call setter value
             All_flights[i]->setDistance(new_distance);
+
+             if(debugging){
+                cerr << "DEBUGGING end loop flight iterations" << endl;
+            }
 
         }
 
@@ -334,9 +357,18 @@ void Airline::setComplication(int selection){
     else{
         Log_object->errorLog(1, "Error! Complication input invalid [AIRLINE.CPP]{LINE 373}");
     }
+
+     if(debugging){
+        cerr << "Entering set complication" << endl;
+    }
+
 }
 
 void Airline::updateDay(int Day){
+
+    if(debugging){
+        cerr << "DEBUGGING In update day" << endl;
+    }
 
     //Set new day
     this->day = Day;
@@ -364,6 +396,10 @@ void Airline::updateDay(int Day){
 
             cin >> selection;
 
+        }
+
+        if(debugging){
+            cerr << " DEBUGGING Bout to call setComp" << endl;
         }
 
         //Send choice to setComplication

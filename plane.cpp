@@ -96,6 +96,7 @@ void Plane::onTimeUpdate(Clock& new_time) {
 }
 void Plane::updateDay(int Day){
     this->day = Day;
+
 }
 void Plane::setLogObject(Logger *log_pointer){
 
