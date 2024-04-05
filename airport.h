@@ -61,7 +61,7 @@ private:
 public:
 
     //Vector for all passenger and gate objects
-    vector<Passenger*> All_passenger_groups;
+    //vector<Passenger*> All_passenger_groups;
     
     //vector<Passenger*> passengersAtGate; //vector of copied passenger groups that have atGate == true
 
