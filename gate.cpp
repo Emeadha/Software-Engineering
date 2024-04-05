@@ -36,6 +36,10 @@ void Gate::onTimeUpdate(Clock& new_time)
     TimeObserver::setIsDone();
 }
 
+void Gate::updateDay(int Day){
+    this->day = Day;
+}
+
 // Getters
 
 int Gate::getGateID(){

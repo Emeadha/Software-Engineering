@@ -47,6 +47,11 @@ void Airport::setTimeManager(TimeManager *time_manager){
     this->time_manager = time_manager;
 
 }
+
+void Airport::updateDay(int Day){
+    this->day = Day;
+}
+
 void Airport::setLogObject(Logger *log_pointer){
 
     //Assign our logger object

@@ -160,11 +160,16 @@ public:
     /* BEGIN MISCELLANEOUS FUNCTIONS */
     /*double*/ void calcCost(); //Calculates the value of Daily Cost, takes in information from fuel cost, loan etc. //TODO: As-is, this doesn't actually calculate anything, just reports to Finance object
     void assignFlight(int targetAirportID, Clock arrivalTime, Clock departTime, double distance, Airport* airport_pointer); //Called by scheduler, gives needed values to assign a new flight.
-    virtual void onTimeUpdate(Clock& new_time) override; //Implements time update ability, inherited from observer
+       
     void planeStatus(); // The method used for checking the plane status and making right decison
     void checkFuelLevel(); // The Checkfuel level method. It will check the fuel level and update the fuel level.
     double findDuration(Clock& new_time); //Find duration of THIS update
     /* END MISCELLANEOUS FUNCTIONS */
+
+
+    virtual void updateDay(int Day) override;
+    virtual void onTimeUpdate(Clock& new_time) override; //Implements time update ability, inherited from observer
+
 
     //Constructor/destructor
     Plane(int Plane_ID, string Plane_name, string Plane_model, float Max_fuel, float Burn_rate, float Max_velocity, int Max_passengers);

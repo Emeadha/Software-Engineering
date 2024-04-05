@@ -103,8 +103,9 @@ public:
     // --------------
     // Implement the TimeObserver interface
     virtual void onTimeUpdate(Clock& new_time) override;
+    
     //Implement the ovveride of updateDay to allow for user input
-    void updateDay(int Day) override;
+    virtual void updateDay(int Day) override;
 
     // --------------
     // "Scheduler" methods

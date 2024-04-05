@@ -94,6 +94,9 @@ void Plane::onTimeUpdate(Clock& new_time) {
     //Say we are done
     TimeObserver::setIsDone();
 }
+void Plane::updateDay(int Day){
+    this->day = Day;
+}
 void Plane::setLogObject(Logger *log_pointer){
 
     //Assign our logger object

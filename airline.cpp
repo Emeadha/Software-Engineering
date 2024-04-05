@@ -337,6 +337,7 @@ void Airline::setComplication(int selection){
 }
 
 void Airline::updateDay(int Day){
+
     //Set new day
     this->day = Day;
 
