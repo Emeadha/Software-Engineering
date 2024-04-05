@@ -31,9 +31,7 @@ public:
 
     virtual void onTimeUpdate(Clock& new_time) = 0;
 
-    virtual void updateDay(int Day){
-        this->day = Day;
-    }
+    virtual void updateDay(int Day) = 0;
 
     //Return whether observer got all the way through the update
     bool getIsDone() {

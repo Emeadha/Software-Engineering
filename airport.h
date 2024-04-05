@@ -79,6 +79,8 @@ public:
 
     // Implement the TimeObserver interface
     virtual void onTimeUpdate(Clock& new_time) override;
+    virtual void updateDay(int Day) override;
+
 
     // Getters
     int getAirportID(); // Return Airport ID

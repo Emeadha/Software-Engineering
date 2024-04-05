@@ -15,11 +15,11 @@ Plane::Plane(int Plane_ID, string Plane_name, string Plane_model, float Max_fuel
     float Max_velocity, int Max_passengers) : Objects_clock(0, 0, 0){
 
     // Check for invalid initialization parameters
-    if (Max_fuel <= 0 || Burn_rate <= 0 || Max_velocity <= 0 || Max_passengers <= 0) 
+    if (Max_fuel <= 0 || Burn_rate <= 0 || Max_velocity <= 0 || Max_passengers <= 0 || Plane_ID < 0) 
     {
         Log_object->errorLog(1, "Error! Invalid initialization parameters for Plane object [plane.cpp][Line 20]");
     }
-    
+
     //Set the plane's main attributess
     this->Plane_ID = Plane_ID;
     this->Plane_name = Plane_name;
@@ -94,13 +94,10 @@ void Plane::onTimeUpdate(Clock& new_time) {
     //Say we are done
     TimeObserver::setIsDone();
 }
+void Plane::updateDay(int Day){
+    this->day = Day;
+}
 void Plane::setLogObject(Logger *log_pointer){
-
-    // Check if the logger pointer is nullptr
-    if (log_pointer == nullptr) 
-    {
-        Log_object->errorLog(1, "Error! Null logger pointer provided [plane.cpp][Line 102]");
-    }
 
     //Assign our logger object
     this->Log_object = log_pointer;
@@ -116,13 +113,14 @@ double Plane::findDuration(Clock& new_time){
 
     if (new_time.hours < 0 || new_time.minutes < 0 || new_time.seconds < 0) 
     {
-    Log_object->errorLog(1, "Error! Invalid time parameter provided for duration calculation [plane.cpp][Line 119]");
+        Log_object->errorLog(1, "Error! Invalid time parameter provided for duration calculation [plane.cpp][Line 119]");
     }
-        
+
     //Getting the difference in hours, minutes, and seconds 
     int diff_hours = new_time.hours - Objects_clock.hours;
     int diff_minutes = new_time.minutes - Objects_clock.minutes;
     int diff_seconds = new_time.seconds - Objects_clock.seconds; 
+
     //converting and storing the time difference to be referenced. 
     double duration = diff_hours * 60.0 + diff_minutes + diff_seconds/ 60.0;
 
@@ -130,11 +128,7 @@ double Plane::findDuration(Clock& new_time){
 }
 void Plane::planeStatus(){
    
-    if (!(isFlying || isGrounded)) 
-    {
-        Log_object->errorLog(1, "Error! Plane state neither flying nor grounded [plane.cpp][Line 135]");
-    }
-        
+
     if(isFlying){
         //Want to start by checking if it is flying
         fly();     
@@ -160,15 +154,15 @@ void Plane::planeStatus(){
             //Decrement time left in maintenence
             doMaintenance();
         }
-        else
-        {
-            Log_object->errorLog(1, "Error! Invalid plane state [plane.cpp][Line 156]");
+        else{
+            Log_object->errorLog(1, "Error! Invalid plane state (Grounded tree) [plane.cpp][Line 155]");
         }
     }
-    else
-    {
-	Log_object->errorLog(1, "Error! Invalid plane state [plane.cpp][Line 160]");
+    else{
+        Log_object->errorLog(1, "Error! Invalid plane state [plane.cpp][Line 159]");
     }
+
+    
 }
 
 
@@ -312,12 +306,6 @@ void Plane::assignFlight(int targetAirportID, Clock arrivalTime, Clock departTim
 
 void Plane::checkFuelLevel(){
 
-    // Add error logging for invalid plane model
-    if (!(Plane_model == "B600" || Plane_model == "B800" || Plane_model == "A100" || Plane_model == "A300")) 
-    {
-        Log_object->errorLog(1, "Error! Invalid plane model for fuel level check [plane.cpp][Line 318]");
-    }
-        
     if(isFlying == true){
         cout <<"Fuel level currently is: " << this->Fuel_tank << endl;
         
@@ -487,13 +475,6 @@ void Plane::setFinanceObject(Finance *New_finance_obj){
 
 void Plane::doMaintenance()
 {
-
-    // Add error logging for unexpected maintenance duration calculation
-    if (untilMaintDone < 0) 
-    {
-        Log_object->errorLog(1, "Error! Unexpected maintenance duration calculation [plane.cpp][Line 494]");
-    }
-        
     //WE NEED TWO DIFFERENT METHODS FOR MAINTENCE
     //1. Sets maintence time, and sets maintence to true
     //2. Chips away at maintence time then eventually sets to false
@@ -510,12 +491,6 @@ void Plane::doMaintenance()
 
 }
 void Plane::sendToMaintenance(){
-
-     if (untilMaintDone < 0) 
-     {
-        Log_object->errorLog(1, "Error! Unexpected issue initiating maintenance [plane.cpp][Line 516]");
-     }
-        
      this->untilMaintDone = 2160;
      this->isMaintenance = true;
 }
