@@ -10,20 +10,6 @@ airline.cpp
 Airline::Airline(TimeManager *time_manager, string airline_name, Input Input_object, Logger *Log_object)
         : time_manager(time_manager),  Objects_clock(0, 0, 0), Input_object(Input_object)
         , Log_object(Log_object) {
-                
-    if (airline_name.empty()) 
-    {
-        Log_object->errorLog(2, "Critical Error! Airline name is empty! [airline.cpp][Line 16]");
-    }
-    /*if (!Input_object.isValid()) 
-    {
-        Log_object->errorLog(2, "Critical Error! Invalid Input object! [airline.cpp][Line 20]");
-    }*/
-    if (!Log_object) 
-    {
-        Log_object->errorLog(2, "Critical Error! Logger object is null! [airline.cpp][Line 24]");
-    }
-
     this->Airline_name = airline_name;
 
     // ---------------------
@@ -33,7 +19,8 @@ Airline::Airline(TimeManager *time_manager, string airline_name, Input Input_obj
     //Get plane vector from input object
     All_planes = Input_object.get_plane_vector();
     if(All_planes.empty()){
-        Log_object->errorLog(2, "Critical Error! Plane vector is empty![airline.cpp][LINE 36]");
+        //HARRIS
+        //2, "Critical Error! Plane vector is empty![AIRLINE.CPP][LINE 20]"
     }
     for(int j=0; j<All_planes.size(); j++){
         //Register with time manager
@@ -45,7 +32,7 @@ Airline::Airline(TimeManager *time_manager, string airline_name, Input Input_obj
     All_airports = Input_object.get_airport_vector();
     if(All_airports.empty()){
         //HARRIS
-        Log_object->errorLog(2, "Critical Error! Plane vector is empty![airline.cpp][LINE 48]");
+        //2, "Critical Error! Plane vector is empty![AIRLINE.CPP][LINE 20]"
     }
     for(int j=0; j<All_airports.size(); j++){
         //register with time manager
@@ -66,11 +53,6 @@ Airline::~Airline(){
 
 //Register a plane as an observer
 void Airline::registerPlane(Plane* plane) {
-    if (!plane) 
-    {
-        Log_object->errorLog(2, "Error! Attempting to register a null plane! [airline.cpp][Line 71]");
-        return;
-    }
     //Add this object as an observer
     time_manager->addObserver(plane);
 
@@ -80,11 +62,6 @@ void Airline::registerPlane(Plane* plane) {
 
 //Register an airport likewise
 void Airline::registerAirport(Airport* airport) {
-    if (!airport) 
-    {
-        Log_object->errorLog(2, "Error! Attempting to register a null airport! [airline.cpp][Line 85]");
-        return;
-    }
     //Add this object as an observer
     time_manager->addObserver(airport);
 
@@ -95,11 +72,6 @@ void Airline::registerAirport(Airport* airport) {
 
 //Schedule flights
 void Airline::scheduleFlights(){
-    if (All_flights.empty()) 
-    {
-        Log_object->errorLog(2, "Error! No flights to schedule! [airline.cpp][Line 100]");
-        return;
-    }
     //Want to acsess flight vector, send out flight info to all objects like 
     // planes and airports, then flip scheduled boolean to true
 
@@ -130,7 +102,7 @@ void Airline::scheduleFlights(){
 
             //Check to make sure plane exists in vector
             if(tempPlaneID == -1){
-                Log_object->errorLog(1, "Error! Plane not found in plane registry[airline.cpp][Line 133]");
+                cerr << "Error! Plane not found in plane registry" << endl;
             }
             else{
                 //Check if plane is ready to receive a new assignment
@@ -240,16 +212,7 @@ int Airline::findAirportID(string airport_name){
 }
 
 void Airline::negotiateGate(int airport_ID, int plane_ID){
-    if (All_airports.empty() || airport_ID < 0 || airport_ID >= All_airports.size()) 
-    {
-        Log_object->errorLog(1, "Error! Invalid airport ID or empty airport list! [airline.cpp][Line 245]");
-        return;
-    }
-    if (All_airports[airport_ID]->All_gates.empty()) 
-    {
-        Log_object->errorLog(2, "Error! No gates available at the airport! [airline.cpp][Line 250]");
-        return;
-    }
+
     int tempGateID;
     int i = 0;
 
@@ -259,10 +222,9 @@ void Airline::negotiateGate(int airport_ID, int plane_ID){
         //Get the gate ID
         tempGateID = All_airports[airport_ID]->All_gates[i]->getGateID();
 
-        //Make sure gateID matches I
-        //airline.cpp
+        //Make sure gateID matches i
         if(tempGateID != i){
-	    Log_object->errorLog(1, "Error! Gate ID does not match [airline.cpp][Line 265]");
+            cerr << "ERROR: [GATE.CPP] gateID != i" << endl;
         }
         
         //See if gate is open
@@ -289,8 +251,10 @@ void Airline::loadFlights(){
     All_flights = Input_object.get_flight_vector();
 
     if(All_flights.empty()){
-       //HARRIS
-       Log_object->errorLog(2, "Critical Error! Flight vector is empty![airline.cpp][LINE 293]");
+         //HARRIS
+    /* 
+        2, "Critical Error! Flight vector is empty![AIRLINE.CPP][LINE 245]"
+    */
     }
    
     //Calculate remaining information based on airport and plane data
