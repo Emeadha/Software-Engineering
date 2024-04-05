@@ -29,34 +29,12 @@ Airport::Airport(int airport_ID, string airport_name): Objects_clock(0, 0, 0)
     for(int i = 0; i < 5; i++) 
     {
         Passenger* passengerGroupID = new Passenger(i);
-        // Check if passengerGroupID is successfully created
-        if (passengerGroupID == nullptr) 
-	{
-            if (Log_object != nullptr) 
-	    {
-                Log_object->errorLog(1, "Error! Passenger creation failed [airport.cpp][Line 37]");
-            }
-        }
-	else 
-	{
-            // Register passenger group if creation succeeds
-            registerPassengerGroup(passengerGroupID);
-        }
+        //Register passenger group
+        registerPassengerGroup(passengerGroupID);
 
         //Creating and registering gates
         Gate* gateID = new Gate(i);
-        // Check if gateID is successfully created
-        if (gateID == nullptr) 
-	{
-            if (Log_object != nullptr) 
-	    {
-                Log_object->errorLog(1, "Error! Gate creation failed [airport.cpp][Line 53]");
-            }
-        } 
-	else 
-	{
-            // Register gate if creation succeeds
-            registerGate(gateID);
+        registerGate(gateID);
         
     }
 
@@ -64,19 +42,10 @@ Airport::Airport(int airport_ID, string airport_name): Objects_clock(0, 0, 0)
 
 //Add reference to TimeManager object, then complete object creation
 void Airport::setTimeManager(TimeManager *time_manager){
-    // Check if time_manager pointer is valid
-    if (time_manager == nullptr) 
-    {
-        if (Log_object != nullptr) 
-        {
-            Log_object->errorLog(1, "Error! Invalid pointer for TimeManager [airport.cpp][Line 80]");
-        }
-    } 
-    else 
-    {
-        // Assign the time_manager
-        this->time_manager = time_manager;
-    }
+
+    //Assign our time_manager
+    this->time_manager = time_manager;
+
 }
 void Airport::setLogObject(Logger *log_pointer){
 
@@ -114,9 +83,8 @@ void Airport::onTimeUpdate(Clock& new_time)
             Log_object->logAirportUpdate(this->Airport_ID, 2, this->Objects_clock);
         }
     }
-    else  
-    {
-        Log_object->errorLog(1, "Error! No pointer for log object [airport.cpp][Line 130]");
+    else{
+        cerr << "ERROR: No pointer for log object" << endl;
     }
 
     //Report time update to cout
