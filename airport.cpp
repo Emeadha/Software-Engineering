@@ -239,10 +239,14 @@ void Airport::passengerMovement()
 }
 
 
-void Airport::transferToGate(int gate_ID, vector<Passenger> passenger_vector){
+void Airport::transferToGate(int gate_ID, vector<Passenger> All_passenger_groups){
 
     //Assign passed vector as the vaector at gate
-    All_gates[gate_ID]->Arriving_passengers = passenger_vector;
+    All_gates[gate_ID]->Arriving_passengers = All_passenger_groups;
+    //for(int x = 0; x < All_passenger_groups.size(); x++)
+    //{
+        //cout << "Passenger groups: " << All_passenger_groups[x] << endl
+    //}
 }
 
 vector<Passenger> Airport::transferToPlane(int gate_ID){

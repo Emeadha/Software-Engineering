@@ -61,12 +61,12 @@ private:
 public:
 
     //Vector for all passenger and gate objects
-    //vector<Passenger*> All_passenger_groups;
+    vector<Passenger*> All_passenger_groups;
     
     //vector<Passenger*> passengersAtGate; //vector of copied passenger groups that have atGate == true
 
 
-    vector<Passenger*> atGateGroups; //temp vector
+    vector<Passenger*> atGateGroups; 
     vector<Gate*> All_gates;
     //Constructor
     Airport(int airport_ID, string airport_name);
@@ -103,7 +103,7 @@ public:
     // Airport-gate-plane interaction methods
     //------------------
 
-    void transferToGate(int gate_ID, vector<Passenger> passenger_vector); 
+    void transferToGate(int gate_ID, vector<Passenger> All_passenger_groups); 
     vector<Passenger> transferToPlane(int gate_ID);
     void freeGate(int gate_ID);
 
