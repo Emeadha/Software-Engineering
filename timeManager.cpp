@@ -54,6 +54,11 @@ void TimeManager::startSimulation(){
 
         }
     }
+
+    //End simulation print out
+    cout << "-------------------------------------------------------------------------" << endl;
+    cout << " SIMULATION COMPLETED                              LOCKSNEED MARTIAN CORP" << endl;
+    cout << "-------------------------------------------------------------------------" << endl;
 }
 void TimeManager::updateSimulationTime(int hours, int minutes, int seconds) {
     simulation_time = Clock(hours, minutes, seconds);

@@ -125,13 +125,14 @@ void Airline::scheduleFlights(){
                     //Set this flight in vector to scheduled
                     All_flights[i]->setScheduledTrue();
 
+                    //Send scheduled notice to Logger
+                    //Big nasty call, but gives flight info
+                    Log_object->logFlightUpdate(All_flights[i]->getFlightID(), 4, All_flights[i]->getOriginAirptName(),  All_flights[i]->getDestAirptName(), tempDepartTime, tempArrivalTime);
+ 
                 }
             }
             
-            //Send scheduled notice to Logger
-            //Big nasty call, but gives flight info
-            Log_object->logFlightUpdate(All_flights[i]->getFlightID(), 4, All_flights[i]->getOriginAirptName(),  All_flights[i]->getDestAirptName(), tempDepartTime, tempArrivalTime);
-           
+                     
         }
 
         //Increment i
@@ -261,10 +262,7 @@ void Airline::loadFlights(){
     All_flights = Input_object.get_flight_vector();
 
     if(All_flights.empty()){
-         //HARRIS
-    /* 
-        2, "Critical Error! Flight vector is empty![AIRLINE.CPP][LINE 245]"
-    */
+       Log_object->errorLog(2, "Critical Error! Flight vector is empty![AIRLINE.CPP][LINE 245]");
     }
    
     //Calculate remaining information based on airport and plane data
@@ -321,26 +319,33 @@ void Airline::setComplication(int selection){
         int num_of_flights_effected;
         double new_distance, percent_inc;
 
-        //TODO - make this check what day they are registered
+        //Get 25% of all flights
         num_of_flights_effected = All_flights.size() / 4;
 
+        //Iterate through the first 25% of flights
         for(int i=0; i<num_of_flights_effected; i++){
 
             if(debugging){
                 cerr << "DEBUGGING In flight iterations" << endl;
             }
 
+            //Error catch
             if(All_flights.empty()){
-                cerr << "ERROR! All flights empty" << endl;
-                exit(1);
+                Log_object->errorLog(2, "Error! Flight vector empty! [AIRLINE.CPP][LINE 332]");
             }
+
             //Get original distance
             new_distance = All_flights[i]->getDistance();
+
+             if(debugging){
+                cerr << "DEBUGGING Old distance: " << new_distance << " FlightID: " << i << endl;
+            }
 
             srand(time(nullptr));
 
             //Increase between 1 and 15
-            percent_inc = (rand() % 15 + 1)/ 100;
+            percent_inc = (rand() % 15 + 1.0)/ 100.0;
+
             //Add increase
             new_distance = new_distance + (new_distance * percent_inc);
 
@@ -348,6 +353,7 @@ void Airline::setComplication(int selection){
             All_flights[i]->setDistance(new_distance);
 
              if(debugging){
+                cerr << "DEBUGGING New distance: " << new_distance << " Percent Inc: " << percent_inc * 100 << "%" << endl;
                 cerr << "DEBUGGING end loop flight iterations" << endl;
             }
 
@@ -377,6 +383,9 @@ void Airline::updateDay(int Day){
     if(debugging){
         cerr << "DEBUGGING In update day" << endl;
     }
+
+    //----------------------
+    //Get ready for new day
 
     //Set new day
     this->day = Day;
