@@ -82,6 +82,7 @@ void Airport::onTimeUpdate(Clock& new_time)
     //Start by setting done to false
     TimeObserver::setIsNotDone();
 
+/*
     if(Log_object != nullptr){
 
         Log_object->logAirportUpdate(this->Airport_ID, 2, this->Objects_clock);  
@@ -89,7 +90,7 @@ void Airport::onTimeUpdate(Clock& new_time)
     else{
         Log_object->errorLog(1, "Error! No pointer for log object [airport.cpp][Line 130]");
     }
-
+*/
     //Report time update to cout
     Objects_clock = new_time;
 
@@ -268,4 +269,7 @@ vector<Passenger> Airport::transferToPlane(int gate_ID){
 void Airport::freeGate(int gate_ID){
     //Set given gate to free
     All_gates[gate_ID]->setInUse(false);
+
+    //Tell logger its been freed
+    Log_object->logAirportUpdate(this->Airport_ID, 3, gate_ID, this->Objects_clock);
 }

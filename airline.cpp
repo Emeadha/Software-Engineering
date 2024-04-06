@@ -19,7 +19,7 @@ Airline::Airline(TimeManager *time_manager, string airline_name, Input Input_obj
     //Get plane vector from input object
     All_planes = Input_object.get_plane_vector();
     if(All_planes.empty()){
-        Log_object->errorLog(2, "Critical Error! Plane vector is empty![airline.cpp][LINE 36]");
+        Log_object->errorLog(2, "Critical Error! Plane vector is empty![AIRLINE.CPP][LINE 22]");
     }
     for(int j=0; j<All_planes.size(); j++){
         //Register with time manager
@@ -30,7 +30,7 @@ Airline::Airline(TimeManager *time_manager, string airline_name, Input Input_obj
     //Get airport vector from input object
     All_airports = Input_object.get_airport_vector();
     if(All_airports.empty()){
-        Log_object->errorLog(2, "Critical Error! Airport vector is empty![airline.cpp][LINE 48]");
+        Log_object->errorLog(2, "Critical Error! Airport vector is empty![AIRLINE.CPP][LINE 33]");
     }
     for(int j=0; j<All_airports.size(); j++){
         //register with time manager
@@ -43,8 +43,6 @@ Airline::Airline(TimeManager *time_manager, string airline_name, Input Input_obj
     //Load flights and fill in missing info based off airport and plane data
     loadFlights();
 
-    //Go ahead and schedule flights now
-    scheduleFlights();
 }
 
 //Destructor
@@ -215,31 +213,41 @@ int Airline::findAirportID(string airport_name){
 
 void Airline::negotiateGate(int airport_ID, int plane_ID){
 
-    int tempGateID;
+    int tempGateID = -1;
     int i = 0;
+    bool gate_found = false;
 
     //Iterate through all gates of a given airport
-    while (i < All_airports[airport_ID]->All_gates.size()){
+    while ((i < All_airports[airport_ID]->All_gates.size()) && !gate_found){
 
         //Get the gate ID
         tempGateID = All_airports[airport_ID]->All_gates[i]->getGateID();
 
         //Make sure gateID matches i
         if(tempGateID != i){
-            cerr << "ERROR: [GATE.CPP] gateID != i" << endl;
+            Log_object->errorLog(1, "Error! Iterator does not match tempGateID [AIRLINE.CPP][LINE 228]");
         }
         
         //See if gate is open
-        if(All_airports[airport_ID]->All_gates[i]->getInUse()){
+        if(All_airports[airport_ID]->All_gates[i]->getInUse() == false){
             //TEMP - For now we just want to grab the first availible gate
             All_planes[plane_ID]->setTargetGate(i);
 
             //Change gate to in use
             All_airports[airport_ID]->All_gates[i]->setInUse(true);
 
-            //EVENTUALLY - Add a call here to plane log 
+            //Tell logger we reserved a gate
+            Log_object->logAirportUpdate(airport_ID, 1, i, this->Objects_clock);
+
+            //Set boolean to true
+            gate_found = true;
         }
         i++;
+    }
+
+    //If we get to the end of this without finding a gate
+    if(!gate_found){
+        Log_object->errorLog(1, "Error! No suitable gate found! [AIRLINE.CPP][LINE 247]");
     }
 }
 
@@ -373,6 +381,20 @@ void Airline::updateDay(int Day){
     //Set new day
     this->day = Day;
 
+    //Reset flight scheduling to false
+    for(int i=0; i<All_flights.size(); i++){
+        All_flights[i]->setScheduledFalse();
+    }
+
+    //---------------------
+    //Logger neatness
+
+    //Print out day divison in respective .txt files
+    Log_object->newDayMarking(Day);
+
+    //--------------------------
+    //User complication selection
+
     //Reset selection
     int selection = -1;
 
@@ -423,6 +445,9 @@ void Airline::onTimeUpdate(Clock& new_time) {
 
     //Start by setting done to false
     TimeObserver::setIsNotDone();
+
+    //Check to see if flights need scheduling
+    scheduleFlights();
 
     //Report time update to cout
     Objects_clock = new_time;

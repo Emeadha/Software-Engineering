@@ -22,17 +22,21 @@ Logger::Logger() : planeFileName("planeLog.txt"), flightFileName("flightLog.txt"
     }
 
     //Write opener for all files
+    planeLogFile << "--------------------------------------------------------------------------" << endl;
     planeLogFile << "PLANELOG                                 LOCKSNEED MARTIAN CORP" << endl;
-    planeLogFile << "--------------------------------------------------------------" << endl;
+    planeLogFile << "--------------------------------------------------------------------------" << endl;
 
+    airportLogFile << "-------------------------------------------------------------------------" << endl;
     airportLogFile << "AIRPORTLOG                              LOCKSNEED MARTIAN CORP" << endl;
-    airportLogFile << "--------------------------------------------------------------" << endl;
+    airportLogFile << "-------------------------------------------------------------------------" << endl;
 
+    flightLogFile << "--------------------------------------------------------------------------" << endl;
     flightLogFile << "FLIGHTLOG                              LOCKSNEED MARTIAN CORP" << endl;
-    flightLogFile << "------------------------------------------------------------" << endl;
+    flightLogFile << "--------------------------------------------------------------------------" << endl;
 
+    errorLogFile << "---------------------------------------------------------------------------" << endl;
     errorLogFile << "ERRORLOG                              LOCKSNEED MARTIAN CORP" << endl;
-    errorLogFile << "------------------------------------------------------------" << endl;
+    errorLogFile << "---------------------------------------------------------------------------" << endl;
 
 }
 
@@ -146,7 +150,7 @@ void Logger::logFlightUpdate(int fid, int f_status, string a_name_1, string a_na
 }
 
 // File that reads methods sent by airport.cpp to determine status of the airport and export it into a text file as a log 
-void Logger::logAirportUpdate(int aid, int a_status, Clock first_time = Clock())
+void Logger::logAirportUpdate(int aid, int a_status, int gate_id, Clock first_time = Clock())
 {
 
     //This allows only one print out statement for the progrm at a time, it slowws things down a bit,
@@ -157,12 +161,16 @@ void Logger::logAirportUpdate(int aid, int a_status, Clock first_time = Clock())
     switch (a_status) 
     {
         case 1:
-            //gate change
-            airportLogFile << "AIRPORT STATUS: " << "Airport " << aid << " has experienced a gate change" << endl;
+            //gate reserved through negotiation
+            airportLogFile << "AIRPORT STATUS: " << first_time << "Airport " << aid << " has negotiated Gate: " << gate_id << endl;
             break;
         case 2:
             //gate change
             airportLogFile << "AIRPORT STATUS: " << "Airport " << aid << " pulse check @" << first_time << endl;
+            break;
+        case 3:
+            //gate freed
+            airportLogFile << "AIRPORT STATUS: " << first_time << "Airport " << aid << " has freed Gate: " << gate_id << endl;
             break;
         default:
             //No updates
@@ -188,6 +196,27 @@ void Logger::errorLog(int severity, string message) //TODO: Integrate with gener
    {
       abort();
    }
+}
+
+void Logger::newDayMarking(int Day){
+    lock_guard<mutex> lock(log_mutex);
+
+    airportLogFile << "-----------------------------------" << endl;
+    airportLogFile << "Starting Day: " << Day << "   V V V" << endl;
+    airportLogFile << "-----------------------------------" << endl;
+
+    flightLogFile << "-----------------------------------" << endl;
+    flightLogFile << "Starting Day: " << Day << "   V V V" << endl;
+    flightLogFile << "-----------------------------------" << endl;
+
+    planeLogFile << "-----------------------------------" << endl;
+    planeLogFile << "Starting Day: " << Day << "   V V V" << endl;
+    planeLogFile << "-----------------------------------" << endl;
+
+    errorLogFile << "-----------------------------------" << endl;
+    errorLogFile << "Starting Day: " << Day << "   V V V" << endl;
+    errorLogFile << "-----------------------------------" << endl;
+
 }
 
 void Logger::updateFlightVector(vector<Flight*> New_vector){
