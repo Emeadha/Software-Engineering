@@ -50,6 +50,8 @@ private:
     Clock Arrival_time;
     Clock Departure_time;
 
+    int day = 0;
+
     vector<Passenger> passenger_vector; 
     //Logger object reference
     Logger* Log_object = nullptr;

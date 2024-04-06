@@ -55,6 +55,7 @@ private:
 
     int Plane_ID; // Which plane is docked at/using the gate?
     
+    int day = 0;
 public:
 
     // Constructor

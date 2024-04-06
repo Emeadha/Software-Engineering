@@ -58,6 +58,8 @@ private:
 
     bool debugging = false;
 
+    int day = 0;
+
 public:
 
     //Vector for all passenger and gate objects

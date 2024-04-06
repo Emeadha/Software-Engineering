@@ -25,8 +25,6 @@ void TimeManager::startSimulation(){
             //Update time
             observer->updateDay(day);
         }
-
-
         //Loop for one day
         //Each iteration is 10 minutes
         int hours = 0;

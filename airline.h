@@ -62,6 +62,8 @@ private:
     //How many complications loaded (used by set complication)
     int comp_count = 0;
 
+    int day = 0;
+
 public:
 
     //Public variables
