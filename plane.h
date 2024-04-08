@@ -21,6 +21,7 @@ Airports by interacting with gates.
 Plane object header file
 */
 // Plane.h
+#define FUELCOST 6.19
 #ifndef PLANE_H
 #define PLANE_H
 #include "timeObserver.h"
