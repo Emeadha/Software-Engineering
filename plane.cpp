@@ -92,11 +92,10 @@ void Plane::onTimeUpdate(Clock& new_time) {
     //Check status and make decison
     planeStatus();
 
-    //If a new day is starting, send a cost report and a revenue report to the Finance object. NOTE THAT THIS HAPPENS *AFTER* A NEW DAY STARTS, NOT AT THE END OF THE PREVIOUS ONE
+    //If a new day is starting, generate a revenue report. NOTE THAT THIS HAPPENS *AFTER* A NEW DAY STARTS, NOT AT THE END OF THE PREVIOUS ONE
     if (Objects_clock.hours == 0 && Objects_clock.minutes == 0 && Objects_clock.seconds == 0)
        {
-          this->Finance_obj->reportPlaneCost(this->Plane_ID, 10); //TODO: Using 10 as a placeholder value, this whole line should be replaced by calcCost when that's functional
-          this->Finance_obj->reportPlaneRevenue(this->Plane_ID, 15); //TODO: Pass an actual value to ReportPlaneRevenue, 10 is just a placeholder
+          Finance::reportDay(this->day);
        }
 
     //Say we are done
