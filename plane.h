@@ -54,8 +54,9 @@ private:
 
     vector<Passenger> passenger_vector; 
     
-    //Logger object reference
+    //Object references
     Logger* Log_object = nullptr;
+    Finance* Finance_object = nullptr;
 
     //Target airport pointer
     Airport* Airport_object = nullptr;
@@ -134,6 +135,7 @@ public:
 
     /* BEGIN SETTERS */
     void setLogObject(Logger *log_pointer); //CRITICAL STEP - passes a reference to logger object
+    void setFinanceObject(Finance *New_finance_obj); //Sets the Finance object to report to, should be common with all other modules
     void resetTripOdometer(); //Sets Trip_odometer to 0
     void setIsReadyForAssignment(bool isReady); //Set ready/not ready for next assignment
     void setFuelTank(float fuel); //Sets Fuel_Tank to a specific value.
@@ -147,7 +149,6 @@ public:
     void setTargetAirport(int airportID); //Sets the value of Target_airport
     void boardPassengers(); //Add all passengers waiting to board to Onboard. This should be called by the airport. //TODO: Currently set as an int for prototyping purposes, needs to be changed to vector of passenger objects at some point
     void disembarkPassengers(); //Remove all passengers from Onboard. Called by the airport //TODO: Currently set as an int for prototyping purposes, needs to be changed to a vector of passenger objects at some point..
-    void setFinanceObject(Finance *New_finance_obj); //Sets the Finance object to report to, should be common with all other modules
     /* END SETTERS */
 
     /*BEGIN OPERATION FUNCTIONS*/
