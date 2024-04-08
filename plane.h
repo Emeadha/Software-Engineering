@@ -53,6 +53,7 @@ private:
     int day = 0;
 
     vector<Passenger> passenger_vector; 
+    
     //Logger object reference
     Logger* Log_object = nullptr;
 

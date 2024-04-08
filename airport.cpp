@@ -255,6 +255,9 @@ vector<Passenger> Airport::transferToPlane(int gate_ID){
     //Placeholder vector
     vector<Passenger> temp;
 
+    //Set departing passengers vector
+    All_gates[gate_ID]->Departing_passengers = All_gates[gate_ID]->Arriving_passengers;
+
     //Assign vector to placeholder
     temp = All_gates[gate_ID]->Departing_passengers;
 
