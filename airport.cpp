@@ -64,10 +64,14 @@ void Airport::registerPassengerGroup(Passenger* passengerGroupID)
     //Note: Passenger no longer time Observer
     //Only add to vector
     All_passenger_groups.push_back(passengerGroupID);
+    //cout << " pasenger groups " << All_passenger_groups.size() << endl;
+
 
 
 }
-
+/*vector<Passenger>& getAllPassengerGroups() {
+        return All_passenger_groups();
+    }*/
 //Register a gate (to vector) and as an observer
 void Airport::registerGate(Gate* gateID)
 {
@@ -248,6 +252,7 @@ void Airport::transferToGate(int gate_ID, vector<Passenger> All_passenger_groups
     //{
         //cout << "Passenger groups: " << All_passenger_groups[x] << endl
     //}
+     cout << "Size of Arriving_passengers vector: " << All_gates[gate_ID]->Arriving_passengers.size();
 }
 
 vector<Passenger> Airport::transferToPlane(int gate_ID){
@@ -260,10 +265,10 @@ vector<Passenger> Airport::transferToPlane(int gate_ID){
 
     //Assign vector to placeholder
     temp = All_gates[gate_ID]->Departing_passengers;
-
+    cout << "Size" << temp.size();
     //Clear vector at gate
     All_gates[gate_ID]->Departing_passengers.clear();
-
+    
     //Return the original vector at gate
     return temp;
 

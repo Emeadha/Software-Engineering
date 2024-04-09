@@ -166,7 +166,6 @@ void Plane::planeStatus(){
     
 }
 
-
 void Plane::fly(){
 
     // Decrement fuel based on flight duration
@@ -264,6 +263,9 @@ void Plane::disembarkPassengers(){
     Airport_object->freeGate(this->gate_ID);
 
 }
+/*void setPassengersFromAirport(Airport& airport) {
+        passenger_vector = airport.getAllPassengerGroups();
+    }*/
 void Plane::inWaitingTime(){
     //This is a temp fix, but for right now plane is going to wait until 10 min before
     // takeoff then board, then fly
@@ -424,6 +426,9 @@ int Plane::getPassengerCount()
    /* END GETTERS */
 
    /* BEGIN SETTERS*/
+void Plane::setPassengerVectorFromAirport(const vector<Passenger>& allPassengers) {
+    passenger_vector = allPassengers;
+}
 void Plane::resetTripOdometer()
 {
      this->Trip_odometer = 0;

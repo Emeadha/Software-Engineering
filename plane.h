@@ -52,7 +52,7 @@ private:
 
     int day = 0;
 
-    vector<Passenger> passenger_vector; 
+    
     
     //Logger object reference
     Logger* Log_object = nullptr;
@@ -115,7 +115,7 @@ public:
 
     //Temp - just gonna make this public for now
     vector<Passenger> Onboard;
-
+    vector<Passenger> passenger_vector; 
     /* BEGIN GETTERS */
     int getPlaneID(); //Returns PlaneID
     string getPlaneName(); //Returns 'tail number' of plane
@@ -133,6 +133,7 @@ public:
     int getPassengerCount(); //Returns the number of passengers in Onboard
 
     /* BEGIN SETTERS */
+    void setPassengerVectorFromAirport(const vector<Passenger>& allPassengers);
     void setLogObject(Logger *log_pointer); //CRITICAL STEP - passes a reference to logger object
     void resetTripOdometer(); //Sets Trip_odometer to 0
     void setIsReadyForAssignment(bool isReady); //Set ready/not ready for next assignment
