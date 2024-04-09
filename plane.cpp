@@ -71,7 +71,8 @@ void Plane::onTimeUpdate(Clock& new_time) {
     3. Calculates time change (useful for later calculations)
     4. Prints log (temporary)
     5. Makes decsion based on status by calling plane status
-    6. Sets done boolean to true
+    6. If the current tine is the start of a new day, report daily cost and revenue
+    7. Sets done boolean to true
     */
 
     //Start by setting done to false
@@ -90,6 +91,12 @@ void Plane::onTimeUpdate(Clock& new_time) {
 
     //Check status and make decison
     planeStatus();
+
+    //If a new day is starting, generate a revenue report. NOTE THAT THIS HAPPENS *AFTER* A NEW DAY STARTS, NOT AT THE END OF THE PREVIOUS ONE
+    if (Objects_clock.hours == 0 && Objects_clock.minutes == 0 && Objects_clock.seconds == 0)
+       {
+          Finance_obj->reportDay(this->day);
+       }
 
     //Say we are done
     TimeObserver::setIsDone();
@@ -329,6 +336,7 @@ void Plane::checkFuelLevel(){
         }
         fuelused = this->duration * (Burn_rate/60.0);
         this->Fuel_tank -= fuelused;
+        Finance_obj->reportPlaneCost(Plane_ID, ((fuelused*0.264172)*FUELCOST)); //Reports the cost of fuel used to the Finance object, converting liters of fuel to gallons since we're using cost-per-gallon
         
         if (Fuel_tank <= 0){
             Fuel_tank=0;
@@ -476,7 +484,7 @@ void Plane::setFinanceObject(Finance *New_finance_obj){
     /* BEGIN MISCELLANEOUS FUNCTIONS */
 /*double*/ void Plane::calcCost() //TODO: As-is, this doesn't actually calculate anything, just reports to Finance object
 {
-   this->Finance_obj->reportPlaneCost(this->Plane_ID, 10); //TODO: Pass an actual value to ReportPlaneCost, 10 is just a placeholder
+   Finance_obj->reportPlaneCost(Plane_ID, 10); //TODO: Pass an actual value to ReportPlaneCost, 10 is just a placeholder
 }
 
 void Plane::doMaintenance()
