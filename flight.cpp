@@ -9,8 +9,8 @@ Flight implementation
 #include "flight.h"
 
 //Big ugly constructor
-Flight::Flight(int Flight_ID, double Ticket_cost, string Flight_type, string plane_name, string Dest_airport_name,
-        string Origin_airport_name, int D_hour, int D_min, int D_sec, int A_hour, int A_min, int A_sec, double distance) 
+Flight::Flight(int Flight_ID, double Ticket_cost, string Flight_type, string Flight_type_ID, string plane_name, string Dest_airport_name,
+        string Origin_airport_name, int D_hour, int D_min, int D_sec, int A_hour, int A_min, int A_sec, double distance, int takeoff_time, int air_time, int deboard_time) 
         : Departure_time(D_hour,D_hour,D_sec), Arrival_time(A_hour,A_min,A_sec) {
 
         //lock_guard<mutex> lock(Flight_Con_Mutex);
@@ -22,6 +22,11 @@ Flight::Flight(int Flight_ID, double Ticket_cost, string Flight_type, string pla
         this->Dest_airport_name = Dest_airport_name;
         this->Origin_airport_name = Origin_airport_name;
         this->Distance = distance;
+        this->Takeoff_duration = takeoff_time;
+        this->In_air_duration = air_time;
+        this->Deboard_duration = deboard_time;
+        this->Flight_type_ID = Flight_type_ID;
+
 
         if(debugging){
             cerr << "DEBUGGING: New flight object made, values of: ID:" << Flight_ID << " Ticket:" << Ticket_cost

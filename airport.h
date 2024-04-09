@@ -49,6 +49,9 @@ private:
     //Clock Passenger_clock;
     string Airport_name; // Airport name
 
+    double longitude = 0;
+    double latitude = 0;
+
     //Pointers to nessesary objects
     TimeManager* time_manager = nullptr;
     Logger* Log_object = nullptr; 
@@ -72,7 +75,7 @@ public:
     vector<Passenger*> atGateGroups; 
     vector<Gate*> All_gates;
     //Constructor
-    Airport(int airport_ID, string airport_name);
+    Airport(int airport_ID, string airport_name, double longitude, double latitude);
 
     // Register a passenger_group (to vector) and as an observer
     void registerPassengerGroup(Passenger* passengerGroupID);

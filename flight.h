@@ -33,7 +33,8 @@ private:
 
     //Basic details that make up a flight
     //Assigned during construction
-    int Flight_ID = 0; //The number that identifies the flight
+    int Flight_ID = 0; //The number that identifies the flight (index)
+    string Flight_type_ID = ""; //Id given in csv file 
     float Ticket_cost = 0; //The cost of a ticket for a flight (currently all tickets for a given flight are the same price)
     string Flight_type = ""; //TODO: What is this?
     string Plane_name = ""; // 'Tail #' of given plane
@@ -41,6 +42,9 @@ private:
     string Origin_airport_name = ""; //The name of the airport where a flight begins
     Clock Departure_time; //Scheduled departure time
     Clock Arrival_time; //Estimated arrival time at origin airport/gate
+    int Takeoff_duration = 0; //Estimated duration of takeoff
+    int In_air_duration = 0; //Estimated duration of the plane flying in air
+    int Deboard_duration = 0; //Estimated duration of deboarding process
 
     double Distance = 0;
 
@@ -63,7 +67,7 @@ private:
 public:
 
     // Constructor
-    Flight(int Flight_ID, double Ticket_cost, string Flight_type, string plane_name, string Dest_airport_name, string Origin_airport_name, int D_hour, int D_min, int D_sec, int A_hour, int A_min, int A_sec, double distance);
+    Flight(int Flight_ID, double Ticket_cost, string Flight_type, string Flight_type_ID, string plane_name, string Dest_airport_name, string Origin_airport_name, int D_hour, int D_min, int D_sec, int A_hour, int A_min, int A_sec, double distance, int takeoff_time, int air_time, int deboard_time);
     
     //Getters
     //ADD MORE GETTERS HERE
