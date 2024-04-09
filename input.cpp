@@ -40,6 +40,7 @@ void Input::read_airports()
 
     //Variable being read in
     string airport_name; 
+	double longitude, latitude;
 	
     //Attempt to open the default file
     ifstream infile(default_file);
@@ -83,23 +84,30 @@ void Input::read_airports()
 				cout << "Index: " << i << endl;
 			}
 			//getline for airport_name since it's the only variable on the line
-			getline(infile, airport_name);
+
+			getline(infile, line);
+
+			istringstream iss(line);
+			char comma;
+
+			getline(iss, airport_name, ',');
+			iss >> longitude >> comma >> latitude;
 
 
-			//Trim the last variable on each line to remove white space
+			/*//Trim the last variable on each line to remove white space
 			size_t end = airport_name.length();
 			while(end > 0 && isspace(airport_name[end-1]))
 			{
 				end--;
 			}
 			//Reassign airport_name once it has been trimmed
-			airport_name = airport_name.substr(0, end);
+			airport_name = airport_name.substr(0, end);*/
 
 			if(debugging){
-			cout << "Airport name: " << airport_name << endl;
+			cout << "Airport name: " << airport_name << ", " << longitude << ", " << latitude << endl;
 			}
 			
-	    	Airport* airport = new Airport(i, airport_name);
+	    	Airport* airport = new Airport(i, airport_name, longitude, latitude);
 		   	register_airport(airport);
 		   
 		}
@@ -221,13 +229,15 @@ void Input::read_flights()
     ifstream infile(default_file);
 	//variables for flight
     string flight_type_name;
+	string flight_type_id;
     string origin;
     string dest;
     double distance;
-    int departure_h, departure_m, departure_s;
-    int arrival_h, arrival_m, arrival_s;
+    int takeoff_h, takeoff_m, takeoff_s;
+	int takeoff_duration, in_air_duration, deboard_duration;
+    int deboard_h, deboard_m, deboard_s;
     double ticket_price;
-	string plane_name;
+	string plane_type;
 
     if(infile.is_open())
     {
@@ -271,33 +281,34 @@ void Input::read_flights()
 
 			iss >> ticket_price >> comma;
 			getline(iss, flight_type_name, ',');
+			getline(iss, flight_type_id, ',');
 			getline(iss, origin, ',');
 			getline(iss, dest, ',');
 			
-			iss >> departure_h >> comma >> departure_m >> comma >>departure_s >> comma >>arrival_h >> comma >>arrival_m >> comma >> arrival_s >> comma >> distance >> comma;
+			iss >> takeoff_h >> comma >> takeoff_m >> comma >> takeoff_s >> comma >> takeoff_duration >> comma >> in_air_duration >> comma >> deboard_duration >> comma >> distance >> comma;
 
-			getline(iss, plane_name);
+			getline(iss, plane_type, ',');
+
+			iss >> deboard_h >> comma >> deboard_m >> comma >> deboard_s;
 
 			//Trim the last variable on each line to remove white space
-			size_t end = plane_name.length();
-			while(end > 0 && isspace(plane_name[end-1]))
+			/*size_t end = plane_type.length();
+			while(end > 0 && isspace(plane_type[end-1]))
 			{
 				end--;
 			}
-			//Reassign airport_name once it has been trimmed
-			plane_name = plane_name.substr(0, end);
+			//Reassign plane_type once it has been trimmed
+			plane_type = plane_type.substr(0, end);*/
 
 
 			if(debugging){
-				cout << "Flight data: " << ticket_price << ", " << origin << ", " << dest << ", " << flight_type_name << ", " << origin << ", " <<  dest << ", " <<  departure_h << ", " << departure_m << ", " << departure_s << ", " << arrival_h << ", " << arrival_m << ", " << arrival_s << ", " << distance << ", " << plane_name << endl;
+				cout << "Flight data: " << ticket_price << ", " << origin << ", " << dest << ", " << flight_type_name << ", " << flight_type_id << ", " << origin << ", " <<  dest << ", " <<  takeoff_h << ", " << takeoff_m << ", " << takeoff_s << ", " << takeoff_duration << ", " << in_air_duration << ", " << deboard_duration << ", " << distance << ", " << plane_type << ", " << deboard_h << ", " << deboard_m << ", " << deboard_s << endl;
 			}
 			//cerr << "----------" << endl;
 			//cerr << ticket_price << ", " << flight_type_name << ", " << plane_name << ", " << dest << ", " <<  origin << ", " <<  departure_h << ", " << departure_m << ", " << departure_s << ", " << arrival_h << ", " << arrival_m << ", " << arrival_s << ", " << distance << endl;
 	
-		    Flight* flight = new Flight(i, ticket_price, flight_type_name, plane_name, dest, origin, departure_h, departure_m, departure_s, arrival_h, arrival_m, arrival_s, distance);
+		    Flight* flight = new Flight(i, ticket_price, flight_type_name, flight_type_id, plane_type, dest, origin, takeoff_h, takeoff_m, takeoff_s, deboard_h, deboard_m, deboard_s, distance, takeoff_duration, in_air_duration, deboard_duration);
 		    register_flight(flight);
-
-			sleep(1);
 	
 		}
 	cout << "Flight processing complete." << endl;
