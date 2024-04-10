@@ -21,6 +21,7 @@ Airports by interacting with gates.
 Plane object header file
 */
 // Plane.h
+#define FUELCOST 6.19
 #ifndef PLANE_H
 #define PLANE_H
 #include "timeObserver.h"
@@ -50,12 +51,19 @@ private:
     Clock Arrival_time;
     Clock Departure_time;
 
+    //Delay objects
+    Clock Gate_delay; //Delays at gate
+    Clock Grounded_delay; //Delay grounded but not at gate
+
+    Clock Zero_clock; //Clock of empty values or no time
+
     int day = 0;
 
-    vector<Passenger> passenger_vector; 
     
-    //Logger object reference
+    
+    //Object references
     Logger* Log_object = nullptr;
+    Finance* Finance_object = nullptr;
 
     //Target airport pointer
     Airport* Airport_object = nullptr;
@@ -71,12 +79,12 @@ private:
     float Max_velocity; //Maximum velocity in KM/hour, ideal velocity i.e. what the plane can be expected to spend most of a flight at when not in takeoff/landing is 90% of this.
 
     //Plane Status 
-    bool isFlying; //This is the status of the plane. Declared True if the plane has taken off. False if the plane is not flying
-    bool isGrounded; //This is the status of the plane if its grounded or has not taken off.
-    bool isMaintenance; //This is the maintenance status of the plane
-    bool isWaiting; //This is the waiting status of the plane 
-    bool isBoarding; //This is the boarding status of the plane
-    bool isUnboarding; //This is the unboarding status of the plane. 
+    bool isFlying = false; //This is the status of the plane. Declared True if the plane has taken off. False if the plane is not flying
+    bool isGrounded = true; //This is the status of the plane if its grounded or has not taken off.
+    bool isMaintenance = false; //This is the maintenance status of the plane
+    bool isWaiting = true; //This is the waiting status of the plane 
+    bool isBoarding = false; //This is the boarding status of the plane
+    bool isUnboarding = false; //This is the unboarding status of the plane.
     int untilMaintDone; //Time until maintenance is done, in minutes. 0 if plane is not in maintenance.
 
     //Availability bools
@@ -115,10 +123,11 @@ public:
 
     //Temp - just gonna make this public for now
     vector<Passenger> Onboard;
-
+    vector<Passenger> passenger_vector; 
     /* BEGIN GETTERS */
     int getPlaneID(); //Returns PlaneID
     string getPlaneName(); //Returns 'tail number' of plane
+    string getPlaneModel(); //Returns plane model
     double getMaintenance(); //Returns Until_maintenance
     double getOdometer(); //Returns Odometer
     double getTripOdometer(); //Returns Trip_odometer
@@ -133,7 +142,9 @@ public:
     int getPassengerCount(); //Returns the number of passengers in Onboard
 
     /* BEGIN SETTERS */
+    void setPassengerVectorFromAirport(const vector<Passenger>& allPassengers);
     void setLogObject(Logger *log_pointer); //CRITICAL STEP - passes a reference to logger object
+    void setFinanceObject(Finance *New_finance_obj); //Sets the Finance object to report to, should be common with all other modules
     void resetTripOdometer(); //Sets Trip_odometer to 0
     void setIsReadyForAssignment(bool isReady); //Set ready/not ready for next assignment
     void setFuelTank(float fuel); //Sets Fuel_Tank to a specific value.
@@ -147,7 +158,6 @@ public:
     void setTargetAirport(int airportID); //Sets the value of Target_airport
     void boardPassengers(); //Add all passengers waiting to board to Onboard. This should be called by the airport. //TODO: Currently set as an int for prototyping purposes, needs to be changed to vector of passenger objects at some point
     void disembarkPassengers(); //Remove all passengers from Onboard. Called by the airport //TODO: Currently set as an int for prototyping purposes, needs to be changed to a vector of passenger objects at some point..
-    void setFinanceObject(Finance *New_finance_obj); //Sets the Finance object to report to, should be common with all other modules
     /* END SETTERS */
 
     /*BEGIN OPERATION FUNCTIONS*/
@@ -157,6 +167,7 @@ public:
     void goTakeOff();// The takeoff method. Checking to see if plane is flying 
     void goLanding(); // The landing method. Called when the plane is not flying
     void inWaitingTime(); // The Waiting method. Called when the plane is grounded and waiting. 
+    void topOffTank(); //If not at max fuel, refill
     //void landAndDock(); //Docks plane at airport, requests passenger operations, fuel operations
     /*END OPERATION FUNCTIONS*/
 
@@ -169,9 +180,13 @@ public:
     double findDuration(Clock& new_time); //Find duration of THIS update
     /* END MISCELLANEOUS FUNCTIONS */
 
-
+    /* Time Manager Methods*/
     virtual void updateDay(int Day) override;
     virtual void onTimeUpdate(Clock& new_time) override; //Implements time update ability, inherited from observer
+
+    /* Delay Objects*/
+    void addDelay(int selection, int delay_min);//Selection 0 = delay AT gate, selection 1 = NOT at gate
+    void decrementDelay(int selection);//Selection 0 = delay AT gate, selection 1 = NOT at gate
 
 
     //Constructor/destructor

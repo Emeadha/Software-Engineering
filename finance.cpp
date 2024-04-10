@@ -13,13 +13,12 @@
 Finance::Finance() : financeFileName("financeLog.txt")
 {
     financeObj.open(financeFileName);
-}
 
-//Calculates the revenue for a given flight
-//double Finance::calculateRevenue(Flight flight, Plane plane)
-//{
-//   return (flight.Flight::getTicketCost()*plane.Plane::getPassengerCount());
-//}
+	financeObj << "-------------------------------------------------------------------------" << endl;
+    financeObj << "FINANCELOG                              LOCKSNEED MARTIAN CORP" << endl;
+    financeObj << "-------------------------------------------------------------------------" << endl;
+
+}
 
 //Report a cost of a plane to the finance object
 void Finance::reportPlaneCost(int planeID, double value)

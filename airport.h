@@ -55,6 +55,7 @@ private:
     //Pointers to nessesary objects
     TimeManager* time_manager = nullptr;
     Logger* Log_object = nullptr; 
+    
 
     bool Airport_open; // Whether or not airport is open
     bool atGate = true; //Whether or not the passenger group is at their gate
@@ -70,7 +71,7 @@ public:
     
     //vector<Passenger*> passengersAtGate; //vector of copied passenger groups that have atGate == true
 
-
+    vector<Passenger>& getAllPassengerGroups();
     vector<Passenger*> atGateGroups; 
     vector<Gate*> All_gates;
     //Constructor
@@ -111,7 +112,7 @@ public:
     void transferToGate(int gate_ID, vector<Passenger> All_passenger_groups); 
     vector<Passenger> transferToPlane(int gate_ID);
     void freeGate(int gate_ID);
-
+    
 };
 
 

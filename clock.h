@@ -123,17 +123,20 @@ public:
     }
     //Subtraction, reduces left clock by values on right
     Clock& operator-(const Clock otherClock){
-        //Ensure we dont drop below 0 for our clock
-        if((this->hours - otherClock.hours) >= 0){
-            this->hours = this->hours - otherClock.hours;
+        
+        //Preform basic subtraction
+        this->hours -= otherClock.hours;
+        this->minutes -= otherClock.minutes;
+        this->seconds -= otherClock.seconds;
+
+        //Account for borrowing
+        if(this->seconds < 0){
+            this->seconds = this->seconds + 60;
+            this->minutes = this->minutes - 1;
         }
-        //If minuets goes below zero we decrement hours
-        if((this->minutes - otherClock.minutes) >= 0){
-            this->minutes = this->hours - otherClock.minutes;
-        }
-        //If seconds drop below zero we decrement mins
-        if((this->seconds - otherClock.seconds) >= 0){
-            this->seconds = this->seconds - otherClock.seconds;
+        if(this->minutes < 0){
+            this->minutes = this->minutes + 60;
+            this->hours = this->hours - 1;
         }
 
         return *this;

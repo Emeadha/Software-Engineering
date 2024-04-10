@@ -56,6 +56,9 @@ Plane::Plane(int Plane_ID, string Plane_name, string Plane_model, float Max_fuel
     this->isBoarding = false;
     this->isUnboarding = false;
 
+    //Initalize our zero clock values
+    Zero_clock = Clock(0,0,0);
+
 
 }
 
@@ -71,7 +74,8 @@ void Plane::onTimeUpdate(Clock& new_time) {
     3. Calculates time change (useful for later calculations)
     4. Prints log (temporary)
     5. Makes decsion based on status by calling plane status
-    6. Sets done boolean to true
+    6. If the current tine is the start of a new day, report daily cost and revenue
+    7. Sets done boolean to true
     */
 
     //Start by setting done to false
@@ -83,19 +87,22 @@ void Plane::onTimeUpdate(Clock& new_time) {
     //Update the plane's time
     Objects_clock = new_time;
 
-    //Debugging statement
-    //cout << "Plane " << Plane_ID << " updated its time to "
-    //          << new_time.hours << ":" << new_time.minutes << ":" << new_time.seconds << endl;
-    //cout << "Variables: " << Plane_model << " " << Max_fuel << " " << Burn_rate << " " << Max_passengers << " " << Current_velocity << " " << Odometer << endl;
-
+    if(debugging){
+    cout << "Plane " << Plane_ID << " updated its time to "
+              << new_time.hours << ":" << new_time.minutes << ":" << new_time.seconds << endl;
+    cout << "Variables: " << Plane_model << " " << Max_fuel << " " << Burn_rate << " " << Max_passengers << " " << Current_velocity << " " << Odometer << endl;
+    }
     //Check status and make decison
     planeStatus();
+
 
     //Say we are done
     TimeObserver::setIsDone();
 }
 void Plane::updateDay(int Day){
     this->day = Day;
+
+    Finance_obj->reportDay(this->day);
 
 }
 void Plane::setLogObject(Logger *log_pointer){
@@ -140,16 +147,20 @@ void Plane::planeStatus(){
             //Decrement time in waiting
             inWaitingTime();
             
-        }
+        }     
         else if(isBoarding){
-            //Board passengers
-            boardPassengers();
-             
-        }
+            if(Gate_delay.minutes > 0){
+                //Send a decrement of the given interval
+                decrementDelay(0);
+            }
+            else{
+                //Board passengers
+                boardPassengers();
+            }             
+            }
         else if(isUnboarding){
             //Unboard passengers
             disembarkPassengers();
-            
         }
         else if(isMaintenance){
             //Decrement time left in maintenence
@@ -165,7 +176,6 @@ void Plane::planeStatus(){
 
     
 }
-
 
 void Plane::fly(){
 
@@ -202,6 +212,9 @@ void Plane::fly(){
 }
 void Plane::goTakeOff(){
     
+    //Top off fuel just in case
+    topOffTank();
+
     //Send log of departure
     Log_object->logPlaneUpdate(this->Plane_ID, 4, this->Objects_clock);
 
@@ -223,8 +236,11 @@ void Plane::goLanding(){
     this->isFlying = false;
     this->Current_velocity = 0;
 
-    //Set unboarding for NEXT update
+    //Set docked and unboarding for NEXT update
     this->isUnboarding = true;
+
+    //Refuel
+    topOffTank();
     
 }
 void Plane::boardPassengers(){
@@ -238,7 +254,7 @@ void Plane::boardPassengers(){
 
     cerr << "Boarding: " << Onboard.size() << endl;
 
-    //Disable boolean
+    //Disable booleans
     isBoarding = false;
     
     //For now, will immediatley take off
@@ -264,6 +280,9 @@ void Plane::disembarkPassengers(){
     Airport_object->freeGate(this->gate_ID);
 
 }
+/*void setPassengersFromAirport(Airport& airport) {
+        passenger_vector = airport.getAllPassengerGroups();
+    }*/
 void Plane::inWaitingTime(){
     //This is a temp fix, but for right now plane is going to wait until 10 min before
     // takeoff then board, then fly
@@ -280,12 +299,6 @@ void Plane::inWaitingTime(){
         
     }
 
-    /*
-    waitingTime -= duration; 
-    if (waitingTime < 0) {
-        waitingTime = 0; //waiting time doesn't go negative
-    }
-    */
 }
 void Plane::assignFlight(int targetAirportID, Clock arrivalTime, Clock departTime, double distance, Airport* airport_pointer){
     //Assign our old flight target ID to be our new origin
@@ -327,6 +340,7 @@ void Plane::checkFuelLevel(){
         }
         fuelused = this->duration * (Burn_rate/60.0);
         this->Fuel_tank -= fuelused;
+        Finance_obj->reportPlaneCost(Plane_ID, ((fuelused*0.264172)*FUELCOST)); //Reports the cost of fuel used to the Finance object, converting liters of fuel to gallons since we're using cost-per-gallon
         
         if (Fuel_tank <= 0){
             Fuel_tank=0;
@@ -338,8 +352,14 @@ void Plane::checkFuelLevel(){
 
 
     }
-
     
+}
+void Plane::topOffTank(){
+    if(this->Fuel_tank != Max_fuel){
+        this->Fuel_tank = Max_fuel;
+
+        Log_object->logPlaneUpdate(this->Plane_ID, 7, this->Objects_clock);
+    }
 }
 
    /* BEGIN GETTERS */
@@ -349,6 +369,9 @@ int Plane::getPlaneID(){
 }
 string Plane::getPlaneName(){
     return this->Plane_name;
+}
+string Plane::getPlaneModel(){
+    return this->Plane_model;
 }
 double Plane::getMaintenance()
 {
@@ -424,6 +447,9 @@ int Plane::getPassengerCount()
    /* END GETTERS */
 
    /* BEGIN SETTERS*/
+void Plane::setPassengerVectorFromAirport(const vector<Passenger>& allPassengers) {
+    passenger_vector = allPassengers;
+}
 void Plane::resetTripOdometer()
 {
      this->Trip_odometer = 0;
@@ -471,7 +497,7 @@ void Plane::setFinanceObject(Finance *New_finance_obj){
     /* BEGIN MISCELLANEOUS FUNCTIONS */
 /*double*/ void Plane::calcCost() //TODO: As-is, this doesn't actually calculate anything, just reports to Finance object
 {
-   this->Finance_obj->reportPlaneCost(this->Plane_ID, 10); //TODO: Pass an actual value to ReportPlaneCost, 10 is just a placeholder
+   Finance_obj->reportPlaneCost(Plane_ID, 10); //TODO: Pass an actual value to ReportPlaneCost, 10 is just a placeholder
 }
 
 void Plane::doMaintenance()
@@ -496,3 +522,49 @@ void Plane::sendToMaintenance(){
      this->isMaintenance = true;
 }
     /* END MISCELLANEOUS FUNCTIONS */
+
+void Plane::addDelay(int selection, int delay_min){
+    //Based on selection, add delay to correct delay clock
+    if(selection == 0){
+        //Selectin for delay AT gate
+        Gate_delay.minutes = Gate_delay.minutes + delay_min;
+
+        //Account for borrowing
+        if(Gate_delay.minutes >= 60){
+            Gate_delay.minutes = Gate_delay.minutes - 60;
+            Gate_delay.hours = Gate_delay.hours + 1;
+        }
+    }
+    else if(selection == 1){
+        //Selection for delay NOT at gate
+        Grounded_delay.minutes = Grounded_delay.minutes + delay_min;
+
+        //Account for borrowing
+        if(Grounded_delay.minutes >= 60){
+            Grounded_delay.minutes = Grounded_delay.minutes - 60;
+            Grounded_delay.hours = Grounded_delay.hours + 1;
+        }
+    }
+    else{
+        Log_object->errorLog(0, "Error! Bad delay selection [PLANE.CPP][Line 509]");
+    }
+}
+void Plane::decrementDelay(int selection){
+
+    //TO DO
+    //We need to convert this to using purley clock objects
+
+    //Based on selection, add delay to correct delay clock
+    if(selection == 0){
+        //Selectin for delay AT gate
+        Gate_delay.minutes = Gate_delay.minutes - duration;
+
+    }
+    else if(selection == 1){
+        //Selection for delay NOT at gate
+        Grounded_delay.minutes = Grounded_delay.minutes - duration;
+    }
+    else{
+        Log_object->errorLog(0, "Error! Bad decrement selection [PLANE.CPP][Line 509]");
+    }
+}

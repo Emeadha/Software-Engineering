@@ -75,6 +75,9 @@ double Flight::getTicketCost(){
 }
 
 //Setters
+void Flight::setFlightID(int flight_ID){
+    this->Flight_ID = flight_ID;
+}
 void Flight::setPlaneID(int Plane_ID){
     this->Plane_ID = Plane_ID;
 }
@@ -104,4 +107,13 @@ void Flight::setArrivalTime(Clock New_arrival_time){
 }
 void Flight::setDepartureTime(Clock New_depature_time){
     this->Departure_time = New_depature_time;
+}
+
+//Print method
+void Flight::printFlightDetails(){
+    //Print out the details of this given flight
+     cout << "FLIGHT ENTRY// ID:" << this->Flight_ID << " Departing: " << this->Departure_time << " Ticket:" << this->Ticket_cost
+                << " FlightType:" << this->Flight_type << " Planename:" << this->Plane_name << " Dest:" << this->Dest_airport_name
+                << " Origin:" << this->Origin_airport_name << " Dist:" << this->Distance << endl;
+
 }

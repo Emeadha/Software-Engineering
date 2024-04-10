@@ -40,8 +40,6 @@ private:
     string Plane_name = ""; // 'Tail #' of given plane
     string Dest_airport_name = ""; //The name of the airport where a flight ends
     string Origin_airport_name = ""; //The name of the airport where a flight begins
-    Clock Departure_time; //Scheduled departure time
-    Clock Arrival_time; //Estimated arrival time at origin airport/gate
     int Takeoff_duration = 0; //Estimated duration of takeoff
     int In_air_duration = 0; //Estimated duration of the plane flying in air
     int Deboard_duration = 0; //Estimated duration of deboarding process
@@ -66,6 +64,9 @@ private:
 
 public:
 
+    Clock Departure_time; //Scheduled departure time
+    Clock Arrival_time; //Estimated arrival time at origin airport/gate
+
     // Constructor
     Flight(int Flight_ID, double Ticket_cost, string Flight_type, string Flight_type_ID, string plane_name, string Dest_airport_name, string Origin_airport_name, int D_hour, int D_min, int D_sec, int A_hour, int A_min, int A_sec, double distance, int takeoff_time, int air_time, int deboard_time);
     
@@ -88,6 +89,7 @@ public:
 
     //Setters
     //ADD MORE SETTERS HERE
+    void setFlightID(int Flight_ID);//Sets a new flight ID
     void setPlaneID(int Plane_ID); //Sets the ID number of the plane to be used for the flight
     void setDestAirptID(int Dest_airport_ID); //Set ID dest airport
     void setOriginAirptID(int Origin_airport_ID); // Set ID of origin airport
@@ -101,6 +103,8 @@ public:
     void setScheduledFalse(); //Sets “Scheduled" variable to false
     void setScheduledTrue(); //Sets “Scheduled" variable to true
 
+    //Print method
+    void printFlightDetails(); //Print out details of this flight entry
 };
 
 #endif // Flight_H

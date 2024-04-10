@@ -15,6 +15,7 @@ the tick-rate (currently every 10 min is 1 second for sim).
 #include "airline.h"
 #include "input.h"
 #include "logger.h"
+#include "finance.h"
 #include <unistd.h>
 
 using namespace std;
@@ -28,6 +29,7 @@ int main() {
     TimeManager time_manager;
     Input input;
     Logger log;
+    Finance finance_obj;
 
     sleep(1);
 
@@ -35,7 +37,7 @@ int main() {
     //At first, we only create our Airline
     // Airline -> Airports + Planes
     // Airports -> Gates + Passengers
-    Airline airline(&time_manager, "Comfort Airlines", input, &log);
+    Airline airline(&time_manager, "Comfort Airlines", input, &log, &finance_obj);
 
     // -------------------------
     // Start 'er up!

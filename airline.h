@@ -57,7 +57,7 @@ private:
     vector<Airport*> All_airports;
 
     bool scheduleNeeded = false;
-    bool debugging = false;
+    bool debugging = true;
 
     //How many complications loaded (used by set complication)
     int comp_count = 0;
@@ -73,6 +73,9 @@ public:
     //Logger object
     Logger* Log_object;
 
+    //Finance object
+    Finance* Finance_obj;
+
     //Input object
     Input Input_object;
 
@@ -84,7 +87,7 @@ public:
     // Constructor/Destructor
     // --------------
 
-    Airline(TimeManager *time_manager, string airport_name, Input Input_object, Logger *Log_object);
+    Airline(TimeManager *time_manager, string airport_name, Input Input_object, Logger *Log_object, Finance *Finance_obj);
 
     //Destructor
     ~Airline();
@@ -114,7 +117,7 @@ public:
     // --------------
 
     void scheduleFlights(); // Schedule all unscheduled flights
-
+    void swapFlights(int firstID, int secondID);
     void loadFlights();//Loads flights from vector (passed by input object), then fill out rest of missing info
 
     // --------------
@@ -138,7 +141,12 @@ public:
     // ---------------
     void negotiateGate(int airport_ID, int plane_ID); //Assigns plane a new availible target gate
 
-
+    // -------------------
+    // "Print" methods
+    // -------------------
+    void printFlightVector(); //Iterate through and print details of each flight
+    void printPlaneVector(); //Iterate through and print details of each plane
+    void printAirportVector();//Iterate through and print details of each airport
 
     
 };
