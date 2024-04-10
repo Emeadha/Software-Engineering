@@ -75,6 +75,9 @@ double Flight::getTicketCost(){
 }
 
 //Setters
+void Flight::setFlightID(int flight_ID){
+    this->Flight_ID = flight_ID;
+}
 void Flight::setPlaneID(int Plane_ID){
     this->Plane_ID = Plane_ID;
 }

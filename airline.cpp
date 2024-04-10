@@ -7,8 +7,8 @@ airline.cpp
 
 // Constructor
 //We assign the time manager here, so we can use it to register new observers
-Airline::Airline(TimeManager *time_manager, string airline_name, Input Input_object, Logger *Log_object)
-        : time_manager(time_manager),  Objects_clock(0, 0, 0), Input_object(Input_object)
+Airline::Airline(TimeManager *time_manager, string airline_name, Input Input_object, Logger *Log_object, Finance *Finance_obj)
+        : time_manager(time_manager),  Objects_clock(0, 0, 0), Input_object(Input_object), Finance_obj(Finance_obj)
         , Log_object(Log_object) {
     this->Airline_name = airline_name;
 
@@ -54,10 +54,12 @@ Airline::~Airline(){
 void Airline::registerPlane(Plane* plane) {
     //Add this object as an observer
     time_manager->addObserver(plane);
-   
 
     //Fill its logger slot
     plane->setLogObject(Log_object);
+
+    //Fill its finance obj slot
+    plane->setFinanceObject(Finance_obj);
 }
 
 //Register an airport likewise
@@ -77,36 +79,46 @@ void Airline::scheduleFlights(){
 
     //Move through vector, checking to see if its been scheduled, then schedule it
     //Set our temporary variables
-    int i = 0, tempPlaneID = 0, tempDestID = 0;
+    int tempPlaneID = 0, tempDestID = 0;
     int planePositionInArray = 0;
+
+    string plane_type = "";
     Clock tempArrivalTime, tempDepartTime;
     double tempDistance;
+
+    //How many flights left?
+    int pending_flights = 0;
 
     //Pointer to Target Airport
     Airport* aiport_pointer = nullptr;
 
-    while (i < All_flights.size()){
+    for(int i = 0; i < All_flights.size(); i++){
         //Check to see if the flight has already been scheduled
         if(All_flights[i]->getScheduled() == false){
 
             //STEPS
-            //1. Get plane ID from flight vector
-            //2. Iterate through all unscheduled flights
-            //2.5 (We only want to grab unscheduled flights with a plane that isn't busy)
-            //3. Get nessesary info from flight
-            //4. Assign to plane
+            //1. Iterate through flights
+            //2. If !scheduled, loop through all planes of that type to see if availible
+            //3. Grab first availible, assign flight
+            //4. If time has already passed, set departure time to current time (modify both flight and plane here)
+            //4. Call flight assignment on plane
             //5. Flip to scheduled (assignFlight takes care of saying the plane itsef is scheduled)
+            //6. Print out the pending number of flights to log
 
-            //Start by grabbing planeID from flight
-            tempPlaneID = All_flights[i]->getPlaneID();
+            //Find out what plane is needed
+            plane_type = All_flights[i]->getPlaneName();
 
-            //Check to make sure plane exists in vector
-            if(tempPlaneID == -1){
-                cerr << "Error! Plane not found in plane registry" << endl;
+            if(debugging){
+                cerr << "Plane Type required: " << plane_type << endl;
             }
-            else{
+
+            //Iterate through all planes, finding matching plane type, and availible
+            for(int j = 0; j < All_planes.size(); j++){
+
                 //Check if plane is ready to receive a new assignment
-                if(All_planes[tempPlaneID]->getIsReadyForAssignment()==true){
+                if((All_planes[j]->getIsReadyForAssignment()==true) && (All_planes[j]->getPlaneModel() == plane_type)){
+
+                    
                     //Get our relevant information from flight
                     tempDestID = All_flights[i]->getDestAirptID();
                     tempArrivalTime = All_flights[i]->getArrivalTime();
@@ -117,10 +129,10 @@ void Airline::scheduleFlights(){
                     aiport_pointer = All_airports[tempDestID];
 
                     //Assign receieved values to plane, and set ready to assign as false
-                    All_planes[tempPlaneID]->assignFlight(tempDestID, tempArrivalTime, tempDepartTime, tempDistance, aiport_pointer);
+                    All_planes[j]->assignFlight(tempDestID, tempArrivalTime, tempDepartTime, tempDistance, aiport_pointer);
 
                     //Negotiate a destination gate
-                    negotiateGate(tempDestID, tempPlaneID);
+                    negotiateGate(tempDestID, j);
 
                     //Set this flight in vector to scheduled
                     All_flights[i]->setScheduledTrue();
@@ -130,15 +142,15 @@ void Airline::scheduleFlights(){
                     Log_object->logFlightUpdate(All_flights[i]->getFlightID(), 4, All_flights[i]->getOriginAirptName(),  All_flights[i]->getDestAirptName(), tempDepartTime, tempArrivalTime);
  
                 }
-            }
+
+            }            
+                
+        }
             
                      
-        }
-
-        //Increment i
-        i++;
     }
 }
+
 //Cycle through planes and return matching ID, or if failure -1
 int Airline::findPlaneID(string plane_name){
 
@@ -254,6 +266,12 @@ void Airline::negotiateGate(int airport_ID, int plane_ID){
 
 void Airline::loadFlights(){
 
+    //Steps
+    // 1. Establishes Dest Airport ID from name
+    // 2. Establishes Origin ID from name
+    // 3. Sorts using bubble sort flights based on departure time
+
+
     //Variable holders
     string temp_name = "";
     int tempID = -1;
@@ -290,15 +308,37 @@ void Airline::loadFlights(){
             cout << "DEBUGGING: Dest airport name: " << temp_name << ", Dest Airport ID" << tempID << endl;
         }
 
-        //Discover and set ID of plane
-        temp_name = All_flights[i]->getPlaneName();
-        tempID = findPlaneID(temp_name);
-        All_flights[i]->setPlaneID(tempID);
+    }
+
+    //-------------------------
+    //Sorting algorithim to sort based on depature time
+    bool swapped;
+    for(int i = 0; i < All_flights.size(); i++){
+        swapped = false;   
+        for(int j = 0; j<(All_flights.size() - i - 1); j++){
+            if(All_flights[j]->Departure_time.hours > All_flights[j+1]->Departure_time.hours){
+                swapFlights(j, j+1);
+                swapped = true;
+            }
+        }
+
     }
 
     //Give logger information about flights
     Log_object->updateFlightVector(All_flights);
     
+}
+
+void Airline::swapFlights(int firstID, int secondID){
+    
+    //Swap their ID's first
+    All_flights[secondID]->setFlightID(firstID);
+    All_flights[firstID]->setFlightID(secondID);
+
+    //Swap the two entires
+    swap(All_flights[firstID], All_flights[secondID]);
+
+
 }
 
 void Airline::setComplication(int selection){
@@ -367,6 +407,54 @@ void Airline::setComplication(int selection){
     else if(selection == 3){
         //Jet stream
 
+    }
+    else if(selection == 4){
+        //Gate delay
+        //5% of flights delayed by 5-90 min
+        int num_of_flights_effected = 0;
+        int time_inc;
+        int tempPlaneID = -1;
+
+        //Get 5% of all flights
+        num_of_flights_effected = All_flights.size() / 20;
+
+
+        //Iterate through the first 5% of flights
+        for(int i=0; i<num_of_flights_effected; i++){
+
+            if(debugging){
+                cerr << "DEBUGGING In flight iterations" << endl;
+            }
+
+            //Error catch
+            if(All_flights.empty()){
+                Log_object->errorLog(2, "Error! Flight vector empty! [AIRLINE.CPP][LINE 390]");
+            }
+
+            //Get plane ID
+            tempPlaneID = All_flights[i]->getPlaneID();
+
+            srand(time(nullptr));
+
+            //Delay between 5 and 90 min
+            time_inc = (rand() % 90 + 5);
+
+            //Send delay to given plane
+            All_planes[tempPlaneID]->addDelay(0,time_inc);
+
+
+             if(debugging){
+                cerr << "DEBUGGING Delay given at gate: " << time_inc << endl;
+                cerr << "DEBUGGING end loop flight iterations" << endl;
+            }
+
+        }
+    }
+    else if(selection == 5){
+        //Aircraft failure
+    }
+    else if(selection == 6){
+        //West of 103 cancled
     }
     else{
         Log_object->errorLog(1, "Error! Complication input invalid [AIRLINE.CPP]{LINE 373}");

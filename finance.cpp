@@ -13,6 +13,11 @@
 Finance::Finance() : financeFileName("financeLog.txt")
 {
     financeObj.open(financeFileName);
+
+	financeObj << "-------------------------------------------------------------------------" << endl;
+    financeObj << "FINANCELOG                              LOCKSNEED MARTIAN CORP" << endl;
+    financeObj << "-------------------------------------------------------------------------" << endl;
+
 }
 
 //Calculates the revenue for a given flight
