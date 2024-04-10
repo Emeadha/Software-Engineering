@@ -263,8 +263,8 @@ void Plane::disembarkPassengers(){
     //Send unboarding message to logger
     Log_object->logPlaneUpdate(this->Plane_ID,3,this->Objects_clock);
     
-    //INSTEAD CALL AIRLINE OBJECT HERE
-    // Ex.
+    
+    
     Airport_object->transferToGate(this->gate_ID, passenger_vector);
 
     Trip_odometer = 0; //Resetting the trip odometer back to 0

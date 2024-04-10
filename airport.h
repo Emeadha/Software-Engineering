@@ -103,7 +103,7 @@ public:
     int findGate(int GateID); // Finds gate based on Gate_ID, returns the position in vector
 
     //will "move" passenger grous to assigned gate
-    void passengerMovement();
+   
 
     //-----------------
     // Airport-gate-plane interaction methods
