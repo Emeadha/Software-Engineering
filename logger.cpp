@@ -187,9 +187,17 @@ void Logger::errorLog(int severity, string message) //TODO: Integrate with gener
     lock_guard<mutex> lock(log_mutex);
 
    errorLogFile << "ERROR: " << message << ", severity " << severity << endl;
-   if (severity == 2);
-   {
-      error1Count++;
+   if(severity == 2){
+      abort();
+   }
+   else if(severity == 1){
+        error1Count++;
+   }
+   else if(severity == 0){
+        //Do nothing
+   }
+   else{
+         errorLogFile << "ERROR: Bad value passed to error logger" << endl;
    }
 
    if (error1Count >= 5 || severity == 2)

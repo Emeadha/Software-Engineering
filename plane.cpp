@@ -102,8 +102,6 @@ void Plane::onTimeUpdate(Clock& new_time) {
 void Plane::updateDay(int Day){
     this->day = Day;
 
-    Finance_obj->reportDay(this->day);
-
 }
 void Plane::setLogObject(Logger *log_pointer){
 

@@ -112,8 +112,12 @@ void Airline::scheduleFlights(){
                 cerr << "Plane Type required: " << plane_type << endl;
             }
 
+            //Variable declaration
+            int j = 0;
+            bool planeFound = false;
+
             //Iterate through all planes, finding matching plane type, and availible
-            for(int j = 0; j < All_planes.size(); j++){
+            while((j < All_planes.size()) && !planeFound){
 
                 //Check if plane is ready to receive a new assignment
                 if((All_planes[j]->getIsReadyForAssignment()==true) && (All_planes[j]->getPlaneModel() == plane_type)){
@@ -140,8 +144,14 @@ void Airline::scheduleFlights(){
                     //Send scheduled notice to Logger
                     //Big nasty call, but gives flight info
                     Log_object->logFlightUpdate(All_flights[i]->getFlightID(), 4, All_flights[i]->getOriginAirptName(),  All_flights[i]->getDestAirptName(), tempDepartTime, tempArrivalTime);
+
+                    //Break loop
+                    planeFound = true;
  
                 }
+
+                //Increment j
+                j++;
 
             }            
                 
@@ -260,7 +270,7 @@ void Airline::negotiateGate(int airport_ID, int plane_ID){
 
     //If we get to the end of this without finding a gate
     if(!gate_found){
-        Log_object->errorLog(1, "Error! No suitable gate found! [AIRLINE.CPP][LINE 247]");
+        Log_object->errorLog(0, "Error! No suitable gate found! [AIRLINE.CPP][LINE 247]");
     }
 }
 

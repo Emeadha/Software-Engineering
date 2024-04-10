@@ -27,6 +27,7 @@ int main() {
 
     //This is our time manager, which will be passed to all objects	
     TimeManager time_manager;
+    //Object creation
     Input input;
     Logger log;
     Finance finance_obj;
@@ -42,6 +43,9 @@ int main() {
     // -------------------------
     // Start 'er up!
     // -------------------------
+    //Send finance reference
+    time_manager.setFinanceObject(&finance_obj);
+    
     // Start simulation
     time_manager.startSimulation();
 

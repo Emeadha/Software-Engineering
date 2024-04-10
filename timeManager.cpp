@@ -53,6 +53,9 @@ void TimeManager::startSimulation(){
 
 
         }
+
+        //Send end of day report to finance
+        Finance_obj->reportDay(day);
     }
 
     //End simulation print out
@@ -81,4 +84,8 @@ void TimeManager::notifyObservers() {
         //Update time
         observer->onTimeUpdate(simulation_time);
     }
+}
+
+void TimeManager::setFinanceObject(Finance *Finance_ptr){
+    this->Finance_obj = Finance_ptr;
 }
