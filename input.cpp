@@ -187,14 +187,14 @@ void Input::read_planes()
 			char comma;
 
 			//getline for plane_name, ending at comma
-			getline(iss, plane_name, ',');
-			//getline for plane_model, ending at comma
 			getline(iss, plane_model, ',');
+			//getline for plane_model, ending at comma
+			getline(iss, plane_name, ',');
 			//read in other variables, skipping commas
 			iss >> max_passengers >> comma >> max_fuel >> comma >> burn_rate >> comma >> max_speed;
 			
 			if(debugging){
-			cout << "Plane data: " << plane_name << ", " << plane_model << ", " << max_passengers << ", " << max_fuel << ", " << burn_rate << ", " << max_speed << endl;
+			cout << "Plane data: " << plane_model << ", " << plane_name << ", " << max_passengers << ", " << max_fuel << ", " << burn_rate << ", " << max_speed << endl;
 			}
 
 	    	Plane* plane = new Plane(i, plane_name, plane_model, max_fuel, burn_rate, max_speed, max_passengers);
