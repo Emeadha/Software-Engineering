@@ -40,6 +40,7 @@ Airport::Airport(int airport_ID, string airport_name, double longitude, double l
         
     }
 
+
 }
 
 //Add reference to TimeManager object, then complete object creation

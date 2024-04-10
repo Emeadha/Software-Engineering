@@ -141,6 +141,9 @@ void Airline::scheduleFlights(){
                     //Set this flight in vector to scheduled
                     All_flights[i]->setScheduledTrue();
 
+                    //Set planeID for flight
+                    All_flights[i]->setPlaneID(j);
+
                     //Send scheduled notice to Logger
                     //Big nasty call, but gives flight info
                     Log_object->logFlightUpdate(All_flights[i]->getFlightID(), 4, All_flights[i]->getOriginAirptName(),  All_flights[i]->getDestAirptName(), tempDepartTime, tempArrivalTime);
