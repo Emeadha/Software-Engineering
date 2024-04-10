@@ -324,6 +324,16 @@ void Airline::loadFlights(){
 
     }
 
+
+    //If debugging, print out our new vector
+    if(debugging){
+        string garbageValue;
+        printFlightVector();
+        cerr << "-----------------------------------------------" << endl;
+        cerr << "Current flight vector, enter anything to confim" << endl;
+        cin >> garbageValue;
+    }
+    
     //Give logger information about flights
     Log_object->updateFlightVector(All_flights);
     
@@ -553,4 +563,12 @@ void Airline::onTimeUpdate(Clock& new_time) {
 
     //Say that we are do3ne
     TimeObserver::setIsDone();
+}
+
+void Airline::printFlightVector(){
+    //Mainly for debugging purposes
+
+    for(int i=0; i<All_flights.size(); i++){
+        All_flights[i]->printFlightDetails();
+    }
 }

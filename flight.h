@@ -59,7 +59,7 @@ private:
     bool Scheduled = false;
 
     //Debugging
-    bool debugging = true;
+    bool debugging = false;
 
 
 public:
@@ -103,6 +103,8 @@ public:
     void setScheduledFalse(); //Sets “Scheduled" variable to false
     void setScheduledTrue(); //Sets “Scheduled" variable to true
 
+    //Print method
+    void printFlightDetails(); //Print out details of this flight entry
 };
 
 #endif // Flight_H

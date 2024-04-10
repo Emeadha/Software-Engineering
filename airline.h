@@ -141,7 +141,12 @@ public:
     // ---------------
     void negotiateGate(int airport_ID, int plane_ID); //Assigns plane a new availible target gate
 
-
+    // -------------------
+    // "Print" methods
+    // -------------------
+    void printFlightVector(); //Iterate through and print details of each flight
+    void printPlaneVector(); //Iterate through and print details of each plane
+    void printAirportVector();//Iterate through and print details of each airport
 
     
 };
