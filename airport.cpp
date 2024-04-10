@@ -41,6 +41,8 @@ Airport::Airport(int airport_ID, string airport_name, double longitude, double l
            //All_gates[gateID]->Departing_passengers.push_back(passengerGroupID);
         }     
     }
+
+    
 }
 
 //Add reference to TimeManager object, then complete object creation
