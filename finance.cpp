@@ -28,7 +28,7 @@ void calculateDailyLoan()
 {
 //   for (int i = 0; i < All_planes.size; i++)
    {
-      cerr << "TODO: Implement calculateDailyLoan()" \n";
+      cerr << "TODO: Implement calculateDailyLoan() \n";
    } 
 }
 
