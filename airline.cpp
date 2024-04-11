@@ -79,7 +79,7 @@ void Airline::scheduleFlights(){
 
     //Move through vector, checking to see if its been scheduled, then schedule it
     //Set our temporary variables
-    int tempPlaneID = 0, tempDestID = 0;
+    int tempDestID = -1, tempOriginID = -1;
     int planePositionInArray = 0;
 
     string plane_type = "";
@@ -90,7 +90,9 @@ void Airline::scheduleFlights(){
     int pending_flights = 0;
 
     //Pointer to Target Airport
-    Airport* aiport_pointer = nullptr;
+    Airport* Target_aiport_pointer = nullptr;
+    //Pointer to Origin Airport
+    Airport* Origin_aiport_pointer = nullptr;
 
     for(int i = 0; i < All_flights.size(); i++){
         //Check to see if the flight has already been scheduled
@@ -125,18 +127,28 @@ void Airline::scheduleFlights(){
                     
                     //Get our relevant information from flight
                     tempDestID = All_flights[i]->getDestAirptID();
+                    tempOriginID = All_flights[i]->getOriginAirptID();
                     tempArrivalTime = All_flights[i]->getArrivalTime();
                     tempDepartTime = All_flights[i]->getDepartureTime();
                     tempDistance = All_flights[i]->getDistance();
 
-                    //Set our airport pointer
-                    aiport_pointer = All_airports[tempDestID];
+                    if(debugging){
+                        cerr << "DestID: " << tempDestID << "OriginID: " << tempOriginID << endl;
+                    }
+
+                    //Set our airport pointers
+                    Target_aiport_pointer = All_airports[tempDestID];
+                    Origin_aiport_pointer = All_airports[tempOriginID];
+
+                    if(debugging){
+                        cerr << "About to negotiate gate " << endl;
+                    }
+
+                    //Negotiate a destination and origin gate
+                    negotiateGate(tempOriginID, tempDestID, j);
 
                     //Assign receieved values to plane, and set ready to assign as false
-                    All_planes[j]->assignFlight(tempDestID, tempArrivalTime, tempDepartTime, tempDistance, aiport_pointer);
-
-                    //Negotiate a destination gate
-                    negotiateGate(tempDestID, j);
+                    All_planes[j]->assignFlight(tempOriginID, tempDestID, tempArrivalTime, tempDepartTime, tempDistance, Origin_aiport_pointer, Target_aiport_pointer);
 
                     //Set this flight in vector to scheduled
                     All_flights[i]->setScheduledTrue();
@@ -148,6 +160,10 @@ void Airline::scheduleFlights(){
                     //Big nasty call, but gives flight info
                     Log_object->logFlightUpdate(All_flights[i]->getFlightID(), 4, All_flights[i]->getOriginAirptName(),  All_flights[i]->getDestAirptName(), tempDepartTime, tempArrivalTime);
 
+                     if(debugging){
+                        cerr << "Plane found and taken care of! ending loop " << endl;
+                    }
+
                     //Break loop
                     planeFound = true;
  
@@ -156,12 +172,16 @@ void Airline::scheduleFlights(){
                 //Increment j
                 j++;
 
-            }            
+            }    
                 
         }
             
                      
     }
+
+    if(debugging){
+                cerr << "Done with scheduling flights "  << endl;
+            }        
 }
 
 //Cycle through planes and return matching ID, or if failure -1
@@ -237,17 +257,17 @@ int Airline::findAirportID(string airport_name){
     return -1;
 }
 
-void Airline::negotiateGate(int airport_ID, int plane_ID){
+void Airline::negotiateGate(int O_airport_ID, int D_airport_ID, int plane_ID){
 
     int tempGateID = -1;
     int i = 0;
     bool gate_found = false;
 
-    //Iterate through all gates of a given airport
-    while ((i < All_airports[airport_ID]->All_gates.size()) && !gate_found){
+    //Find gate for origin airport
+    while ((i < All_airports[O_airport_ID]->All_gates.size()) && !gate_found){
 
         //Get the gate ID
-        tempGateID = All_airports[airport_ID]->All_gates[i]->getGateID();
+        tempGateID = All_airports[O_airport_ID]->All_gates[i]->getGateID();
 
         //Make sure gateID matches i
         if(tempGateID != i){
@@ -255,15 +275,15 @@ void Airline::negotiateGate(int airport_ID, int plane_ID){
         }
         
         //See if gate is open
-        if(All_airports[airport_ID]->All_gates[i]->getInUse() == false){
+        if(All_airports[O_airport_ID]->All_gates[i]->getInUse() == false){
             //TEMP - For now we just want to grab the first availible gate
-            All_planes[plane_ID]->setTargetGate(i);
+            All_planes[plane_ID]->setOriginGate(i);
 
             //Change gate to in use
-            All_airports[airport_ID]->All_gates[i]->setInUse(true);
+            All_airports[O_airport_ID]->All_gates[i]->setInUse(true);
 
             //Tell logger we reserved a gate
-            Log_object->logAirportUpdate(airport_ID, 1, i, this->Objects_clock);
+            Log_object->logAirportUpdate(O_airport_ID, 1, i, this->Objects_clock);
 
             //Set boolean to true
             gate_found = true;
@@ -273,7 +293,47 @@ void Airline::negotiateGate(int airport_ID, int plane_ID){
 
     //If we get to the end of this without finding a gate
     if(!gate_found){
-        Log_object->errorLog(0, "Error! No suitable gate found! [AIRLINE.CPP][LINE 247]");
+        Log_object->errorLog(1, "Error! No suitable gate found! [AIRLINE.CPP][LINE 247]");
+    }
+
+    //---------------------------------------
+    //Do again but for target airport
+    tempGateID = -1;
+    i = 0;
+    gate_found = false;
+
+    //Iterate through all gates of a given airport
+    while ((i < All_airports[D_airport_ID]->All_gates.size()) && !gate_found){
+
+        //Get the gate ID
+        tempGateID = All_airports[D_airport_ID]->All_gates[i]->getGateID();
+
+        //Make sure gateID matches i
+        if(tempGateID != i){
+            Log_object->errorLog(1, "Error! Iterator does not match tempGateID [AIRLINE.CPP][LINE 228]");
+        }
+        
+        //See if gate is open
+        if(All_airports[D_airport_ID]->All_gates[i]->getInUse() == false){
+            //TEMP - For now we just want to grab the first availible gate
+            All_planes[plane_ID]->setTargetGate(i);
+
+            //Change gate to in use
+            All_airports[D_airport_ID]->All_gates[i]->setInUse(true);
+
+            //Tell logger we reserved a gate
+            Log_object->logAirportUpdate(D_airport_ID, 1, i, this->Objects_clock);
+
+            //Set boolean to true
+            gate_found = true;
+        }
+        i++;
+    }
+
+    
+    //If we get to the end of this without finding a gate
+    if(!gate_found){
+        Log_object->errorLog(1, "Error! No suitable destination gate found! [AIRLINE.CPP][LINE 247]");
     }
 }
 

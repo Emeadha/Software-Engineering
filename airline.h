@@ -139,7 +139,7 @@ public:
     // ---------------
     // "Gate negotiation" methods
     // ---------------
-    void negotiateGate(int airport_ID, int plane_ID); //Assigns plane a new availible target gate
+    void negotiateGate(int O_airport_ID, int D_airport_ID, int plane_ID); //Assigns plane a new availible target gate
 
     // -------------------
     // "Print" methods

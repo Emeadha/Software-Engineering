@@ -40,11 +40,10 @@ private:
 
     /* BEGIN VARIABLES */
 
-    bool debugging = false;
+    bool debugging = true;
     
     //Basic plane attributes
     int Plane_ID; //The ID number of the plane (Primary Key)
-    int gate_ID;
     string Plane_name; //Tail number
     string Plane_model; //The make of the plane, e.g. “Boeing 757”
     Clock Objects_clock; //Instance of the clock object for the plane, used to keep simulation synchronization
@@ -66,7 +65,8 @@ private:
     Finance* Finance_object = nullptr;
 
     //Target airport pointer
-    Airport* Airport_object = nullptr;
+    Airport* Target_airport_object = nullptr;
+    Airport* Origin_airport_object = nullptr;
 
     //Variables for particular time update
     double duration;
@@ -112,7 +112,8 @@ private:
     double Range; //KILOMETERS of travel possible remaining
     int Origin_airport_ID = -1; //The airport the plane is starting from on a flight.
     int Target_airport_ID = -1; //The airport the plane is scheduled to land at next.
-    int Target_gate_ID = -1; //The gate of the targeted airport at which the plane is scheduled to land.
+    int Origin_gate_ID = 0;//Gate from origin airport
+    int Target_gate_ID = 0; //The gate of the targeted airport at which the plane is scheduled to land.
 
     //Finance
     Finance* Finance_obj; //Reference for the Finance object, for passing finance information to
@@ -155,6 +156,7 @@ public:
     void setDepartureTime(Clock newTime);//Set clock for departure time
 
     void setTargetGate(int gateID); //Sets the value of Target_gate
+    void setOriginGate(int gateID);
     void setTargetAirport(int airportID); //Sets the value of Target_airport
     void boardPassengers(); //Add all passengers waiting to board to Onboard. This should be called by the airport. //TODO: Currently set as an int for prototyping purposes, needs to be changed to vector of passenger objects at some point
     void disembarkPassengers(); //Remove all passengers from Onboard. Called by the airport //TODO: Currently set as an int for prototyping purposes, needs to be changed to a vector of passenger objects at some point..
@@ -173,7 +175,8 @@ public:
 
     /* BEGIN MISCELLANEOUS FUNCTIONS */
     /*double*/ void calcCost(); //Calculates the value of Daily Cost, takes in information from fuel cost, loan etc. //TODO: As-is, this doesn't actually calculate anything, just reports to Finance object
-    void assignFlight(int targetAirportID, Clock arrivalTime, Clock departTime, double distance, Airport* airport_pointer); //Called by scheduler, gives needed values to assign a new flight.
+    void assignFlight(int origin_airport_ID,int target_airport_ID, Clock arrivalTime, Clock departTime, 
+            double distance, Airport* origin_airport_pointer, Airport* target_airport_pointer); //Called by scheduler, gives needed values to assign a new flight.
        
     void planeStatus(); // The method used for checking the plane status and making right decison
     void checkFuelLevel(); // The Checkfuel level method. It will check the fuel level and update the fuel level.

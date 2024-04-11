@@ -39,7 +39,7 @@ private:
     vector<Plane*> All_planes; //Create a vector to handle all planes
     vector<Airport*> All_airports; //Createa a vector to handle all airports
 
-    bool debugging = true; //debugging bool in order to output debug information if set to true
+    bool debugging = false; //debugging bool in order to output debug information if set to true
     static mutex input_lock;
 
 public:
