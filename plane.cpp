@@ -110,10 +110,10 @@ void Plane::setLogObject(Logger *log_pointer){
     
 }
 
-void Plane::setAirportObject(Airport *airport_pointer)
-{
-    this->Airport_object = airport_pointer;
-}
+//void Plane::setAirportObject(Airport *airport_pointer)
+//{
+//    this->Airport_object = airport_pointer;
+//}
 
 double Plane::findDuration(Clock& new_time){
 
@@ -177,6 +177,10 @@ void Plane::planeStatus(){
 
 void Plane::fly(){
 
+    if(debugging){
+        cerr << "Entering [fly]" << endl;
+    }
+
     // Decrement fuel based on flight duration
     checkFuelLevel(); 
      
@@ -191,8 +195,9 @@ void Plane::fly(){
     //Change our distance to target
     this->Target_airport_location_distance = this->Target_airport_location_distance - distanceTraveled;
 
-    cout << "Plane " << Plane_ID <<" is flying "<< Objects_clock.hours <<":"<< Objects_clock.minutes << endl;
-
+    if(debugging){
+        cout << "Plane " << Plane_ID <<" is flying "<< Objects_clock.hours <<":"<< Objects_clock.minutes << endl;
+    }
 
     if(debugging){
         cout << "PLANE " << Plane_ID << " Current velocity: " << Current_velocity << endl;
@@ -205,7 +210,10 @@ void Plane::fly(){
         //Land and prepare to unboard
         goLanding();
     }
-            
+
+    if(debugging){
+        cerr << "Exiting [fly]" << endl;
+    }   
         
 }
 void Plane::goTakeOff(){
@@ -225,6 +233,10 @@ void Plane::goTakeOff(){
     
 }
 void Plane::goLanding(){
+
+    if(debugging){
+        cerr << "Entering [goLanding]" << endl;
+    }
     
     //Begin landing
 
@@ -239,35 +251,63 @@ void Plane::goLanding(){
 
     //Refuel
     topOffTank();
+
+    if(debugging){
+        cerr << "Exiting [goLanding]" << endl;
+    }
     
 }
 void Plane::boardPassengers(){
+
+    if(debugging){
+        cerr << "Entering [boardPassengers]" << endl;
+    }
 
     //Send boarding message to logger
     Log_object->logPlaneUpdate(this->Plane_ID,2,this->Objects_clock);
 
     //INSTEAD - Call the airline transferToPlane method here
-    
-    this->Onboard = Airport_object->transferToPlane(this->gate_ID);
+    this->Onboard = Origin_airport_object->transferToPlane(this->Origin_gate_ID);
 
     cerr << "Boarding: " << Onboard.size() << endl;
 
     //Disable booleans
     isBoarding = false;
     
+    //Free this origin gate
+    Origin_airport_object->freeGate(this->Origin_gate_ID);
+
     //For now, will immediatley take off
     goTakeOff();
+
+     if(debugging){
+        cerr << "Exiting [boardPassengers]" << endl;
+    }
 }
 void Plane::disembarkPassengers(){
+
+    if(debugging){
+        cerr << "Entering [disembarkPassengers]" << endl;
+    }
 
     //Send unboarding message to logger
     Log_object->logPlaneUpdate(this->Plane_ID,3,this->Objects_clock);
     
     
+<<<<<<< Updated upstream
     
     Airport_object->transferToGate(this->gate_ID);
+=======
+    if(debugging){
+        cerr << "CHECK" << endl;
+        cerr << "Target airport obj: " << Target_airport_object << endl;
+        cerr << "Target GateID: " << Target_gate_ID << endl;
+    }
+    Target_airport_object->transferToGate(this->Target_gate_ID, Onboard);
+>>>>>>> Stashed changes
 
     Trip_odometer = 0; //Resetting the trip odometer back to 0
+
 
     //Plane is waiting for next assignment
     isWaiting = true;
@@ -275,7 +315,12 @@ void Plane::disembarkPassengers(){
     isUnboarding = false;
 
     //Important step! We let airport know this gate is now availible
-    Airport_object->freeGate(this->gate_ID);
+    //Free the target gate up
+    Target_airport_object->freeGate(this->Target_gate_ID);
+
+    if(debugging){
+        cerr << "Exiting [disembarkPassengers]" << endl;
+    }
 
 }
 /*void setPassengersFromAirport(Airport& airport) {
@@ -298,18 +343,21 @@ void Plane::inWaitingTime(){
     }
 
 }
-void Plane::assignFlight(int targetAirportID, Clock arrivalTime, Clock departTime, double distance, Airport* airport_pointer){
+void Plane::assignFlight(int origin_airport_ID,int target_airport_ID, Clock arrivalTime, Clock departTime, 
+    double distance, Airport* origin_airport_pointer, Airport* target_airport_pointer){
     //Assign our old flight target ID to be our new origin
-    this->Origin_airport_ID = this->Target_airport_ID;
+    //this->Origin_airport_ID = this->Target_airport_ID;
 
     //Assign values passed in 
-    this->Target_airport_ID = targetAirportID;
+    this->Origin_airport_ID = origin_airport_ID;
+    this->Target_airport_ID = target_airport_ID;
     this->Arrival_time = arrivalTime;
     this->Departure_time = departTime;
     this->Target_airport_location_distance = distance;
 
-    //Set our airport pointer
-    this->Airport_object = airport_pointer;
+    //Set our airport pointers
+    this->Origin_airport_object = origin_airport_pointer;
+    this->Target_airport_object = target_airport_pointer;
 
     //Flip assigned to false
     this->Is_ready_for_assignment = false;
@@ -483,6 +531,9 @@ void Plane::setIsReadyForAssignment(bool isReady){
 void Plane::setTargetGate(int gate){
     this->Target_gate_ID = gate;
 }   
+void Plane::setOriginGate(int gate){
+    this->Origin_gate_ID = gate;
+} 
 
 void Plane::setTargetAirport(int airportID){
     this->Target_airport_ID = airportID;
