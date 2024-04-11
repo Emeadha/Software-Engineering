@@ -294,17 +294,12 @@ void Plane::disembarkPassengers(){
     Log_object->logPlaneUpdate(this->Plane_ID,3,this->Objects_clock);
     
     
-<<<<<<< Updated upstream
-    
-    Airport_object->transferToGate(this->gate_ID);
-=======
     if(debugging){
         cerr << "CHECK" << endl;
         cerr << "Target airport obj: " << Target_airport_object << endl;
         cerr << "Target GateID: " << Target_gate_ID << endl;
     }
-    Target_airport_object->transferToGate(this->Target_gate_ID, Onboard);
->>>>>>> Stashed changes
+    Target_airport_object->transferToGate(this->Target_gate_ID);
 
     Trip_odometer = 0; //Resetting the trip odometer back to 0
 
