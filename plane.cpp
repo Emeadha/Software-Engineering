@@ -265,7 +265,7 @@ void Plane::disembarkPassengers(){
     
     
     
-    Airport_object->transferToGate(this->gate_ID, passenger_vector);
+    Airport_object->transferToGate(this->gate_ID);
 
     Trip_odometer = 0; //Resetting the trip odometer back to 0
 
@@ -446,7 +446,7 @@ int Plane::getPassengerCount()
    /* END GETTERS */
 
    /* BEGIN SETTERS*/
-void Plane::setPassengerVectorFromAirport(const vector<Passenger>& allPassengers) {
+void Plane::setPassengerVectorFromAirport(const vector<Passenger*>& allPassengers) {
     passenger_vector = allPassengers;
 }
 void Plane::resetTripOdometer()

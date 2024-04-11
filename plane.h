@@ -123,7 +123,7 @@ public:
 
     //Temp - just gonna make this public for now
     vector<Passenger> Onboard;
-    vector<Passenger> passenger_vector; 
+    vector<Passenger*> passenger_vector; 
     /* BEGIN GETTERS */
     int getPlaneID(); //Returns PlaneID
     string getPlaneName(); //Returns 'tail number' of plane
@@ -142,7 +142,7 @@ public:
     int getPassengerCount(); //Returns the number of passengers in Onboard
 
     /* BEGIN SETTERS */
-    void setPassengerVectorFromAirport(const vector<Passenger>& allPassengers);
+    void setPassengerVectorFromAirport(const vector<Passenger*>& allPassengers);
     void setLogObject(Logger *log_pointer); //CRITICAL STEP - passes a reference to logger object
     void setFinanceObject(Finance *New_finance_obj); //Sets the Finance object to report to, should be common with all other modules
     void resetTripOdometer(); //Sets Trip_odometer to 0

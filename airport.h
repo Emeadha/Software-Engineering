@@ -109,9 +109,10 @@ public:
     // Airport-gate-plane interaction methods
     //------------------
 
-    void transferToGate(int gate_ID, vector<Passenger> All_passenger_groups); 
+    void transferToGate(int gate_ID); 
     vector<Passenger> transferToPlane(int gate_ID);
     void freeGate(int gate_ID);
+    void passengersToDeparture(int gate_ID, Passenger* passengerGroupID);
     
 };
 
