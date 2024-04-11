@@ -52,6 +52,8 @@ private:
     double longitude = 0;
     double latitude = 0;
 
+    int hub_status = 0;
+
     //Pointers to nessesary objects
     TimeManager* time_manager = nullptr;
     Logger* Log_object = nullptr; 
@@ -75,7 +77,7 @@ public:
     vector<Passenger*> atGateGroups; 
     vector<Gate*> All_gates;
     //Constructor
-    Airport(int airport_ID, string airport_name, double longitude, double latitude);
+    Airport(int airport_ID, string airport_name, double longitude, double latitude, int hub_status);
 
     // Register a passenger_group (to vector) and as an observer
     void registerPassengerGroup(Passenger* passengerGroupID);
@@ -92,6 +94,7 @@ public:
     int getAirportID(); // Return Airport ID
     string getAirportName(); // Return Airport name
     bool getAirportOpen(); // Return whether or not open
+    int getHubStatus(); //Return whether airport is a hub or not, 0 means not and 1 means hub
 
     // Setters
     void setTimeManager(TimeManager *time_manager); //CRITICAL STEP - passes a a refernce to time manager

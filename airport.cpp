@@ -13,13 +13,14 @@ airport.cpp
 using namespace std;
 
 // Constructor
-Airport::Airport(int airport_ID, string airport_name, double longitude, double latitude): Objects_clock(0, 0, 0)
+Airport::Airport(int airport_ID, string airport_name, double longitude, double latitude, int hub_status): Objects_clock(0, 0, 0)
 {
 
 
     this->Airport_name = airport_name;
     this->longitude = longitude;
     this->latitude = latitude;
+    this->hub_status = hub_status;
 
     // Initialize Airport_ID to a default value 
     Airport_ID = airport_ID;
@@ -126,6 +127,12 @@ bool Airport::getAirportOpen()
 {
     return Airport_open;
 } 
+
+// Return if hub or not
+int Airport::getHubStatus()
+{
+    return hub_status;
+}
 
 //Setters
 

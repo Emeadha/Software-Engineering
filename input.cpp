@@ -41,6 +41,7 @@ void Input::read_airports()
     //Variable being read in
     string airport_name; 
 	double longitude, latitude;
+	int hub_status;
 	
     //Attempt to open the default file
     ifstream infile(default_file);
@@ -91,7 +92,12 @@ void Input::read_airports()
 			char comma;
 
 			getline(iss, airport_name, ',');
-			iss >> longitude >> comma >> latitude;
+			iss >> longitude >> comma >> latitude >> comma >> hub_status;
+
+			if(hub_status != 1 && hub_status != 0)
+			{
+				cerr << "ERROR: Invalid hub status. Index: " << i << endl; 
+			}
 
 
 			/*//Trim the last variable on each line to remove white space
@@ -104,10 +110,10 @@ void Input::read_airports()
 			airport_name = airport_name.substr(0, end);*/
 
 			if(debugging){
-			cout << "Airport name: " << airport_name << ", " << longitude << ", " << latitude << endl;
+			cout << "Airport name: " << airport_name << ", " << longitude << ", " << latitude << ", " << hub_status << endl;
 			}
 			
-	    	Airport* airport = new Airport(i, airport_name, longitude, latitude);
+	    	Airport* airport = new Airport(i, airport_name, longitude, latitude, hub_status);
 		   	register_airport(airport);
 		   
 		}
