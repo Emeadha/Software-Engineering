@@ -11,6 +11,8 @@ TimeManager::TimeManager() : simulation_time(0, 0, 0) {}
 void TimeManager::startSimulation(){
     
     int day = 0;
+    //Setup: Calculate daily loan cost for Finance to use
+//    Finance_obj->calculateDailyLoan();
     //THIS IS THE MAIN SIMULATION LOOP FOR TIME
 
     //Loop for the week

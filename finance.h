@@ -50,6 +50,7 @@ class Finance {
         Finance();
 
 //        double calculateRevenue(Flight flight, Plane plane);
+        void calculateDailyLoan();
         void reportPlaneCost(int planeID, double value);
         void reportPlaneRevenue(int planeID, double value);
         void reportDay(int day);

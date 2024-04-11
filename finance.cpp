@@ -14,10 +14,22 @@ Finance::Finance() : financeFileName("financeLog.txt")
 {
     financeObj.open(financeFileName);
 
-	financeObj << "-------------------------------------------------------------------------" << endl;
+	 financeObj << "-------------------------------------------------------------------------" << endl;
     financeObj << "FINANCELOG                              LOCKSNEED MARTIAN CORP" << endl;
     financeObj << "-------------------------------------------------------------------------" << endl;
 
+}
+
+//void Finance::setAirlineObject(Airline *New_airline_obj){
+//   this->Airline_obj = New_airline_obj;
+//}
+
+void calculateDailyLoan()
+{
+//   for (int i = 0; i < All_planes.size; i++)
+   {
+      cerr << "TODO: Implement calculateDailyLoan()" \n";
+   } 
 }
 
 //Report a cost of a plane to the finance object

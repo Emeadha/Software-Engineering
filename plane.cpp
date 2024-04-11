@@ -338,7 +338,7 @@ void Plane::checkFuelLevel(){
         }
         fuelused = this->duration * (Burn_rate/60.0);
         this->Fuel_tank -= fuelused;
-        Finance_obj->reportPlaneCost(Plane_ID, ((fuelused*0.264172)*FUELCOST)); //Reports the cost of fuel used to the Finance object, converting liters of fuel to gallons since we're using cost-per-gallon
+//        Finance_obj->reportPlaneCost(Plane_ID, ((fuelused*0.264172)*FUELCOST)); //Reports the cost of fuel used to the Finance object, converting liters of fuel to gallons since we're using cost-per-gallon //MOVED TO TopOffTank()
         
         if (Fuel_tank <= 0){
             Fuel_tank=0;
@@ -354,6 +354,7 @@ void Plane::checkFuelLevel(){
 }
 void Plane::topOffTank(){
     if(this->Fuel_tank != Max_fuel){
+        Finance_obj->reportPlaneCost(Plane_ID, (((Max_fuel - Fuel_tank)*0.264172)*FUELCOST)); //Reports the cost of fuel used to refill the plane to the Finance object, converting liters of fuel to gallons since we're using cost-per-gallon //TODO: Double-check/test the math on this
         this->Fuel_tank = Max_fuel;
 
         Log_object->logPlaneUpdate(this->Plane_ID, 7, this->Objects_clock);
@@ -461,6 +462,7 @@ void Plane::setFuelTank(float fuel)
 void Plane::refuelToFull()
 {
      this->Fuel_tank = this->Max_fuel;
+//     Finance_obj->reportPlaneCost(Plane_ID, (((Max_fuel - Fuel_tank)*0.264172)*FUELCOST)); //Reports the cost of fuel used to refill the plane to the Finance object, converting liters of fuel to gallons since we're using cost-per-gallon
 }   
 
 void Plane::setMaintStatus(bool maintStatus)
