@@ -14,6 +14,11 @@
 *
 */
 
+#define B600LOAN 50;
+#define B800LOAN 50;
+#define A100LOAN 50;
+#define A300LOAN 50;
+
 #ifndef FINANCE_H
 #define FINANCE_H
 
@@ -34,6 +39,8 @@ using namespace std;
 class Finance {
 
     private:
+//        void setAirlineObject(Airline *new_airline_obj);
+
         double totalDailyCost = 0;
         double totalDailyRevenue = 0;
 
@@ -48,6 +55,8 @@ class Finance {
 
     public:
         Finance();
+
+//        Input Input_obj; //TODO: Supposed to be used for getModelCount(), but requires input.h which results in circular dependency
 
 //        double calculateRevenue(Flight flight, Plane plane);
         void calculateDailyLoan();

@@ -147,6 +147,7 @@ public:
     void printFlightVector(); //Iterate through and print details of each flight
     void printPlaneVector(); //Iterate through and print details of each plane
     void printAirportVector();//Iterate through and print details of each airport
+    int getModelCount(string model); //Returns the count of the specified plane model registered to the airline
 
     
 };

@@ -24,13 +24,34 @@ Finance::Finance() : financeFileName("financeLog.txt")
 //   this->Airline_obj = New_airline_obj;
 //}
 
-void calculateDailyLoan()
-{
-//   for (int i = 0; i < All_planes.size; i++)
-   {
-      cerr << "TODO: Implement calculateDailyLoan() \n";
-   } 
+/*
+int Input::getModelCount(string model){
+    int modelCount = 0;
+//    vector<Plane*> All_planes = Input_object->get_plane_vector(); //TODO: Requires plane.h, which causes a circular dependency.
+
+    for(int i=0; i<All_planes.size(); i++){
+        if (All_planes[i]->getPlaneModel() == model)
+        {
+           modelCount++;
+        }
+    }
+    if (debugging)
+        cerr << "modelCount for " << model << ": " << modelCount << endl;
+    return modelCount;
 }
+
+float calculateDailyLoan()
+{
+   float loanPerDay = 0;
+
+   loanPerDay+=Airline::getModelCount("B600")*B600LOAN;
+   loanPerDay+=Airline::getModelCount("B800")*B800LOAN;
+   loanPerDay+=Airline::getModelCount("A100")*A100LOAN;
+   loanPerDay+=Airline::getModelCount("A300")*A300LOAN;
+
+   return loanPerDay;
+}
+*/
 
 //Report a cost of a plane to the finance object
 void Finance::reportPlaneCost(int planeID, double value)
