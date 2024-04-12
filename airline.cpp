@@ -145,7 +145,8 @@ void Airline::scheduleFlights(){
                     }
 
                     //Negotiate a destination and origin gate
-                    negotiateGate(tempOriginID, tempDestID, j);
+                    // MOVED TO GATE
+                    //negotiateGate(tempOriginID, tempDestID, j);
 
                     //Assign receieved values to plane, and set ready to assign as false
                     All_planes[j]->assignFlight(tempOriginID, tempDestID, tempArrivalTime, tempDepartTime, tempDistance, Origin_aiport_pointer, Target_aiport_pointer);

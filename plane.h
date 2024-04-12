@@ -174,14 +174,16 @@ public:
     /*END OPERATION FUNCTIONS*/
 
     /* BEGIN MISCELLANEOUS FUNCTIONS */
-    /*double*/ void calcCost(); //Calculates the value of Daily Cost, takes in information from fuel cost, loan etc. //TODO: As-is, this doesn't actually calculate anything, just reports to Finance object
-    void assignFlight(int origin_airport_ID,int target_airport_ID, Clock arrivalTime, Clock departTime, 
-            double distance, Airport* origin_airport_pointer, Airport* target_airport_pointer); //Called by scheduler, gives needed values to assign a new flight.
-       
+    /*double*/ void calcCost(); //Calculates the value of Daily Cost, takes in information from fuel cost, loan etc. //TODO: As-is, this doesn't actually calculate anything, just reports to Finance object       
     void planeStatus(); // The method used for checking the plane status and making right decison
     void checkFuelLevel(); // The Checkfuel level method. It will check the fuel level and update the fuel level.
     double findDuration(Clock& new_time); //Find duration of THIS update
     /* END MISCELLANEOUS FUNCTIONS */
+
+    /* Scheduling and communication*/
+    void assignFlight(int origin_airport_ID,int target_airport_ID, Clock arrivalTime, Clock departTime, 
+            double distance, Airport* origin_airport_pointer, Airport* target_airport_pointer); //Called by scheduler, gives needed values to assign a new flight.
+    void negotiateGate(int selection); //(Moved here from airline) Selection = 1(Origin Negotiate) or =2 (Dest Negotiate)
 
     /* Time Manager Methods*/
     virtual void updateDay(int Day) override;

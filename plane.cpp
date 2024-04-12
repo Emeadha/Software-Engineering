@@ -238,7 +238,12 @@ void Plane::goLanding(){
         cerr << "Entering [goLanding]" << endl;
     }
     
-    //Begin landing
+    //Begin landing process
+    //-----------------------
+
+    //First, negotiate a gate
+    // 2 - Selection means target airport
+    negotiateGate(2);
 
     //Send log message
     Log_object->logPlaneUpdate(this->Plane_ID,5,this->Objects_clock);
@@ -262,6 +267,10 @@ void Plane::boardPassengers(){
     if(debugging){
         cerr << "Entering [boardPassengers]" << endl;
     }
+
+    //Negotiate a gate
+    // 1 = Origin airport
+    negotiateGate(1);
 
     //Send boarding message to logger
     Log_object->logPlaneUpdate(this->Plane_ID,2,this->Objects_clock);
@@ -358,6 +367,95 @@ void Plane::assignFlight(int origin_airport_ID,int target_airport_ID, Clock arri
     this->Is_ready_for_assignment = false;
 }
 
+void Plane::negotiateGate(int selection){
+    int tempGateID = -1;
+    int i = 0;
+    bool gate_found = false;
+
+    //Error catch for else
+    //Selection = 1 sets origin = 2 sets target
+    if(Origin_airport_object && Target_airport_object){
+        if(selection == 1){
+            //Find gate for origin airport
+            while ((i < Origin_airport_object->All_gates.size()) && !gate_found){
+
+                //Get the gate ID
+                tempGateID = Origin_airport_object->All_gates[i]->getGateID();
+
+                //Make sure gateID matches i
+                if(tempGateID != i){
+                    Log_object->errorLog(1, "Error! Iterator does not match tempGateID [PLANE.CPP][LINE 378]");
+                }
+        
+                //See if gate is open
+                if(Origin_airport_object->All_gates[i]->getInUse() == false){
+                    //TEMP - For now we just want to grab the first availible gate
+                    setOriginGate(i);
+
+                    //Change gate to in use
+                    Origin_airport_object->All_gates[i]->setInUse(true);
+
+                    //Tell logger we reserved a gate
+                    Log_object->logAirportUpdate(Origin_airport_object->getAirportID(), 1, i, this->Objects_clock);
+
+                    //Set boolean to true
+                    gate_found = true;
+                }
+                
+                i++;
+            }
+
+            //If we get to the end of this without finding a gate
+            if(!gate_found){
+                Log_object->errorLog(1, "Error! No suitable gate found! [PLANE.CPP][LINE 401]");
+            }
+
+        }
+        else if(selection == 2){
+            //Find gate for target airport
+            while ((i < Target_airport_object->All_gates.size()) && !gate_found){
+
+                //Get the gate ID
+                tempGateID = Target_airport_object->All_gates[i]->getGateID();
+
+                //Make sure gateID matches i
+                if(tempGateID != i){
+                    Log_object->errorLog(1, "Error! Iterator does not match tempGateID [PLANE.CPP][LINE 414]");
+                }
+        
+                //See if gate is open
+                if(Target_airport_object->All_gates[i]->getInUse() == false){
+                    //TEMP - For now we just want to grab the first availible gate
+                    setOriginGate(i);
+
+                    //Change gate to in use
+                    Target_airport_object->All_gates[i]->setInUse(true);
+
+                    //Tell logger we reserved a gate
+                    Log_object->logAirportUpdate(Target_airport_object->getAirportID(), 1, i, this->Objects_clock);
+
+                    //Set boolean to true
+                    gate_found = true;
+                }
+                
+                i++;
+            }
+
+            //If we get to the end of this without finding a gate
+            if(!gate_found){
+                Log_object->errorLog(1, "Error! No suitable gate found! [PLANE.CPP][LINE 437]");
+            }
+        }
+        else{
+            Log_object->errorLog(0, "Error! Bad negotiation selection [PLANE.CPP][Line 371]");
+        }
+
+    }
+    else{
+        Log_object->errorLog(1, "Error! Origin or Target Airport object not set! [PLANE.CPP][Line 376]");
+    }
+    
+}
 
 void Plane::checkFuelLevel(){
 
