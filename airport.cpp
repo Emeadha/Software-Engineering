@@ -27,22 +27,43 @@ Airport::Airport(int airport_ID, string airport_name, double longitude, double l
 
     // Set the initial value of Airport_open 
     Airport_open = true;
+    getHubStatus();
+
 
     //Continue with object creation
-    for(int i = 0; i < 5; i++) 
+    if(hub_status == 1){
+        const int num_gates = 11;
+        for(int i = 0; i < num_gates; i++) 
     {
         //Creating and registering gates
         Gate* gateID = new Gate(i);
         registerGate(gateID);
         
-        for(int x=0; x <5; x++){
+        //cout << "Is a Hub " << gateID << endl;
+        for(int x=0; x <num_gates; x++){
+           Passenger* passengerGroupID = new Passenger(x); 
+           //function call to push passengers onto departing_passenger vector
+           passengersToDeparture(i, passengerGroupID);
+        }     
+    }
+    }
+    else{
+        const int num_gates = 5;
+    for(int i = 0; i < num_gates; i++) 
+    {
+        //Creating and registering gates
+        Gate* gateID = new Gate(i);
+        registerGate(gateID);
+        
+        //cout << "Is not a Hub" << endl;
+        for(int x=0; x <num_gates; x++){
            Passenger* passengerGroupID = new Passenger(x); 
            //function call to push passengers onto departing_passenger vector
            passengersToDeparture(i, passengerGroupID);
         }     
     }
 
-    
+    }
 }
 
 //Add reference to TimeManager object, then complete object creation
