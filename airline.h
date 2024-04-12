@@ -57,7 +57,7 @@ private:
     vector<Airport*> All_airports;
 
     bool scheduleNeeded = false;
-    bool debugging = true;
+    bool debugging = false;
 
     //How many complications loaded (used by set complication)
     int comp_count = 0;

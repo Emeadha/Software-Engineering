@@ -52,7 +52,7 @@ private:
     int D_gate_ID = 0; //Destination gate at target airport
     int O_gate_ID = 0; //Origin gate at origin airport
     int Plane_ID = 0; //The ID number of the plane used for a flight
-    // EVENTUALLY MOVE HERE double Distance;
+    
     
 
     // Has this already been scheduled?
@@ -66,6 +66,10 @@ public:
 
     Clock Departure_time; //Scheduled departure time
     Clock Arrival_time; //Estimated arrival time at origin airport/gate
+
+    //For calculating revenue
+    double revenue = 0;
+    double cost = 0;
 
     // Constructor
     Flight(int Flight_ID, double Ticket_cost, string Flight_type, string Flight_type_ID, string plane_name, string Dest_airport_name, string Origin_airport_name, int D_hour, int D_min, int D_sec, int A_hour, int A_min, int A_sec, double distance, int takeoff_time, int air_time, int deboard_time);

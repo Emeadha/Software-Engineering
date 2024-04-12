@@ -29,6 +29,8 @@
 //#include "airline.h"
 //#include "input.h"
 #include "logger.h"
+#include "flight.h"
+
 #include <iostream>
 #include <fstream>
 #include <mutex>
@@ -51,6 +53,9 @@ class Finance {
 
         const string financeFileName;
 
+        //Debugging flag
+        bool debugging = true;
+
         
 
     public:
@@ -61,9 +66,14 @@ class Finance {
 //        double calculateRevenue(Flight flight, Plane plane);
         void calculateDailyLoan();
         void reportPlaneCost(int planeID, double value);
-        void reportPlaneRevenue(int planeID, double value);
+        void reportPlaneRevenue(int planeID, double numOfPassengers);
         void reportDay(int day);
         void reportOverall();
+
+        void setFlightVector(vector<Flight*> *All_flights);
+
+        //Vector pointer to find flight info
+        vector<Flight*>* All_flights;
 };
 #endif //FINANCE_H
 

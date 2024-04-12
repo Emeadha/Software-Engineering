@@ -43,6 +43,9 @@ Airline::Airline(TimeManager *time_manager, string airline_name, Input Input_obj
     //Load flights and fill in missing info based off airport and plane data
     loadFlights();
 
+    //Send flight vector pointer to finance
+    Finance_obj->setFlightVector(&All_flights);
+
 }
 
 //Destructor

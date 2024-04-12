@@ -20,9 +20,10 @@ Finance::Finance() : financeFileName("financeLog.txt")
 
 }
 
-//void Finance::setAirlineObject(Airline *New_airline_obj){
-//   this->Airline_obj = New_airline_obj;
-//}
+void Finance::setFlightVector(vector<Flight*>* flights_ptr){
+	//Set our pointer to this vector
+	All_flights = flights_ptr;
+}
 
 /*
 int Input::getModelCount(string model){
@@ -56,11 +57,32 @@ float calculateDailyLoan()
 //Report a cost of a plane to the finance object
 void Finance::reportPlaneCost(int planeID, double value)
 {
+	bool planeFound = false;
+
 	if(value > 0) 
 	{
-		financeObj << "Plane " << planeID << " reports a cost of: " << value << endl;
+		if(debugging){
+			financeObj << "Plane " << planeID << " reports a cost of: " << value << endl;
+		}
 		totalDailyCost += value; 
 		totalOverallCost += value;
+
+		//Add this value to the flight's vector
+		if(All_flights){
+			for(int i=0; i < All_flights->size(); i++){
+				if(planeID == (*All_flights)[i]->getPlaneID()){
+					planeFound = true;
+					(*All_flights)[i]->cost += value;
+				}
+			}
+			if(!planeFound){
+				cerr << "Error! No planeID found" << endl;
+			}
+
+		}
+		else{
+			cerr << "Error! No flight vector in finance" << endl;
+		}
 	}
 	else
 	{
@@ -68,17 +90,49 @@ void Finance::reportPlaneCost(int planeID, double value)
 	}
 }
 //Report a revenue of a plane to the finance object
-void Finance::reportPlaneRevenue(int planeID, double value)
+void Finance::reportPlaneRevenue(int planeID, double numOfPassengers)
 {
-	if(value > 0) 
-	{
-		financeObj << "Plane " << planeID << " reports a cost of: " << value << endl;
-		totalDailyRevenue += value;
-		totalOverallRevenue += value; 
+	bool planeFound = false;
+	double value = 0;
+
+	if(numOfPassengers > 0) 
+	{ 
+		//Add this value to the flight's vector
+		if(All_flights){
+			for(int i=0; i < All_flights->size(); i++){
+				if(planeID == (*All_flights)[i]->getPlaneID()){
+					//We found our plane!
+					planeFound = true;
+
+					// ---------------------
+					//Find out ticket price
+					value = (*All_flights)[i]->getTicketCost();
+
+					//Multiply by number of passengers
+					//Remember, passenger group is ten people
+					value = value * (numOfPassengers * 10);
+
+					(*All_flights)[i]->revenue += value;
+
+					if(debugging){
+						financeObj << "Plane " << planeID << " reports a revenue of: " << value << endl;
+					}
+						totalDailyRevenue += value;
+						totalOverallRevenue += value;
+				}
+			}
+			if(!planeFound){
+				cerr << "Error! No planeID found" << endl;
+			}
+
+		}
+		else{
+			cerr << "Error! No flight vector in finance" << endl;
+		}
 	}
 	else
 	{
-		cerr << "Error! Negative revenue not allowed. " << endl;
+		cerr << "Error! Negative passengers not allowed. " << endl;
 	}
 }
 //Write a day into the financial summary log
@@ -86,9 +140,12 @@ void Finance::reportDay(int day)
 {
 	financeObj << "-----------------------------------------------" << endl;
 	financeObj << "Simulation Day " << day << " Financial Summary" << endl;
+	financeObj << "-----------------------------------------------" << endl;
+	financeObj << endl;
 
 	financeObj << "Total Cost: $" << totalDailyCost << endl;
 	financeObj << "Total Revenue: $" << totalDailyRevenue << endl;
+	
 	
 	if(totalDailyCost > totalDailyRevenue) 
 	{
@@ -107,6 +164,28 @@ void Finance::reportDay(int day)
 		cerr << "Unexpected error in reporting daily financial summary. Day: " << day << endl;
 		financeObj << "Error getting difference in revenue and cost." << endl;
 	}
+
+	financeObj << "--------------------------------" << endl;
+	financeObj << "Flight breakdown V V V" << endl;
+	financeObj << "--------------------------------" << endl;
+
+	//Print out cost of each flight
+	//Add this value to the flight's vector
+		if(All_flights){
+			for(int i=0; i < All_flights->size(); i++){
+				//Print out daily cost and revenue
+				financeObj << "Flight: " << (*All_flights)[i]->getFlightID() << " Revenue = "
+					<< (*All_flights)[i]->revenue << " Cost = " << (*All_flights)[i]->cost << endl;
+
+				//Reset values
+				(*All_flights)[i]->revenue = 0;
+				(*All_flights)[i]->cost = 0;
+			}
+
+		}
+		else{
+			cerr << "Error! No flight vector in finance" << endl;
+		}
 
 	financeObj << "-----------------------------------------------" << endl;
 }

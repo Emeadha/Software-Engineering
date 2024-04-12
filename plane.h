@@ -40,7 +40,7 @@ private:
 
     /* BEGIN VARIABLES */
 
-    bool debugging = true;
+    bool debugging = false;
     
     //Basic plane attributes
     int Plane_ID; //The ID number of the plane (Primary Key)

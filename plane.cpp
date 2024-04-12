@@ -278,8 +278,6 @@ void Plane::boardPassengers(){
     //INSTEAD - Call the airline transferToPlane method here
     this->Onboard = Origin_airport_object->transferToPlane(this->Origin_gate_ID);
 
-    cerr << "Boarding: " << Onboard.size() << endl;
-
     //Disable booleans
     isBoarding = false;
     
@@ -304,10 +302,16 @@ void Plane::disembarkPassengers(){
     
     
     if(debugging){
+        int garbage;
         cerr << "CHECK" << endl;
         cerr << "Target airport obj: " << Target_airport_object << endl;
         cerr << "Target GateID: " << Target_gate_ID << endl;
+        cerr << "Number of passenger groups: " << Onboard.size() << endl;
+        //cin >> garbage;
     }
+
+    Finance_obj->reportPlaneRevenue(this->Plane_ID, Onboard.size());
+
     Target_airport_object->transferToGate(this->Target_gate_ID);
 
     Trip_odometer = 0; //Resetting the trip odometer back to 0
@@ -460,8 +464,10 @@ void Plane::negotiateGate(int selection){
 void Plane::checkFuelLevel(){
 
     if(isFlying == true){
-        cout <<"Fuel level currently is: " << this->Fuel_tank << endl;
-        
+        if(debugging){
+            cout <<"Fuel level currently is: " << this->Fuel_tank << endl;
+        }
+
         double fuelused; 
         
         
@@ -475,7 +481,7 @@ void Plane::checkFuelLevel(){
         Burn_rate=2600;
         }
         else{
-            cout << "Plane model invalid" << endl;
+            Log_object->errorLog(1, "Plane model invalid");
         }
         fuelused = this->duration * (Burn_rate/60.0);
         this->Fuel_tank -= fuelused;
@@ -483,11 +489,12 @@ void Plane::checkFuelLevel(){
         
         if (Fuel_tank <= 0){
             Fuel_tank=0;
-            cout << " Fuel Tank is empty. Refuel before takeoff" << endl;}
-            else{
-            cout << "Fuel used" << fuelused << endl;
-            cout << " Fuel Tank Level: " << this->Fuel_tank << "liters" << endl;
-            }
+            Log_object->errorLog(0, " Fuel Tank is empty. Refuel before takeoff");
+        }
+        else{
+            //cout << "Fuel used" << fuelused << endl;
+            //cout << " Fuel Tank Level: " << this->Fuel_tank << "liters" << endl;
+        }
 
 
     }

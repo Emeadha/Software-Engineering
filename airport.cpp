@@ -194,7 +194,9 @@ void Airport::transferToGate(int gate_ID){
 
     //Assign passed vector as the vector at gate
     All_gates[gate_ID]->Arriving_passengers = All_gates[gate_ID]->Departing_passengers;
-    cout << "Size of Arriving_passengers vector: " << All_gates[gate_ID]->Arriving_passengers.size() <<endl;
+    if(debugging){
+        cout << "Size of Arriving_passengers vector: " << All_gates[gate_ID]->Arriving_passengers.size() <<endl;
+    }
     All_gates[gate_ID]->Arriving_passengers.clear();
 
 }
@@ -209,7 +211,9 @@ vector<Passenger> Airport::transferToPlane(int gate_ID){
     for(Passenger* passPtr : All_gates[gate_ID]->Departing_passengers){
         temp.push_back(*passPtr);
     }
-    cout << "Size: " << temp.size() << endl;
+    if(debugging){
+        cout << "Size: " << temp.size() << endl;
+    }
     //Clear vector at gate
     All_gates[gate_ID]->Departing_passengers.clear();
     
@@ -233,6 +237,6 @@ void Airport::passengersToDeparture(int gate_ID, Passenger* passengerGroupID){
        All_gates[gate_ID]->Departing_passengers.push_back(passengerGroupID); 
     }
     else{
-        cerr << "Invalid gate ID: " << gate_ID << endl;
+        Log_object->errorLog(0,"Error! Invalid gate ID [AIRPORT.CPP][LNE 238]");
     }
 }
