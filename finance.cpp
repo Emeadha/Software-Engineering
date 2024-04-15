@@ -180,6 +180,8 @@ void Finance::reportDay(int day)
 				//Reset values
 				(*All_flights)[i]->revenue = 0;
 				(*All_flights)[i]->cost = 0;
+            totalDailyRevenue = 0;
+            totalDailyCost = 0;
 			}
 
 		}
