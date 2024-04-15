@@ -148,7 +148,12 @@ void Logger::logFlightUpdate(int fid, int f_status, string a_name_1, string a_na
 
    
 }
+void Logger::logComplication(int fid, string msg){
 
+    lock_guard<mutex> lock(log_mutex);
+
+    flightLogFile << "FLIGHT STATUS: " << "Flight " << fid << " " << msg << endl;
+}
 // File that reads methods sent by airport.cpp to determine status of the airport and export it into a text file as a log 
 void Logger::logAirportUpdate(int aid, int a_status, int gate_id, Clock first_time = Clock())
 {

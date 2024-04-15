@@ -95,6 +95,8 @@ public:
     string getAirportName(); // Return Airport name
     bool getAirportOpen(); // Return whether or not open
     int getHubStatus(); //Return whether airport is a hub or not, 0 means not and 1 means hub
+    double getLat(); // Returns latitude
+    double getLong(); //Returns longitude
 
     // Setters
     void setTimeManager(TimeManager *time_manager); //CRITICAL STEP - passes a a refernce to time manager

@@ -73,6 +73,12 @@ Clock Flight::getDepartureTime(){
 double Flight::getTicketCost(){
     return Ticket_cost;
 }
+double Flight::getGateDelay(){
+    return this->gate_delay;
+}
+double Flight::getGroundedDelay(){
+    return this->grounded_delay;
+}
 
 //Setters
 void Flight::setFlightID(int flight_ID){
@@ -108,7 +114,12 @@ void Flight::setArrivalTime(Clock New_arrival_time){
 void Flight::setDepartureTime(Clock New_depature_time){
     this->Departure_time = New_depature_time;
 }
-
+void Flight::setGroundedDelay(double delay){
+    this->grounded_delay = delay;
+}
+void Flight::setGateDelay(double delay){
+    this->gate_delay = delay;
+}
 //Print method
 void Flight::printFlightDetails(){
     //Print out the details of this given flight

@@ -35,6 +35,7 @@ public:
     // Methods to receive updates from planes, flights, and airports
     void logPlaneUpdate(int pid, int p_status, const Clock& first_time);
     void logFlightUpdate(int fid, int f_status, string a_name_1, string a_name_2, const Clock& first_time, const Clock& second_time);
+    void logComplication(int fid, string msg);
     void logAirportUpdate(int aid, int a_status, int gate_ID, Clock first_time );
     void errorLog(int severity, string message); //Logs an error- 3 severity levels, 0, 1, and 2. 5 level 2 errors abort the program, 1 level 2 error immediately aborts. (Level 0 errors do not count towards aborting program)
     void updateFlightVector(vector<Flight*> New_vector); //Called by scheduler when theres been a flight change

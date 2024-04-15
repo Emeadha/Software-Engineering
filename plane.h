@@ -50,10 +50,6 @@ private:
     Clock Arrival_time;
     Clock Departure_time;
 
-    //Delay objects
-    Clock Gate_delay; //Delays at gate
-    Clock Grounded_delay; //Delay grounded but not at gate
-
     Clock Zero_clock; //Clock of empty values or no time
 
     int day = 0;
@@ -85,6 +81,7 @@ private:
     bool isWaiting = true; //This is the waiting status of the plane 
     bool isBoarding = false; //This is the boarding status of the plane
     bool isUnboarding = false; //This is the unboarding status of the plane.
+    bool isAboutToTakeoff = false; //Waiting on tarmac about to leave
     int untilMaintDone; //Time until maintenance is done, in minutes. 0 if plane is not in maintenance.
 
     //Availability bools
@@ -121,6 +118,10 @@ private:
 
 
 public:
+
+    //Delay objects
+    Clock Gate_delay; //Delays at gate
+    Clock Grounded_delay; //Delay grounded but not at gate
 
     //Temp - just gonna make this public for now
     vector<Passenger> Onboard;

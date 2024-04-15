@@ -52,6 +52,10 @@ private:
     int D_gate_ID = 0; //Destination gate at target airport
     int O_gate_ID = 0; //Origin gate at origin airport
     int Plane_ID = 0; //The ID number of the plane used for a flight
+
+    //Delay values
+    double grounded_delay = 0;
+    double gate_delay = 0;
     
     
 
@@ -89,6 +93,9 @@ public:
     Clock getDepartureTime(); //Returns scheduled departure time from origin 
     double getTicketCost(); //Returns the cost for a ticket for the flight
 
+    double getGroundedDelay(); //Gets delay for plane not at gate
+    double getGateDelay(); //Gets delay for plane at gate
+
     //find way to set clock times with an override function
 
     //Setters
@@ -106,6 +113,9 @@ public:
 
     void setScheduledFalse(); //Sets “Scheduled" variable to false
     void setScheduledTrue(); //Sets “Scheduled" variable to true
+
+    void setGroundedDelay(double delay); //Sets delay for plane not at gate
+    void setGateDelay(double delay); //Sets delay for plane at gate
 
     //Print method
     void printFlightDetails(); //Print out details of this flight entry

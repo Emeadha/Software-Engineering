@@ -148,6 +148,9 @@ void Plane::planeStatus(){
         }     
         else if(isBoarding){
             if(Gate_delay.minutes > 0){
+
+                Log_object->errorLog(0, "Decrementing gate delay");
+
                 //Send a decrement of the given interval
                 decrementDelay(0);
             }
@@ -155,7 +158,21 @@ void Plane::planeStatus(){
                 //Board passengers
                 boardPassengers();
             }             
+        }
+        else if(isAboutToTakeoff){
+            //Try to takeoff
+            if(Grounded_delay.minutes > 0){
+
+                Log_object->errorLog(0, "Decrementing grounded delay");
+
+                //Send a decrement of the given interval
+                decrementDelay(1);
             }
+            else{
+                //Board passengers
+                goTakeOff();
+            }             
+        }
         else if(isUnboarding){
             //Unboard passengers
             disembarkPassengers();
@@ -224,7 +241,8 @@ void Plane::goTakeOff(){
     //Send log of departure
     Log_object->logPlaneUpdate(this->Plane_ID, 4, this->Objects_clock);
 
-    //Set is flying to ture for NEXT update 
+    //Set is flying to ture for NEXT update
+    this->isAboutToTakeoff = false; 
     this->isFlying = true;
 
     //TEMP
@@ -284,8 +302,9 @@ void Plane::boardPassengers(){
     //Free this origin gate
     Origin_airport_object->freeGate(this->Origin_gate_ID);
 
-    //For now, will immediatley take off
-    goTakeOff();
+    //For now, we set our boolean to take off next tick
+    isAboutToTakeoff = true;
+
 
      if(debugging){
         cerr << "Exiting [boardPassengers]" << endl;

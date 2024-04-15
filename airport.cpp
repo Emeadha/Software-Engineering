@@ -154,7 +154,12 @@ int Airport::getHubStatus()
 {
     return hub_status;
 }
-
+double Airport::getLat(){
+    return this->latitude;
+}
+double Airport::getLong(){
+    return this->longitude;
+}
 //Setters
 
 // Set Airport ID

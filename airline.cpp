@@ -154,6 +154,10 @@ void Airline::scheduleFlights(){
                     //Assign receieved values to plane, and set ready to assign as false
                     All_planes[j]->assignFlight(tempOriginID, tempDestID, tempArrivalTime, tempDepartTime, tempDistance, Origin_aiport_pointer, Target_aiport_pointer);
 
+                    //Assign delay values (if there are any)
+                    All_planes[j]->Gate_delay.minutes = All_flights[i]->getGateDelay();
+                    All_planes[j]->Grounded_delay.minutes = All_flights[i]->getGroundedDelay();
+
                     //Set this flight in vector to scheduled
                     All_flights[i]->setScheduledTrue();
 
@@ -434,6 +438,10 @@ void Airline::setComplication(int selection){
         cerr << " DEBUGGING Entering set complication" << endl;
     }
 
+    //Error catch
+    if(All_flights.empty()){
+        Log_object->errorLog(2, "Error! Flight vector empty! [AIRLINE.CPP][LINE 390]");
+    }
 
     if(selection == 0){
         //This is NO COMPLICATION
@@ -456,11 +464,6 @@ void Airline::setComplication(int selection){
                 cerr << "DEBUGGING In flight iterations" << endl;
             }
 
-            //Error catch
-            if(All_flights.empty()){
-                Log_object->errorLog(2, "Error! Flight vector empty! [AIRLINE.CPP][LINE 332]");
-            }
-
             //Get original distance
             new_distance = All_flights[i]->getDistance();
 
@@ -479,9 +482,14 @@ void Airline::setComplication(int selection){
             //Call setter value
             All_flights[i]->setDistance(new_distance);
 
+            //Tell Logger
+            Log_object->logComplication(i, "Has been delayed due to bad weather.");
+
              if(debugging){
+                string test;
                 cerr << "DEBUGGING New distance: " << new_distance << " Percent Inc: " << percent_inc * 100 << "%" << endl;
                 cerr << "DEBUGGING end loop flight iterations" << endl;
+                cin >> test;
             }
 
         }
@@ -489,18 +497,137 @@ void Airline::setComplication(int selection){
     }
     else if(selection == 2){
         //Icing
+        //20% north of 40 degrees are delayed due to icing
+        //TODO this one's bugged we dont hit the debugging statement at the end
 
+        if(debugging){
+                cerr << "DEBUGGING Entering selection 2" << endl;
+        }
+
+        int tempAirID = -1;
+        double delay = 0;
+
+        //Random value
+        srand(time(nullptr));
+
+
+        //Get all ID's above 40 degrees
+        vector<int> IDarray;
+
+        //Find all matching flights
+        for(int i = 0; i<All_flights.size(); i++){
+            //Get the ID of that origin airport
+            tempAirID = All_flights[i]->getOriginAirptID();
+
+            //Error catch
+            if(tempAirID == -1){
+                Log_object->errorLog(2, "Critical error! Airport not found in flight entry [AIRLINE.CPP][LINE 507]");
+            }
+
+            //Find out if that airport is above 40 degrees
+            if(All_airports[tempAirID]->getLat() >= 40){
+                //Add this flight ID to our array
+                IDarray.push_back(i);
+            }
+        }
+
+        //Loop through 20% of these to delay
+        for(int i = 0; i < (IDarray.size() / 5); i++){
+        
+            //Random time between 10 and 45 min
+            delay = (rand() % 45 + 10);
+
+            //Set grounded delay for when flight is scheduled
+            All_flights[IDarray[i]]->setGroundedDelay(delay);
+
+            //Tell logger
+            Log_object->logComplication(i, "Has been delayed due to icing.");
+
+             if(debugging){
+                string test;
+                cerr << "DEBUGGING Delay given at gate: " << delay << endl;
+                cerr << "DEBUGGING end loop flight iterations" << endl;
+                cin >> test;
+            }
+        }
+
+         if(debugging){
+                cerr << "DEBUGGING Exiting selection 2" << endl;
+        }
     }
     else if(selection == 3){
         //Jet stream
+        //Due east extended by 12%, west DECREASED by same amount
+        //TODO figure out what is DUE east versus kinda east
+
+        int tempOID, tempDID;
+        double new_distance, percent_inc;
+
+        //Iterate through the all flights
+        for(int i=0; i<All_flights.size(); i++){
+
+            if(debugging){
+                cerr << "DEBUGGING In flight iterations" << endl;
+            }
+
+            //Get original distance
+            new_distance = All_flights[i]->getDistance();
+
+             if(debugging){
+                cerr << "DEBUGGING Old distance: " << new_distance << " FlightID: " << i << endl;
+            }
+
+            //Our percent increase will always be 12%
+            percent_inc = 0.12;
+
+            //Find out where this flight is travelling
+            tempOID = All_flights[i]->getOriginAirptID();
+            tempDID = All_flights[i]->getDestAirptID();
+
+            //See if we are moving east or west
+            if(All_airports[tempDID]->getLong() > All_airports[tempOID]->getLong()){
+                //We are traveing east
+
+                //Add distance
+                new_distance = new_distance + (new_distance * percent_inc);
+
+                //Call setter value
+                All_flights[i]->setDistance(new_distance);
+
+                //Tell Logger
+                Log_object->logComplication(i, "Has been delayed due to Jet Stream.");
+            }
+            else{
+                //Travelling west
+                //DECREASE distance
+                new_distance = new_distance - (new_distance * percent_inc);
+
+                //Call setter value
+                All_flights[i]->setDistance(new_distance);
+
+                //Tell Logger
+                Log_object->logComplication(i, "Has been hastened due to Jet Stream.");
+            }
+
+             if(debugging){
+                string test;
+                cerr << "DEBUGGING New distance: " << new_distance << " Percent Change: " << percent_inc * 100 << "%" << endl;
+                cerr << "DEBUGGING end loop flight iterations" << endl;
+                cin >> test;
+            }
+
+        }
+
 
     }
     else if(selection == 4){
         //Gate delay
         //5% of flights delayed by 5-90 min
         int num_of_flights_effected = 0;
-        int time_inc;
-        int tempPlaneID = -1;
+        double time_inc;
+
+        //random value
+        srand(time(nullptr));
 
         //Get 5% of all flights
         num_of_flights_effected = All_flights.size() / 20;
@@ -513,26 +640,21 @@ void Airline::setComplication(int selection){
                 cerr << "DEBUGGING In flight iterations" << endl;
             }
 
-            //Error catch
-            if(All_flights.empty()){
-                Log_object->errorLog(2, "Error! Flight vector empty! [AIRLINE.CPP][LINE 390]");
-            }
-
-            //Get plane ID
-            tempPlaneID = All_flights[i]->getPlaneID();
-
-            srand(time(nullptr));
-
             //Delay between 5 and 90 min
             time_inc = (rand() % 90 + 5);
 
-            //Send delay to given plane
-            All_planes[tempPlaneID]->addDelay(0,time_inc);
+            //Establish delay
+            All_flights[i]->setGateDelay(time_inc);
+
+            //Tell logger
+            Log_object->logComplication(i, "Has been delayed at gate.");
 
 
              if(debugging){
+                string test;
                 cerr << "DEBUGGING Delay given at gate: " << time_inc << endl;
                 cerr << "DEBUGGING end loop flight iterations" << endl;
+                cin >> test;
             }
 
         }
