@@ -102,6 +102,22 @@ void Plane::onTimeUpdate(Clock& new_time) {
 void Plane::updateDay(int Day){
     this->day = Day;
 
+    this->Is_ready_for_assignment = true;
+
+    //TEMP Reset values for the day so every plane is again in a waiting state
+    this->isFlying = false; 
+    this->isGrounded = true; 
+    this->isMaintenance = false; 
+    this->isWaiting = true; 
+    this->isBoarding = false; 
+    this->isUnboarding = false; 
+    this->isAboutToTakeoff = false;
+
+    //For now, we say maintence is done
+    untilMaintDone = 0;
+
+
+
 }
 void Plane::setLogObject(Logger *log_pointer){
 
@@ -178,7 +194,7 @@ void Plane::planeStatus(){
             disembarkPassengers();
         }
         else if(isMaintenance){
-            //Decrement time left in maintenence
+            //TEMP = Is down for maintence for the day
             doMaintenance();
         }
         else{
@@ -677,12 +693,15 @@ void Plane::doMaintenance()
     //2. Chips away at maintence time then eventually sets to false
 
     //If in maintenance, remove 10 minutes from the timer. If the timer hits zero, set the plane to no longer be in maintenance.
+    //Note: This is about 36 hours, so once it goes down it goes down for the day
     if (untilMaintDone > 0)
     {
        untilMaintDone -= 10;
        if (untilMaintDone <= 0)
        {
           setMaintStatus(false);
+
+          this->Is_ready_for_assignment = true;
        }
     }
 
@@ -690,6 +709,17 @@ void Plane::doMaintenance()
 void Plane::sendToMaintenance(){
      this->untilMaintDone = 2160;
      this->isMaintenance = true;
+
+     //We are not ready for assignment
+     this->Is_ready_for_assignment = false;
+
+     //Set booleans
+     this->isGrounded = true;
+     this->isFlying = false;
+     this->isBoarding = false;
+     this->isUnboarding = false;
+     this->isWaiting = false;
+     this->isAboutToTakeoff = false;
 }
     /* END MISCELLANEOUS FUNCTIONS */
 

@@ -661,6 +661,12 @@ void Airline::setComplication(int selection){
     }
     else if(selection == 5){
         //Aircraft failure
+        //For now, first aircraft in registry taken out of commison of the day
+        int i = 0;
+        All_planes[i]->sendToMaintenance();
+
+        //Tell Logger
+        Log_object->logPlaneUpdate(i, 6, this->Objects_clock);
     }
     else if(selection == 6){
         //West of 103 cancled
