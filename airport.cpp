@@ -115,15 +115,28 @@ void Airport::onTimeUpdate(Clock& new_time)
 
     //loop checking to see if gates are full with passengers, if not
     //function is called to push more passengers onto departing_passenger vector
-   for(int i = 0; i < All_gates.size(); i++){
-        if(All_gates[i]->Departing_passengers.size() != 5){
-            int num = 5 - All_gates[i]->Departing_passengers.size();
-            for(int x = 0; x < num; x++){
-                Passenger* passengerGroupID = new Passenger(x);
+    if(hub_status == 1){
+        const int num_gates = 11;
+        for(int i = 0; i < num_gates; i++){
+            if(All_gates[i]->Departing_passengers.size() != 11){
+                int num = 11 - All_gates[i]->Departing_passengers.size();
+                for(int x = 0; x < num; x++){
+                    Passenger* passengerGroupID = new Passenger(x);
+                    passengersToDeparture(i, passengerGroupID);
+                }
+            }
+        }
+    }
+    else{
+        const int num_gates = 5;
+        for(int i = 0; i < num_gates; i++){
+            for(int x=0; x <num_gates; x++){
+                Passenger* passengerGroupID = new Passenger(x); 
+                //function call to push passengers onto departing_passenger vector
                 passengersToDeparture(i, passengerGroupID);
             }
         }
-   }
+    }
 
     //Say that we are done
     TimeObserver::setIsDone();
