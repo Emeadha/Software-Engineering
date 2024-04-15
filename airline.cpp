@@ -716,9 +716,11 @@ void Airline::updateDay(int Day){
             if(selection == 9){
                 cout << "-----------------------------------" << endl;
                 cout << "(0) No complication" << endl;
-                cout << "(1) Bad weather" << endl;
-                cout << "(2) Icing" << endl;
-                cout << "(3) Jet stream" << endl;
+                cout << "(1) 25% Of flights encounter bad weather" << endl;
+                cout << "(2) 20% of flights originating 40 degrees north delayed due to ice" << endl;
+                cout << "(3) Strong jet stream (East/West)" << endl;
+                cout << "(4) 5% of flights get random delay at gate" << endl;
+                cout << "(5) Plane taken out of commision" << endl;
             }
             cout << "------------------------------------" << endl;
             cout << "//   Locksneed Martian    //////////" << endl;
