@@ -81,6 +81,7 @@ public:
     //Getters
     //ADD MORE GETTERS HERE
     int getFlightID(); //Return flight ID
+    string getFlightTypeID(); //return flight type id
     bool getScheduled(); //Returns whether the flight has been given a time to begin
     int getPlaneID(); //Return plane ID
     string getPlaneName(); //Returns 'tail number' of plane
