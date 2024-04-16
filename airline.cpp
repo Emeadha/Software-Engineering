@@ -708,12 +708,15 @@ void Airline::updateDay(int Day){
     //User complication selection
 
     //Reset selection
-    int selection = -1;
+    string selection = "";
+
+    bool boolTest = false;
 
     //Take use input
-    while((selection > 8) || (selection < 0)){
+    while( (selection != "0") && (selection != "1") && (selection != "2") && (selection != "3")
+        && (selection != "4") &&  (selection != "5")){
 
-            if(selection == 9){
+            if(selection == "9"){
                 cout << "-----------------------------------" << endl;
                 cout << "(0) No complication" << endl;
                 cout << "(1) 25% Of flights encounter bad weather" << endl;
@@ -738,8 +741,40 @@ void Airline::updateDay(int Day){
             cerr << " DEBUGGING Bout to call setComp" << endl;
         }
 
-        //Send choice to setComplication
-        setComplication(selection);
+        //Convert to int
+        if(selection == "0"){
+            //Send choice to setComplication
+            setComplication(0);
+        }
+        else if(selection == "1"){
+            //Send choice to setComplication
+            setComplication(1);
+        }
+        else if(selection == "2"){
+            //Send choice to setComplication
+            setComplication(2);
+        }
+        else if(selection == "3"){
+            //Send choice to setComplication
+            setComplication(3);
+        }
+        else if(selection == "4"){
+            //Send choice to setComplication
+            setComplication(4);
+        }
+        else if(selection == "5"){
+            //Send choice to setComplication
+            setComplication(5);
+        }
+        else if(selection == "9"){
+            //Send choice to setComplication
+            setComplication(9);
+        }
+        else{
+            //Tell logger we hit a bad error
+            Log_object->errorLog(2, "Error! Bad complication selection [AIRLINE.CPP]");
+        }
+
 
 }
 
