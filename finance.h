@@ -54,7 +54,7 @@ class Finance {
         const string financeFileName;
 
         //Debugging flag
-        bool debugging = true;
+        bool debugging = false;
 
         
 

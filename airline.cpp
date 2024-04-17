@@ -406,14 +406,13 @@ void Airline::loadFlights(){
     }
 
 
-    //If debugging, print out our new vector
-    if(debugging){
+        //USED TO BE DEBUGGING, NOW STANDARD
+        //If debugging, print out our new vector
         string garbageValue;
         printFlightVector();
         cerr << "-----------------------------------------------" << endl;
         cerr << "Current flight vector, enter anything to confim" << endl;
         cin >> garbageValue;
-    }
     
     //Give logger information about flights
     Log_object->updateFlightVector(All_flights);

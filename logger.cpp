@@ -207,7 +207,9 @@ void Logger::errorLog(int severity, string message) //TODO: Integrate with gener
 
    if (error1Count >= 5 || severity == 2)
    {
-      abort();
+        //Print out
+        cerr << "/////// MAXIMUM AMOUNT OF SEVERITY 1 ERRORS REACHED /////////" << endl;
+        abort();
    }
 }
 

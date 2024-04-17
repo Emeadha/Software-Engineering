@@ -76,6 +76,11 @@ void Airport::setTimeManager(TimeManager *time_manager){
 
 void Airport::updateDay(int Day){
     this->day = Day;
+
+    //Iterate through gates and ensure they are free
+    for(int i = 0; i < All_gates.size(); i++){
+	    freeGate(All_gates[i]->getGateID());
+    }
 }
 
 void Airport::setLogObject(Logger *log_pointer){

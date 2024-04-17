@@ -30,7 +30,7 @@ Flight::Flight(int Flight_ID, double ticket_cost, string Flight_type, string Fli
 
         if(debugging){
             cerr << "DEBUGGING: New flight object made, values of: ID:" << Flight_ID << " Ticket:" << Ticket_cost
-                << " FlightType:" << Flight_type << " Planename:" << Plane_name << " Dest:" << Dest_airport_name
+                << " FlightType:" << Flight_type << " Plane Model Needed:" << Plane_name << " Dest:" << Dest_airport_name
                 << " Origin:" << Origin_airport_name << " Dist:" << distance << endl;
         }
     
@@ -127,7 +127,7 @@ void Flight::setGateDelay(double delay){
 void Flight::printFlightDetails(){
     //Print out the details of this given flight
      cout << "FLIGHT ENTRY// ID:" << this->Flight_ID << " Departing: " << this->Departure_time << " Ticket:" << this->Ticket_cost
-                << " FlightType:" << this->Flight_type << " Planename:" << this->Plane_name << " Dest:" << this->Dest_airport_name
-                << " Origin:" << this->Origin_airport_name << " Dist:" << this->Distance << endl;
+                << " FlightType:" << this->Flight_type << " Plane Model Needed:" << this->Plane_name << " Dest:" << this->Dest_airport_name
+                << " Origin:" << this->Origin_airport_name << " Dist:" << this->Distance << " Km " << endl;
 
 }

@@ -165,8 +165,6 @@ void Plane::planeStatus(){
         else if(isBoarding){
             if(Gate_delay.minutes > 0){
 
-                Log_object->errorLog(0, "Decrementing gate delay");
-
                 //Send a decrement of the given interval
                 decrementDelay(0);
             }
@@ -178,8 +176,6 @@ void Plane::planeStatus(){
         else if(isAboutToTakeoff){
             //Try to takeoff
             if(Grounded_delay.minutes > 0){
-
-                Log_object->errorLog(0, "Decrementing grounded delay");
 
                 //Send a decrement of the given interval
                 decrementDelay(1);
