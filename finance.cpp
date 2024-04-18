@@ -90,7 +90,7 @@ void Finance::reportPlaneCost(int planeID, double value)
 	}
 }
 //Report a revenue of a plane to the finance object
-void Finance::reportPlaneRevenue(int planeID, double numOfPassengers)
+void Finance::reportPlaneRevenue(int planeID, int numOfPassengers)
 {
 	bool planeFound = false;
 	double value = 0;
@@ -133,6 +133,13 @@ void Finance::reportPlaneRevenue(int planeID, double numOfPassengers)
 	else
 	{
 		cerr << "Error! Negative passengers not allowed. " << endl;
+	}
+
+	if(debugging){
+		string testValue;
+		cerr << "DEBUGGING: Plane reporting revenue ID=" << planeID << endl;
+		cerr << "Number of passengers: " << numOfPassengers << " Revenue: " << value << endl;
+		cin >>testValue;
 	}
 }
 //Write a day into the financial summary log

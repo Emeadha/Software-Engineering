@@ -49,22 +49,26 @@ private:
     //Clock Passenger_clock;
     string Airport_name; // Airport name
 
+    //Location variables
     double longitude = 0;
     double latitude = 0;
 
+    //Whether or not hub
     int hub_status = 0;
 
     //Pointers to nessesary objects
     TimeManager* time_manager = nullptr;
     Logger* Log_object = nullptr; 
     
-
+    int day = 0; //Current day
     bool Airport_open; // Whether or not airport is open
     bool atGate = true; //Whether or not the passenger group is at their gate
 
+    int universalPID; //FUTURE CHANGE, want a univeral passenger ID, so that they do not overlap
+
+    //Debugging
     bool debugging = false;
 
-    int day = 0;
 
 public:
 

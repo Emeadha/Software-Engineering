@@ -362,9 +362,6 @@ void Plane::disembarkPassengers(){
     }
 
 }
-/*void setPassengersFromAirport(Airport& airport) {
-        passenger_vector = airport.getAllPassengerGroups();
-    }*/
 void Plane::inWaitingTime(){
     //This is a temp fix, but for right now plane is going to wait until 10 min before
     // takeoff then board, then fly

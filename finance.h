@@ -66,7 +66,7 @@ class Finance {
 //        double calculateRevenue(Flight flight, Plane plane);
         void calculateDailyLoan();
         void reportPlaneCost(int planeID, double value);
-        void reportPlaneRevenue(int planeID, double numOfPassengers);
+        void reportPlaneRevenue(int planeID, int numOfPassengers);
         void reportDay(int day);
         void reportOverall();
 

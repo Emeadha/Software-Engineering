@@ -134,6 +134,10 @@ void Flight::resetValues(){
 
     //Reset flight scheduled to false
     setScheduledFalse();
+
+    //Reset cost and revenue
+    this->revenue = 0;
+    this->cost = 0;
 }
 //Print method
 void Flight::printFlightDetails(){

@@ -29,39 +29,42 @@ Airport::Airport(int airport_ID, string airport_name, double longitude, double l
     Airport_open = true;
     getHubStatus();
 
+    //Depending on whether or not hub, this will change
+    int num_of_gates;
 
     //Continue with object creation
     if(hub_status == 1){
-        const int num_gates = 11;
-        for(int i = 0; i < num_gates; i++) 
-    {
-        //Creating and registering gates
-        Gate* gateID = new Gate(i);
-        registerGate(gateID);
+        //Hubs have 11 gates
+        num_of_gates = 11;
+        for(int i = 0; i < num_of_gates; i++){
+            //Creating and registering gates
+            Gate* gateID = new Gate(i);
+            registerGate(gateID);
         
-        //cout << "Is a Hub " << gateID << endl;
-        for(int x=0; x <num_gates; x++){
-           Passenger* passengerGroupID = new Passenger(x); 
-           //function call to push passengers onto departing_passenger vector
-           passengersToDeparture(i, passengerGroupID);
-        }     
-    }
+            //Add five passenger groups to each gate
+            for(int x=0; x <5; x++){
+                Passenger* passengerGroupID = new Passenger(x); 
+                //function call to push passengers onto departing_passenger vector
+                passengersToDeparture(i, passengerGroupID);
+            }     
+        }
     }
     else{
-        const int num_gates = 5;
-    for(int i = 0; i < num_gates; i++) 
-    {
-        //Creating and registering gates
-        Gate* gateID = new Gate(i);
-        registerGate(gateID);
+        //Non hubs have 5 gates
+        num_of_gates = 5;
+
+        for(int i = 0; i < num_of_gates; i++){
+            //Creating and registering gates
+            Gate* gateID = new Gate(i);
+            registerGate(gateID);
         
-        //cout << "Is not a Hub" << endl;
-        for(int x=0; x <num_gates; x++){
-           Passenger* passengerGroupID = new Passenger(x); 
-           //function call to push passengers onto departing_passenger vector
-           passengersToDeparture(i, passengerGroupID);
-        }     
-    }
+            //Create five passenger groups for each gate
+            for(int x=0; x < 5; x++){
+                Passenger* passengerGroupID = new Passenger(x); 
+                //function call to push passengers onto departing_passenger vector
+                passengersToDeparture(i, passengerGroupID);
+            }     
+        }
 
     }
 }
@@ -120,12 +123,21 @@ void Airport::onTimeUpdate(Clock& new_time)
 
     //loop checking to see if gates are full with passengers, if not
     //function is called to push more passengers onto departing_passenger vector
+    int num_of_gates = 0;
+    int difference = 0;
+
     if(hub_status == 1){
-        const int num_gates = 11;
-        for(int i = 0; i < num_gates; i++){
-            if(All_gates[i]->Departing_passengers.size() != 11){
-                int num = 11 - All_gates[i]->Departing_passengers.size();
-                for(int x = 0; x < num; x++){
+        //Hubs have 11 gates
+        num_of_gates = 11;
+
+        for(int i = 0; i < num_of_gates; i++){
+            //If there are less than five passenger groups here
+            if(All_gates[i]->Departing_passengers.size() < 5){
+
+                //Find the difference
+                int difference = 5 - All_gates[i]->Departing_passengers.size();
+                //Send that many to gate
+                for(int x = 0; x < difference; x++){
                     Passenger* passengerGroupID = new Passenger(x);
                     passengersToDeparture(i, passengerGroupID);
                 }
@@ -133,12 +145,20 @@ void Airport::onTimeUpdate(Clock& new_time)
         }
     }
     else{
-        const int num_gates = 5;
-        for(int i = 0; i < num_gates; i++){
-            for(int x=0; x <num_gates; x++){
-                Passenger* passengerGroupID = new Passenger(x); 
-                //function call to push passengers onto departing_passenger vector
-                passengersToDeparture(i, passengerGroupID);
+        //Non hubs have 5 gates
+        num_of_gates = 5;
+
+        for(int i = 0; i < num_of_gates; i++){
+            //If there are less than five passenger groups here
+            if(All_gates[i]->Departing_passengers.size() < 5){
+
+                //Find the difference
+                int difference = 5 - All_gates[i]->Departing_passengers.size();
+                //Send that many to gate
+                for(int x = 0; x < difference; x++){
+                    Passenger* passengerGroupID = new Passenger(x);
+                    passengersToDeparture(i, passengerGroupID);
+                }
             }
         }
     }
@@ -231,11 +251,14 @@ vector<Passenger> Airport::transferToPlane(int gate_ID){
 
     //Assign vector to placeholder
     //temp = All_gates[gate_ID]->Departing_passengers;
-    for(Passenger* passPtr : All_gates[gate_ID]->Departing_passengers){
+    for(const auto& passPtr : All_gates[gate_ID]->Departing_passengers){
         temp.push_back(*passPtr);
     }
     if(debugging){
-        cout << "Size: " << temp.size() << endl;
+        string yeet;
+        cout << "Size of temp: " << temp.size() << endl;
+        cout << "Size of Departing: " << All_gates[gate_ID]->Departing_passengers.size() << endl;
+        cin >> yeet;
     }
     //Clear vector at gate
     All_gates[gate_ID]->Departing_passengers.clear();
