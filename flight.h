@@ -44,7 +44,10 @@ private:
     int In_air_duration = 0; //Estimated duration of the plane flying in air
     int Deboard_duration = 0; //Estimated duration of deboarding process
 
+    //First value is current distance, second is the one set during construction
+    //Why is this important? Need a way to reset flight values after complication
     double Distance = 0;
+    double Dflt_dist = 0;
 
     //Calculated during scheduling
     int Dest_airport_ID = 0; //The ID number of the airport for the plane to land at
@@ -93,7 +96,6 @@ public:
     Clock getArrivalTime(); //Return estimated arrival time at target airport
     Clock getDepartureTime(); //Returns scheduled departure time from origin 
     double getTicketCost(); //Returns the cost for a ticket for the flight
-
     double getGroundedDelay(); //Gets delay for plane not at gate
     double getGateDelay(); //Gets delay for plane at gate
 
@@ -118,6 +120,9 @@ public:
     void setGroundedDelay(double delay); //Sets delay for plane not at gate
     void setGateDelay(double delay); //Sets delay for plane at gate
 
+    //Reset distance and delay values (needed after complication changes)
+    void resetValues();
+    
     //Print method
     void printFlightDetails(); //Print out details of this flight entry
 };

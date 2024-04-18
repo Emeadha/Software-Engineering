@@ -692,9 +692,10 @@ void Airline::updateDay(int Day){
     //Set new day
     this->day = Day;
 
-    //Reset flight scheduling to false
+    //Reset flights
+    // This call resets, delays, distance, and scheduled status
     for(int i=0; i<All_flights.size(); i++){
-        All_flights[i]->setScheduledFalse();
+        All_flights[i]->resetValues();
     }
 
     //---------------------

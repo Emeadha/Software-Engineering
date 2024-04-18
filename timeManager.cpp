@@ -60,6 +60,9 @@ void TimeManager::startSimulation(){
         Finance_obj->reportDay(day);
     }
 
+    //Call our end report for the finance log
+    Finance_obj->reportOverall();
+
     //End simulation print out
     cout << "-------------------------------------------------------------------------" << endl;
     cout << " SIMULATION COMPLETED                              LOCKSNEED MARTIAN CORP" << endl;

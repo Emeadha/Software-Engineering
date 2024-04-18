@@ -22,6 +22,7 @@ Flight::Flight(int Flight_ID, double ticket_cost, string Flight_type, string Fli
         this->Dest_airport_name = Dest_airport_name;
         this->Origin_airport_name = Origin_airport_name;
         this->Distance = distance;
+        this->Dflt_dist = distance;
         this->Takeoff_duration = takeoff_time;
         this->In_air_duration = air_time;
         this->Deboard_duration = deboard_time;
@@ -122,6 +123,17 @@ void Flight::setGroundedDelay(double delay){
 }
 void Flight::setGateDelay(double delay){
     this->gate_delay = delay;
+}
+void Flight::resetValues(){
+    //Reset delay times
+    this->gate_delay = 0;
+    this->grounded_delay = 0;
+
+    //Reset distance
+    this->Distance = Dflt_dist;
+
+    //Reset flight scheduled to false
+    setScheduledFalse();
 }
 //Print method
 void Flight::printFlightDetails(){
