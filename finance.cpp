@@ -15,7 +15,7 @@ Finance::Finance() : financeFileName("financeLog.txt")
     financeObj.open(financeFileName);
 
 	 financeObj << "-------------------------------------------------------------------------" << endl;
-    financeObj << "FINANCELOG                              LOCKSNEED MARTIAN CORP" << endl;
+    financeObj << "FINANCELOG                              " << endl;
     financeObj << "-------------------------------------------------------------------------" << endl;
 
 }

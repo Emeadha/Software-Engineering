@@ -23,19 +23,19 @@ Logger::Logger() : planeFileName("planeLog.txt"), flightFileName("flightLog.txt"
 
     //Write opener for all files
     planeLogFile << "--------------------------------------------------------------------------" << endl;
-    planeLogFile << "PLANELOG                                 LOCKSNEED MARTIAN CORP" << endl;
+    planeLogFile << "PLANELOG                                 " << endl;
     planeLogFile << "--------------------------------------------------------------------------" << endl;
 
     airportLogFile << "-------------------------------------------------------------------------" << endl;
-    airportLogFile << "AIRPORTLOG                              LOCKSNEED MARTIAN CORP" << endl;
+    airportLogFile << "AIRPORTLOG                              " << endl;
     airportLogFile << "-------------------------------------------------------------------------" << endl;
 
     flightLogFile << "--------------------------------------------------------------------------" << endl;
-    flightLogFile << "FLIGHTLOG                              LOCKSNEED MARTIAN CORP" << endl;
+    flightLogFile << "FLIGHTLOG                              " << endl;
     flightLogFile << "--------------------------------------------------------------------------" << endl;
 
     errorLogFile << "---------------------------------------------------------------------------" << endl;
-    errorLogFile << "ERRORLOG                              LOCKSNEED MARTIAN CORP" << endl;
+    errorLogFile << "ERRORLOG                              " << endl;
     errorLogFile << "---------------------------------------------------------------------------" << endl;
 
 }

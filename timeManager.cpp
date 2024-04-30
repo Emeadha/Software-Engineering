@@ -65,7 +65,7 @@ void TimeManager::startSimulation(){
 
     //End simulation print out
     cout << "-------------------------------------------------------------------------" << endl;
-    cout << " SIMULATION COMPLETED                              LOCKSNEED MARTIAN CORP" << endl;
+    cout << " SIMULATION COMPLETED                              " << endl;
     cout << "-------------------------------------------------------------------------" << endl;
 }
 void TimeManager::updateSimulationTime(int hours, int minutes, int seconds) {
@@ -73,7 +73,6 @@ void TimeManager::updateSimulationTime(int hours, int minutes, int seconds) {
     cout << "--------------------------------------------------------" << endl;
     cout << "               TIME UPDATE   [" << simulation_time.hours << ":" << simulation_time.minutes << ":" << simulation_time.seconds << "]" << endl;
     cout << "--------------------------------------------------------" << endl;
-    //cout << "Locksneed Martian Corp. 2024" << endl;
 
     //Send out update, wait to progess until all objects have updated
     notifyObservers();

@@ -726,7 +726,7 @@ void Airline::updateDay(int Day){
                 cout << "(5) Plane taken out of commision" << endl;
             }
             cout << "------------------------------------" << endl;
-            cout << "//   Locksneed Martian    //////////" << endl;
+            cout << "//   AIRLINE SIMULATION   //////////" << endl;
             cout << "//   Current Day in simulation : " << day << endl;
             cout << "------------------------------------" << endl;
             cout << "Enter complication selection...     " << endl;
