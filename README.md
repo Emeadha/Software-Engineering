@@ -1,5 +1,4 @@
 # AIRLINE SIMULATION README
-# Locksneed Martin Corp.
 
 -- This file contains directions to prepare and run simulation
 
